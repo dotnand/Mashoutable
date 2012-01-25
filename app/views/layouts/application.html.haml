@@ -1,0 +1,135 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %link{:href => "http://mashout.greanetree.com/favicon.png", :rel => "icon", :type => "image/png"}
+    %title Mashoutable
+    = stylesheet_link_tag     'application', :media => 'all'
+    = stylesheet_link_tag     'application-print', :media => 'print'
+    = yield :optional_css
+    /[if lt IE 7] 
+      = stylesheet_link_tag   'application-ie', :media => 'all'
+    = javascript_include_tag  'application'
+    = yield :optional_javascript
+    = csrf_meta_tags
+  %body
+    / body wrapper
+    #wrapper
+      / feedback floater
+      %a#feedback{:href => "#", :style => "margin-top: 0px;"} Feedback
+      / container
+      .container
+        / top section
+        #top
+          / top-black bar
+          %p#top-bar.clear Mashoutable™: Free tools to Amplify Your Social Media Development
+          / header
+          #header
+            / header logo
+            #logo.left
+              %a{:href => "/"}
+                %img{:alt => "Mashoutable", :src => "#{asset_path('logo.png')}"}
+              %h1.hide Mashoutable
+            / navigation and time savings
+            #navigation-social.right.last
+              #time-savings.right.last
+                %h4
+                  Mashoutable™ has given
+                  %span.orange 211
+                  Hours and
+                  %span.orange 44
+                  minutes
+                  = succeed "back" do
+                    %br/
+                  to it's users in Time-Savings!
+              / navigation
+              #h-navigation
+                %ul.right.last.clear
+                  = render 'shared/navigation_link', :href => '/', :controller_name => 'content', :action_name => 'home', :name => 'Home'
+                  = render 'shared/navigation_link', :href => "#{dashboard_path}", :controller_name => 'dashboard', :name => 'Tools'
+                  = render 'shared/navigation_link', :href => "#{about_us_path}", :controller_name => 'content', :action_name => 'about_us', :name => 'About Us'
+                  = render 'shared/navigation_link', :href => "#{blog_path}", :controller_name => 'content', :action_name => 'blog', :name => 'Blog'
+                  = render 'shared/navigation_link', :href => "#{contact_us_path}", :controller_name => 'content', :action_name => 'contact_us', :name => 'Contact Us'
+            %hr.space
+            - if flash[:notice]
+              %p.notice 
+                = flash[:notice]
+            - if flash[:error]
+              %p.error 
+                = flash[:error]
+            = yield :body
+      = yield :optional_body
+      / footer wrapper
+      #footer
+        #blog-twitter
+          #footer-divider.clear
+          / footer container
+          .container
+            / footer blog section
+            #blog.left
+              %h3.title From the Blog:
+              / footer first blog item
+              .blog-item
+                .left.blog-date
+                  %h2 04
+                  %h4 MAR
+                .left.blog-desc.span-6
+                  %h3 Some news headlines
+                  %h5 Posted in news
+                  %p
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's standard
+                    %br/
+                    %br/
+                    %a{:href => "#"} Read More
+              / footer second blog item
+              .blog-item
+                .left.blog-date
+                  %h2 04
+                  %h4 MAR
+                .left.blog-desc.span-6
+                  %h3 Some news headlines
+                  %h5 Posted in news
+                  %p
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's standard
+                    %br/
+                    %br/
+                    %a{:href => "#"} Read More
+            / footer twitter section
+            #twitter.right.last
+              %h3.title Twitter:
+              .left
+                .tweet
+                #twitter-bird.right
+        / footer back to top icon
+        #back-to-top.clear
+          .container
+            .right.last
+              %a{:href => "#top"}
+                %img{:alt => "Back To Top", :src => "#{asset_path('footer-back-to-top.png')}"}
+        / footer bottom bar wrapper
+        #navigation-copyright.clear
+          / footer bottom bar container
+          .container
+            / footer bottom bar navigation
+            #f-navigation.left
+              %ul
+                %li
+                  %a{:href => "http://mashout.greanetree.com/"} Home
+                %li
+                  %a{:href => "#"} Tools
+                %li
+                  %a{:href => "#"} About Us
+                %li
+                  %a{:href => "#"} Blog
+                %li
+                  %a{:href => "#"} Contact Us
+            / footer bottom bar copyright notice and social media icons
+            #copyright.right.last
+              %a{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
+                %span.icons-facebook.left
+              %a{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
+                %span.icons-twitter.left
+              %span.left Copyright 2011 Mashoutable.com
+    

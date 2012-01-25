@@ -1,11 +1,17 @@
 Mashoutable::Application.routes.draw do
-  controller :content do
-    get :about_us,    :via => 'about-us'
-    get :blog,        :via => 'blog'
-    get :contact_us,  :via => 'contact-us'
-  end
-
-  match '/' => 'content#home'
+  match 'contact-us/message' => 'content#message', :via => :post, :as => 'contact_us_message'
+  
+  match 'contact-us'          => 'content#contact_us', :as => 'contact_us'
+  match 'about-us'            => 'content#about_us',   :as => 'about_us'
+  match 'blog'                => 'content#blog'
+  match 'dashboard'           => 'dashboard#index'
+  match 'dashboard/tool'      => 'dashboard#tool'
+  match 'dashboard/mashout'   => 'dashboard#mashout'
+  match 'dashboard/blastout'  => 'dashboard#blastout'
+  match 'dashboard/shoutout'  => 'dashboard#shoutout'
+  match 'dashboard/pickout'   => 'dashboard#pickout'
+  match 'dashboard/signout'   => 'dashboard#signout'
+  match '/'                   => 'content#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

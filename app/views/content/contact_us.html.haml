@@ -1,0 +1,30 @@
+- content_for :title do
+  .prepend-top
+    .left
+      %h2.inset-type Contact Us
+      
+- content_for :content_body do
+  = form_for @message, :url => contact_us_message_path do |form|
+    %span{:class => 'span-3'}
+      = form.label :name
+    %span{:class => 'span-10'}
+      = form.text_field :name
+
+    %span{:class => 'span-3'}
+      = form.label :email
+    %span{:class => 'span-10'}
+      = form.text_field :email
+    
+    %span{:class => 'span-3'}
+      = form.label :subject
+    %span{:class => 'span-10'}
+      = form.text_field :subject
+    
+    %span{:class => 'span-3'}
+      = form.label :body
+    %span{:class => 'span-10'}
+      = form.text_area :body, :cols => nil
+    
+    %div{:class => 'span-13 align-right'}
+      %input.button{:type => 'submit', :value => 'Send'}
+  

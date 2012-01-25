@@ -1,0 +1,35 @@
+- content_for :body do
+  #content-wrapper.clear.span-24
+    / left content box
+    #main-content.left
+      #content-top.clear
+      #content-body.left
+        / start content
+        #content-inner.span-15
+          / content title
+          #title
+            = yield :title
+          / content section
+          %div{:class => 'span-15 box'}
+            = yield :content_body
+      #content-bottom.clear
+      %hr.space/
+    / sidebar
+    #sidebar.right
+      / sidebar testimonials bubble
+      #testimonials
+        %h4.inset-type What People are Saying:
+        #testimonials-quote
+          .quote-top
+          .quote-body
+            %p
+              Mashoutable has been an invaluable tool for our
+              business. Using the Targeted Tweet tool has helped us manage our social
+              network process without taking time away from our work!
+          .quote-bottom
+          %h6.quoted-by.right.last.append-bottom Brian A., Some Company
+      / sidebar ad
+      #ad
+        %img{:alt => "Ad", :src => "#{asset_path('ad.png')}"}
+        
+= render :template => 'layouts/application'
