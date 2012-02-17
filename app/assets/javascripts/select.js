@@ -1,4 +1,4 @@
-$(function() {
+function createAutocompleteComboboxes(postCreateCallback) {
     $.widget("ui.combobox", {
         _create: function() {
             var self = this,
@@ -98,7 +98,7 @@ $(function() {
         }
     });
     
-     // prepare jquery comboboxes
+    // prepare jquery comboboxes
     $("select").combobox();
     
     // disable comboxbox edit fields
@@ -107,4 +107,12 @@ $(function() {
     $("#toggle").click(function () {
         $("select").toggle();
     });
+    
+    if(postCreateCallback) {
+      postCreateCallback();
+    }
+};
+
+$(function() {
+    createAutocompleteComboboxes();
 });

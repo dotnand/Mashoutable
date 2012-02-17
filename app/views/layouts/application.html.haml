@@ -7,7 +7,7 @@
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'
     = yield :optional_css
-    /[if lt IE 7] 
+    /[if IE] 
       = stylesheet_link_tag   'application-ie', :media => 'all'
     = javascript_include_tag  'application'
     = yield :optional_javascript
@@ -32,16 +32,7 @@
               %h1.hide Mashoutable
             / navigation and time savings
             #navigation-social.right.last
-              #time-savings.right.last
-                %h4
-                  Mashoutable™ has given
-                  %span.orange 211
-                  Hours and
-                  %span.orange 44
-                  minutes
-                  = succeed "back" do
-                    %br/
-                  to it's users in Time-Savings!
+              = render 'shared/login'
               / navigation
               #h-navigation
                 %ul.right.last.clear
@@ -52,11 +43,11 @@
                   = render 'shared/navigation_link', :href => "#{contact_us_path}", :controller_name => 'content', :action_name => 'contact_us', :name => 'Contact Us'
             %hr.space
             - if flash[:notice]
-              %p.notice 
-                = flash[:notice]
+              %p.notice= flash[:notice]
             - if flash[:error]
-              %p.error 
-                = flash[:error]
+              %p.error= flash[:error]
+            - if flash[:success]
+              %p.success= flash[:success] 
             = yield :body
       = yield :optional_body
       / footer wrapper
@@ -116,15 +107,15 @@
             #f-navigation.left
               %ul
                 %li
-                  %a{:href => "http://mashout.greanetree.com/"} Home
+                  %a{:href => home_path} Home
                 %li
-                  %a{:href => "#"} Tools
+                  %a{:href => dashboard_path} Tools
                 %li
-                  %a{:href => "#"} About Us
+                  %a{:href => about_us_path} About Us
                 %li
-                  %a{:href => "#"} Blog
+                  %a{:href => blog_path} Blog
                 %li
-                  %a{:href => "#"} Contact Us
+                  %a{:href => contact_us_path} Contact Us
             / footer bottom bar copyright notice and social media icons
             #copyright.right.last
               %a{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}

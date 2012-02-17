@@ -1,0 +1,10 @@
+- content_for :optional_javascript do
+  = javascript_include_tag 'mashout'
+
+- content_for :content_body do
+  = form_tag mashout_create_path do
+    = render 'target_list_item', :item_number => 1
+    = render "hashtag_list_item", :item_number => 2
+    = render 'trend_list_item', :item_number => 3
+    = render "comment_list_item", :item_number => 4
+    = render "out", :item_number => 5

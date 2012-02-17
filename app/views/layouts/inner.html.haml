@@ -10,15 +10,14 @@
           #title
             = yield :title
           / content section
-          %div{:class => 'span-15 box'}
-            = yield :content_body
+          = yield :content_body
       #content-bottom.clear
       %hr.space/
     / sidebar
     #sidebar.right
       / sidebar testimonials bubble
       #testimonials
-        %h4.inset-type What People are Saying:
+        %h3.inset-type Ready to Mashout?
         #testimonials-quote
           .quote-top
           .quote-body
@@ -27,9 +26,6 @@
               business. Using the Targeted Tweet tool has helped us manage our social
               network process without taking time away from our work!
           .quote-bottom
-          %h6.quoted-by.right.last.append-bottom Brian A., Some Company
-      / sidebar ad
-      #ad
-        %img{:alt => "Ad", :src => "#{asset_path('ad.png')}"}
+          %h6.quoted-by.right.last.append-bottom
         
 = render :template => 'layouts/application'

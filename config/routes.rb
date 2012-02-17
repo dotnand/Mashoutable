@@ -1,9 +1,16 @@
 Mashoutable::Application.routes.draw do
-  match 'contact-us/message' => 'content#message', :via => :post, :as => 'contact_us_message'
+  match '/auth/:provider/callback' => 'authorization#create'
+
+  match 'mashout/preview'   => 'dashboard#preview_mashout', :via => :get,   :as => :mashout_preview
+  match 'mashout/create'    => 'dashboard#create_mashout',  :via => :post,  :as => :mashout_create
+  match 'shoutout/create'   => 'dashboard#create_shoutout', :via => :post,  :as => :shoutout_create
+
+  match 'contact-us/message' => 'content#message', :via => :post, :as => :contact_us_message
   
-  match 'contact-us'          => 'content#contact_us', :as => 'contact_us'
-  match 'about-us'            => 'content#about_us',   :as => 'about_us'
+  match 'contact-us'          => 'content#contact_us', :as => :contact_us
+  match 'about-us'            => 'content#about_us',   :as => :about_us
   match 'blog'                => 'content#blog'
+  
   match 'dashboard'           => 'dashboard#index'
   match 'dashboard/tool'      => 'dashboard#tool'
   match 'dashboard/mashout'   => 'dashboard#mashout'
@@ -11,7 +18,12 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/shoutout'  => 'dashboard#shoutout'
   match 'dashboard/pickout'   => 'dashboard#pickout'
   match 'dashboard/signout'   => 'dashboard#signout'
-  match '/'                   => 'content#home'
+  match 'dashboard/trends'    => 'dashboard#trends',    :via => :get, :as => :trend_source
+  match 'dashboard/targets'   => 'dashboard#targets',   :via => :get, :as => :target_source
+  
+  match '/'                   => 'content#home',        :as => :home
+  
+  root :to => "content#home"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

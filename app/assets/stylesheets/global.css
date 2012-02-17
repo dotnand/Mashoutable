@@ -320,6 +320,11 @@ input[type='text'], textarea {
     color: #ffffff;}
 
 
+/* Twitter Display */
+#target-tweet-list {
+  margin-top:5px;}
+
+
 /*Footer Twitter*/
 #footer #blog-twitter #twitter {
     width: 281px;}
@@ -623,13 +628,31 @@ input[type='text'], textarea {
     height: 10px;
     width: 227px;}
 
+#content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content img {
+    margin-top:5px;
+    float:right;}
+    
+#content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content {
+    padding:5px;
+    background:#fbfbfb;
+    border:solid 1px #a7dcf0;
+    overflow:hidden;
+    margin-bottom:3px;}
+    
+#wrapper, #welcome, #footer { min-width: 960px; }
+
 
 /*Sidebar*/
 #content-wrapper #sidebar {
     margin-top:0; width: 310px;}
 
-#content-wrapper #sidebar h4 {
-    color: #f6651b;}
+#content-wrapper #sidebar h3 {
+    color: #f6651b;
+    margin-bottom: 10px;}
+
+#content-wrapper #sidebar #testimonials  {
+    padding: 5px;
+    z-index: 1337;}
 
 #content-wrapper #sidebar #testimonials #testimonials-quote .quote-top {
     background: url("bubbles.png");
@@ -657,6 +680,28 @@ input[type='text'], textarea {
 #content-wrapper #sidebar #testimonials #testimonials-quote .quoted-by {
     text-align: right;
     margin-top: -10px;
-    margin-right: 10px;}
+    margin-right: 10px;
+    background-image: url("social-icons.png");
+    background-position: 0 -48px;
+    background-repeat: no-repeat;
+    display: block;
+    height: 33px;
+    margin-top: -10px;
+    margin-right: 55px;
+    width: 27px;}
+    
 
-#wrapper, #welcome, #footer { min-width: 960px; }
+/*Forms*/
+label {
+    color: #494949;}
+
+#out {
+    height: 100px;}
+      
+.ui-autocomplete {
+		max-height: 250px;
+		overflow-y: auto;}
+		
+#mashout-chars-left {
+    width: 40px;
+}

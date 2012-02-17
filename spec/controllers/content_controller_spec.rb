@@ -6,6 +6,12 @@ describe ContentController do
     response.should render_template("layouts/application")
     response.code.should eq("200")
   end
+
+  it "GET home should redirect to dashboard if logged in" do
+    subject.should_receive(:signed_in?).and_return(true)
+    get :home
+    response.should redirect_to(dashboard_path)
+  end
   
   it "GET about-us should be successful" do
     get :about_us

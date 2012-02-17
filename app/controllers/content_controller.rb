@@ -1,6 +1,10 @@
 class ContentController < ApplicationController
   def home
-    render :layout => 'application'
+    if signed_in?
+      redirect_to dashboard_path
+    else
+      render :layout => 'application'
+    end
   end
   
   def about_us

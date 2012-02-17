@@ -19,9 +19,9 @@
         / Call to action social media login
         #home-sign-in.span-24.clear
           %img#sign-in-arrow.left{:alt => "Sign In", :src => "#{asset_path('sign-in-arrow.png')}"}
-          %a{:href => "#"}
+          %a{:href => twitter_auth_path}
             %span#sign-in-twitter.left.append-1
-          %a{:href => "#"}
+          %a{:href => facebook_auth_path}
             %span#sign-in-facebook.left
         / Call to action step 1
         .clear.box.left.span-6
