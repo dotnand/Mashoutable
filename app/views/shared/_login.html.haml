@@ -1,0 +1,18 @@
+- if current_user.nil?
+  / social media sign in
+  #social-media.right.last
+    %a{:href => twitter_auth_path}
+      %span#navigation-sign-in-twitter.left
+    %a{:href => facebook_auth_path}
+      %span#navigation-sign-in-facebook.left
+- else 
+  #time-savings.right.last
+    %h4
+      Mashoutable™ has given
+      %span.orange 211
+      Hours and
+      %span.orange 44
+      minutes
+      = succeed "back" do
+        %br/
+      to it's users in Time-Savings!

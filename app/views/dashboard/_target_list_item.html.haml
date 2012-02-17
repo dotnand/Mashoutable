@@ -1,0 +1,17 @@
+.span-15.box
+  %h1.left.clear= "#{item_number}."
+  %h3.list-item
+    %span
+      Add a
+    = succeed "?" do
+      %span.orange Target
+    (or 
+    = "#{item_number + 1})"
+  .content-bubble.span-6.left.clear
+    .bubble-top
+    .bubble-body
+      %p Pick a refab comment from the list:
+    .bubble-bottom
+  = render 'target'
+  %hr.space/
+  = render 'media_source'

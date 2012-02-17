@@ -1,0 +1,12 @@
+/ content section
+.span-15.box
+  %h1.left.clear= "#{item_number}."
+  %h3.list-item
+    %span
+      Add a
+      = succeed "?" do
+        %span.orange Trend
+      (or 
+      = "#{item_number + 1})"
+  = render 'trend'
+  %hr.space/

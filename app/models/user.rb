@@ -1,0 +1,98 @@
+class User < ActiveRecord::Base
+  has_many :authorizations
+  has_many :mentions
+  has_many :replies
+  has_many :besties, :class_name => 'Bestie'
+  
+  def self.create_from_hash!(hash)
+    create(:name => hash['info']['name'])
+  end
+  
+  def twitter
+    unless @twitter_client
+      provider = self.authorizations.find_by_provider('twitter')
+      @twitter_client = Twitter::Client.new(:oauth_token => provider.token, :oauth_token_secret => provider.secret) rescue nil
+    end
+    
+    @twitter_client
+  end
+  
+  def tweople
+    follower_ids    = twitter_ids(:follower_ids)
+    friend_ids      = twitter_ids(:friend_ids)
+    home_timeline   = twitter.home_timeline(:count => 1000).shuffle
+    tweople         = []
+    local_mentions  = self.mentions.find(:all, :select => :who).map { |mention| mention.who }
+    
+    home_timeline.each do |status|
+      next if tweople.include?(status.user)
+      next if local_mentions.include?(status.user.screen_name)
+      next if friend_ids.include?(status.user.id)
+      next if follower_ids.include?(status.user.id)
+
+      web           = status.source.casecmp('web') == 0
+      within_a_week = (7.days.ago..Date.today).cover?(status.created_at.to_date)
+
+      tweople << status.user if web and within_a_week
+    end
+
+    tweople
+  end
+  
+  def following_me
+    follower_ids = twitter_ids(:follower_ids).shuffle
+    return [] if follower_ids.count < 1
+    twitter.users(follower_ids[0..[follower_ids.count, 15].min])
+  end
+  
+  def followed_by_i_follow
+    twitter_ids = twitter_ids(:follower_ids).shuffle & twitter_ids(:friend_ids).shuffle
+    twitter.users(twitter_ids[0..100])
+  end
+  
+  def i_follow
+    friend_ids = twitter_ids(:friend_ids).shuffle
+    return [] if friend_ids.count < 1
+    twitter.users(friend_ids[0..[friend_ids.count, 15].min])
+  end
+  
+  def mentioned(date = Date.today)
+    twitter_mentions  = twitter.mentions(:count => 200).select { |mention| mention.created_at.to_date == date }
+    local_replies     = self.replies.find(:all, :select => :status_id).map { |mention| mention.status_id }
+
+    twitter_mentions.reject do |twitter_mention| 
+      local_replies.include?(twitter_mention.id.to_s) or local_replies.include?(twitter_mention.in_reply_to_status_id.to_s)
+    end
+  end
+
+  def shoutouts
+    mentioned.select { |mention| mention.text =~ /#s\/o|#S\/O|#shoutouts|#SHOUTOUTS|#shoutout|#SHOUTOUT/ }
+  end
+  
+  def retweets_of_me(date = Date.today)
+    twitter.retweets_of_me(:count => 200).select { |status| status.created_at.to_date == date }
+  end
+  
+  def verified(type = :follower_ids)
+    follower_ids = twitter_ids(type).shuffle
+    return [] if follower_ids.count < 1
+    twitter.users(follower_ids[0..99]).select { |user| user.verified }
+  end
+  
+  def twitter_besties
+    self.twitter.users(self.besties.map { |bestie| bestie.gsub('@', '') })
+  end
+  
+  def twitter_ids(method)
+    ids     = []
+    cursor  = -1
+    
+    while (results = twitter.send(method, :cursor => cursor))
+      ids = ids + results['ids']
+      break if results['next_cursor'] == 0
+      cursor = cursor + 1
+    end
+    
+    ids
+  end
+end

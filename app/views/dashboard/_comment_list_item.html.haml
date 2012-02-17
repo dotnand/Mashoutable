@@ -1,0 +1,27 @@
+.span-15.box
+  %h1.left.clear= "#{item_number}."
+  %h3.list-item
+    %span
+      Add a
+      = succeed "?" do
+        %span.orange Comment
+      (or 
+      = "#{item_number + 1})"
+  .content-bubble.span-6.left.clear
+    .bubble-top
+    .bubble-body
+      %p Pick a refab comment from the list:
+    .bubble-bottom
+  #mashout-comment-container.span-9.left.ui-combobox
+    %select{:id => 'mashout-comment', :name => 'mashout-comment', :style => "display: none;"}
+      %option{:value => 'NONE'} Select one...
+      %option{:value => "#{URI.encode('#Gratitude for the #Mentions!')}"} #YouMakeMeFeelLikeACeleb!
+      %option{:value => "#{URI.encode('#Gratitude for the #Shoutouts!')}"} #Positive #Energy #RightBackAtcha!
+      %option{:value => "#{URI.encode('#Gratitude for the #RT\'s!')}"} #Positive #Social #Amplification!
+      %option{:value => "#{URI.encode('#YoureTheBest!')}"} #YoureTheBest!
+      %option{:value => "#{URI.encode('#YouTotallyRock!')}"} #YouTotallyRock!
+      %option{:value => "#{URI.encode('#Lovin what you are doing on #Twitter!')}"} #Lovin what you are doing on #Twitter!
+      %option{:value => "#{URI.encode('#ImYourBiggestFan!')}"} #ImYourBiggestFan!
+      %option{:value => "#{URI.encode('Hit that #Follow Button! I promise it\'s worth it!')}"} Hit that #Follow Button! I promise it&#39;s worth it!
+      %option{:value => "#{URI.encode('My #SocialMedia #Bestie! #LoveYa!')}"} My #SocialMedia #Bestie! #LoveYa!
+  %hr.space/
