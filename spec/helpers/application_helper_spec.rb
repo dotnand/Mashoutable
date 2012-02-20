@@ -31,4 +31,16 @@ describe ApplicationHelper do
   it 'should group nothing given nothing' do
     helper.group_hash_by(nil, nil).should be_nil
   end
+  
+  it 'should detect if visiting the dashboard index page' do
+    pending
+  end
+  
+  it 'should render a conditional div' do
+    pending
+  end
+  
+  it 'should sanitize twitter screen name' do
+    helper.sanitize_twitter_screen_name('@foo_bar').should eq('foo_bar')
+  end
 end

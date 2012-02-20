@@ -1,10 +1,36 @@
+require 'shared_context/twitter_besties'
 require 'spec_helper'
 
 describe DashboardController do
+  include_context 'twitter besties'
+
   let(:current_user) { FactoryGirl.create(:user) }  
   
   before do
     subject.stub(:current_user) { current_user }
+  end
+
+  def setup_current_user_twitter_besties
+    current_user.should_receive(:twitter_besties).and_return(twitter_besties)
+  end
+
+  context 'besites' do
+    it 'should GET besties' do
+      setup_current_user_twitter_besties
+      
+      get :besties
+      
+      response.should be_success
+      assigns[:besties].should eq(twitter_besties)  
+    end
+    
+    it 'should DELETE bestie given it exists' do
+      pending
+    end
+    
+    it 'should not DELETE bestie if one does not exist' do
+      pending
+    end
   end
 
   context 'build a tweet' do
@@ -106,8 +132,8 @@ describe DashboardController do
 
   it 'GET should redirect to root when not signed in' do
     subject.stub(:current_user) { nil }
-
-    get :index
+    
+    get :index      
     response.should redirect_to(root_path)
     get :mashout
     response.should redirect_to(root_path)
@@ -122,8 +148,11 @@ describe DashboardController do
   end
   
   it 'GET index should be successful' do
+    setup_current_user_twitter_besties
     get :index
+    
     response.should be_success
+    assigns[:besties].should eq(twitter_besties)
   end
   
   it 'GET tool should be successful' do
@@ -152,6 +181,8 @@ describe DashboardController do
   end
     
   it 'should know the current tool' do
+    setup_current_user_twitter_besties
+    
     get :index
     assigns[:current_tool].should eq(dashboard_path)
   

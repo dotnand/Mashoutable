@@ -1,0 +1,14 @@
+.button,
+input[type="submit"] {
+    padding: 5px 0; }
+
+.ui-button-icon-only .ui-button-text {
+    padding: 0.75em;
+    margin: 0 0 -10px 0; }
+
+button {
+    top: -0.4em; }
+
+h3.list-item {
+    margin-left: -10px;}
+

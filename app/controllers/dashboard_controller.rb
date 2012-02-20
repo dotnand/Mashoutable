@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   before_filter :current_tool, :auth_required
   
   def index
+    @besties = current_user.twitter_besties
   end
   
   def tool
@@ -63,6 +64,25 @@ class DashboardController < ApplicationController
   def signout
     session[:user_id] = nil
     redirect_to root_path
+  end
+  
+  def besties
+    @besties = current_user.twitter_besties
+    render :partial => 'besties'
+  end
+  
+  def delete_bestie
+    bestie = current_user.besties.find_by_screen_name(params['bestie'])
+
+    if bestie.present?
+      bestie.destroy
+      @message = 'Removed ' << bestie.screen_name
+    else 
+      @message = params['bestie'] << ' not found'
+    end 
+
+    @besties = current_user.twitter_besties
+    render :partial => 'besties'
   end
   
   protected 

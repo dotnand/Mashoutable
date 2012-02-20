@@ -1,0 +1,155 @@
+- content_for :optional_javascript do
+  = javascript_include_tag 'mashout'
+
+- content_for :content_body do
+  / content section
+  #hours-saved.clear
+    %h3 Mashoutable has saved you 9 hours and 40 minutes
+  #tool-buttons.left.clear
+    %h4.left
+      %a{:href => "#"} MASHOUT
+    %h4.left
+      %a{:href => "#"} BLASTOUT
+    %h4.left
+      %a{:href => "#"} SHOUTOUT
+    %h4.left
+      %a{:href => "#"} PICKOUT
+    %h4.left
+      %a{:href => "#"} LOOKOUT
+    %h4.left
+      %a{:href => "#"} COMING SOON
+  #dropdown-buttons.left.clear
+    %h4.left
+      %a{:href => "#", :id => "pickouts"} MY PICKOUTS
+    %h4.left
+      %a{:href => "#", :id => "analytics"} OUT.AM ANALYTICS
+    %h4.left.active
+      %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
+    .pickouts.clear.hidden
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+    .analytics.clear.hidden
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+    .networks.clear.hidden
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+  #extra-info.left
+    = render 'besties'
+    #video-library.left
+      %h4 Video Library
+      %a{:href => "#"} Add a Video
+      #videos
+        %ul
+          %li
+            %img.left{:alt => "Video Name", :src => asset_path("video.jpg")}/
+            %h4 Name of Video
+            %input{:type => "checkbox", :value => "private"}/
+            %label Make Private
+            %br/
+            %a{:href => "#"} Delete
+          %li
+            %img.left{:alt => "Video Name", :src => asset_path("video.jpg")}/
+            %h4 Name of Video
+            %input{:type => "checkbox", :value => "private"}/
+            %label Make Private
+            %br/
+            %a{:href => "#"} Delete
+          %li
+            %img.left{:alt => "Video Name", :src => asset_path("video.jpg")}/
+            %h4 Name of Video
+            %input{:type => "checkbox", :value => "private"}/
+            %label Make Private
+            %br/
+            %a{:href => "#"} Delete
+          %li
+            %img.left{:alt => "Video Name", :src => asset_path("video.jpg")}/
+            %h4 Name of Video
+            %input{:type => "checkbox", :value => "private"}/
+            %label Make Private
+            %br/
+            %a{:href => "#"} Delete
+          %li
+            %img.left{:alt => "Video Name", :src => asset_path("video.jpg")}/
+            %h4 Name of Video
+            %input{:type => "checkbox", :value => "private"}/
+            %label Make Private
+            %br/
+            %a{:href => "#"} Delete
+      %ul.pager.right
+        %li
+          %a.active{:href => "#"} 1
+        %li
+          %a{:href => "#"} 2
+        %li
+          %a{:href => "#"} 3
+        %li
+          %a{:href => "#"} 4
+        %li
+          %a{:href => "#"} 5
+    #interactions.left
+      %h4 Interactions
+      #list-interactions
+        %table
+          %tbody
+            %tr
+              %th Name
+              %th Count
+              %th Picture
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td facebook_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 10
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td facebook_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+            %tr
+              %td @Twitter_1
+              %td 1
+              %td
+                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
+      %ul.pager.right
+        %li
+          %a.active{:href => "#"} 1
+        %li
+          %a{:href => "#"} 2
+        %li
+          %a{:href => "#"} 3
+        %li
+          %a{:href => "#"} 4
+        %li
+          %a{:href => "#"} 5
+

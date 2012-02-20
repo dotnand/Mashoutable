@@ -80,7 +80,9 @@ class User < ActiveRecord::Base
   end
   
   def twitter_besties
-    self.twitter.users(self.besties.map { |bestie| bestie.gsub('@', '') })
+    local_besties = self.besties
+    return self.twitter.users(local_besties.map { |bestie| bestie.screen_name.gsub('@', '') }) if local_besties.count > 0
+    []
   end
   
   def twitter_ids(method)

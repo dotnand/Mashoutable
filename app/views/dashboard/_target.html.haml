@@ -19,7 +19,7 @@
           - first_target = statuses.shift
           .target-content
             - if not first_target.nil?
-              - sanitized_screen_name = first_target[:screen_name].gsub(/[^0-9a-z]+/i, '')
+              - sanitized_screen_name = sanitize_twitter_screen_name(first_target[:screen_name])
               .append-bottom
                 %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox'}/
                 %label= first_target[:screen_name]
@@ -41,7 +41,7 @@
         #mashout-target-checkboxes
           %br/
           - @profiles.each do |profile|
-            - sanitized_screen_name = profile[:screen_name].gsub(/[^0-9a-z]+/i, '')
+            - sanitized_screen_name = sanitize_twitter_screen_name(profile[:screen_name])
             .target-content
               .append-bottom
                 %p

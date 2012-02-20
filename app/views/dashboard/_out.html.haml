@@ -1,26 +1,28 @@
-.span-15.box
-  .span-6.left
-    %h1.left.clear 5.
-    %h3.list-item
-      %span
-        Ready to
-        = succeed "?" do
-          %span.orange MASHOUT
-  .content-bubble.span-6.left.clear
-    .bubble-top
-    .bubble-body
-      %p
-        %span#mashout-chars-left
-          140 
-        Characters Left
-    .bubble-bottom
-  .span-9.left
-    %textarea#out{:maxlength => '140', :name => 'out'}
-      = @out
-    .align-right
-      %input.button{:type => "submit", :value => "Send Tweet!"}
-      %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
-      %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
-    :javascript
-      bindMashoutPreviewClick("#{mashout_preview_path}")
-      bindMashoutClearPreviewClick();
+/ sidebar
+#sidebar.right
+  / floating sidebar
+  #ready-to-mashout
+    .content
+      %h3.left.orange.inset-type
+        Ready to MASHOUT?
+      #quote
+        .top
+        .body
+          .box
+            %p
+              %span#mashout-chars-left
+                140 
+              Characters Left
+            .clear.left
+              = form_tag form_path do
+                %textarea#out{:maxlength => '140', :name => 'out'}
+                  = @out
+                .align-right.span-7
+                  %input.button{:type => "submit", :value => "Send Tweet!"}
+                  %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
+                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
+        .bottom
+        %h6.quoted-by.clear.last.right
+  :javascript
+    bindMashoutPreviewClick("#{mashout_preview_path}")
+    bindMashoutClearPreviewClick();

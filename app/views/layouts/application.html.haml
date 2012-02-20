@@ -7,8 +7,11 @@
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'
     = yield :optional_css
-    /[if IE] 
+    /[if IE]
       = stylesheet_link_tag   'application-ie', :media => 'all'
+      = stylesheet_link_tag   'ie', :media => 'all'
+    /[if IE7]
+      = stylesheet_link_tag   'ie7', :media => 'all'
     = javascript_include_tag  'application'
     = yield :optional_javascript
     = csrf_meta_tags

@@ -18,4 +18,20 @@ module ApplicationHelper
     end
     grouped    
   end
+  
+  def on_dashboard_index?
+    controller.controller_name == 'dashboard' and controller.action_name == 'index'
+  end
+
+  def conditional_div(condition, attributes, &block)
+    if condition
+      haml_tag :div, attributes, &block
+    else
+      haml_concat capture_haml(&block)
+    end
+  end
+  
+  def sanitize_twitter_screen_name(screen_name)
+    screen_name.gsub(/[^0-9a-z\-\_]+/i, '')
+  end
 end

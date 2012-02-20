@@ -1,7 +1,7 @@
 - content_for :body do
-  #content-wrapper.clear.span-24
+  #content-wrapper.clear.span-24{:class => on_dashboard_index? ? 'dashboard' : nil}
     / left content box
-    #main-content.left
+    - conditional_div(!on_dashboard_index?, {:id => 'main-content', :class => 'left'}) do
       #content-top.clear
       #content-body.left
         / start content
@@ -13,19 +13,7 @@
           = yield :content_body
       #content-bottom.clear
       %hr.space/
-    / sidebar
-    #sidebar.right
-      / sidebar testimonials bubble
-      #testimonials
-        %h3.inset-type Ready to Mashout?
-        #testimonials-quote
-          .quote-top
-          .quote-body
-            %p
-              Mashoutable has been an invaluable tool for our
-              business. Using the Targeted Tweet tool has helped us manage our social
-              network process without taking time away from our work!
-          .quote-bottom
-          %h6.quoted-by.right.last.append-bottom
+    - if !on_dashboard_index?
+      = yield :out
         
 = render :template => 'layouts/application'

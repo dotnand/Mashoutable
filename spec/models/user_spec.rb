@@ -1,3 +1,4 @@
+require 'shared_context/twitter_besties'
 require 'spec_helper'
 
 describe User do
@@ -32,11 +33,13 @@ describe User do
   end
   
   context 'relationships' do
+    include_context 'twitter besties' 
+  
     let!(:user1)     { double(:id => 1, :screen_name => 'john_doe1', :verified => true) }
     let!(:user2)     { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
     let!(:user3)     { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
-    context 'tweople' do
+    context 'tweople' do  
       let!(:out_mention1)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe1') }
       let!(:out_mention2)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe2') }
       let!(:out_mention3)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe3') }
@@ -92,14 +95,10 @@ describe User do
     end
     
     it 'should have twitter besties' do
-      bestie1 = double(:profile_image_url => 'http://www.foobar.com', :screen_name => '@twitter_1', :description => 'twitter_1 desc.', :location => 'San Fransico')
-      bestie2 = double(:profile_image_url => 'http://www.helloworld.com', :screen_name => '@twitter_2', :description => 'twitter_2 desc.', :location => 'New York')
-      bestie3 = double(:profile_image_url => 'http://www.twitterland.com', :screen_name => '@twitter_3', :description => 'twitter_3 desc.', :location => 'Las Vagas')
+      subject.should_receive(:besties).and_return([local_bestie1, local_bestie2, local_bestie3])
+      twitter.should_receive(:users).with(['twitter_1', 'twitter_2', 'twitter_3']).and_return([twitter_bestie1, twitter_bestie2, twitter_bestie3])
       
-      subject.should_receive(:besties).and_return(['@twitter_1', '@twitter_2', '@twitter_3'])
-      twitter.should_receive(:users).with(['twitter_1', 'twitter_2', 'twitter_3']).and_return([bestie1, bestie2, bestie3])
-      
-      subject.twitter_besties.should eq([bestie1, bestie2, bestie3])
+      subject.twitter_besties.should eq([twitter_bestie1, twitter_bestie2, twitter_bestie3])
     end
     
     it 'should have celeb/verified followers' do

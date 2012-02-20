@@ -1,6 +1,6 @@
 //= require dashboard
 
-$(function(){
+$(function() {
     $('#mashout-target-container .ui-autocomplete-input').css('width','300px');
     $('#mashout-media-container .ui-autocomplete-input').css('width','300px');
     $('#mashout-comment-container .ui-autocomplete-input').css('width','300px');
@@ -14,6 +14,25 @@ $(function(){
     $("#out").keyup(function(){
         calculateCharsLeft(); 
     });
+    
+    // setup ready to mashout floating step
+    if($('#sidebar').offset() != null) {
+        var top = $('#sidebar #ready-to-mashout .content').offset().top - parseFloat($('#sidebar #ready-to-mashout .content').css('top').replace(/auto/, 0));
+        
+        $(window).scroll(function (event) {
+            // what the y position of the scroll is
+            var y = $(this).scrollTop();
+
+            // whether that's below the form
+            if (y >= top) {
+                // if so, ad the fixed class
+                $('#sidebar #ready-to-mashout .content').addClass('fixed');
+            } else {
+                // otherwise remove it
+                $('#sidebar #ready-to-mashout .content').removeClass('fixed');
+            }
+        });
+    }
 });
 
 function calculateCharsLeft() {

@@ -1,0 +1,31 @@
+#besties.left
+  %h4 Best Friends and Favorite Follows
+  - if defined? @message and @message.length > 0
+    %em= @message
+  #list-people
+    %input{:id => 'bestie-editor', :type => "text"}/
+    %br/
+    %input.button.left{:type => "submit", :value => "Add Bestie"}/
+    %input.button.right{:id => 'delete-bestie-button', :type => "submit", :value => "Delete Bestie"}/
+    :javascript
+      $(function() { bindDeleteBestieButton('#delete-bestie-button', '#bestie-editor', "#{delete_bestie_path}"); });
+    %ul.clear.left
+      - @besties.each do |bestie|
+        %li
+          - sanitized_screen_name = sanitize_twitter_screen_name(bestie.screen_name)
+          - real_screen_name = '@' << bestie.screen_name
+          %a.left{:id => "#{sanitized_screen_name}", :href => "#"}= real_screen_name
+          %img{:alt => "avatar", :float => "right", :src => bestie.profile_image_url, :width => "32", :height => "32"}/
+          :javascript
+            $(function() { bindUpdateBestieEditor("##{sanitized_screen_name}", '#bestie-editor', "#{real_screen_name}") });
+  %ul.pager.right
+    %li
+      %a.active{:href => "#"} 1
+    %li
+      %a{:href => "#"} 2
+    %li
+      %a{:href => "#"} 3
+    %li
+      %a{:href => "#"} 4
+    %li
+      %a{:href => "#"} 5
