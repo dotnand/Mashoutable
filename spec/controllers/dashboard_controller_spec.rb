@@ -14,22 +14,70 @@ describe DashboardController do
     current_user.should_receive(:twitter_besties).and_return(twitter_besties)
   end
 
-  context 'besites' do
-    it 'should GET besties' do
+  context 'besties' do
+    before do
       setup_current_user_twitter_besties
-      
+    end
+  
+    it 'should GET besties' do
       get :besties
       
       response.should be_success
-      assigns[:besties].should eq(twitter_besties)  
+      assigns[:besties].should eq(twitter_besties_paginated)  
     end
     
-    it 'should DELETE bestie given it exists' do
-      pending
-    end
-    
-    it 'should not DELETE bestie if one does not exist' do
-      pending
+    context 'from twitter' do
+      let(:besties) { mock('besties') }
+      
+      before do
+        current_user.should_receive(:besties).and_return(besties)
+      end
+      
+      it 'should DELETE bestie given it exists' do
+        bestie  = mock('bestie')
+        
+        bestie.should_receive(:destroy)
+        bestie.should_receive(:screen_name).and_return('bestie2')
+        besties.should_receive(:find_by_screen_name).with('bestie2').and_return(bestie)
+        
+        delete :delete_bestie, {'bestie' => 'bestie2'}
+        
+        assigns[:message].should eq('Removed bestie2 bestie')
+        assigns[:besties].should eq(twitter_besties_paginated)
+      end
+      
+      it 'should not DELETE bestie if one does not exist' do
+        besties.should_receive(:find_by_screen_name).with('bestie2').and_return(nil)
+        
+        delete :delete_bestie, {'bestie' => 'bestie2'}
+        
+        assigns[:message].should eq('Bestie bestie2 not found')
+        assigns[:besties].should eq(twitter_besties_paginated)
+      end
+
+      it 'should POST a new bestie' do
+        bestie = mock('bestie')
+        
+        bestie.should_receive(:save).and_return(true)
+        besties.should_receive(:create).with(:screen_name => '@bestie2').and_return(bestie)
+        
+        post :create_bestie, {'bestie' => 'bestie2'}
+        
+        assigns[:message].should eq('Bestie @bestie2 created')
+        assigns[:besties].should eq(twitter_besties_paginated)
+      end
+      
+      it 'should not POST a new bestie if bestie exists ' do
+        bestie = mock('bestie')
+        
+        bestie.should_receive(:save).and_return(false)
+        besties.should_receive(:create).with(:screen_name => '@bestie2').and_return(bestie)
+        
+        post :create_bestie, {'bestie' => 'bestie2'}
+        
+        assigns[:message].should eq('Unable to create @bestie2')
+        assigns[:besties].should eq(twitter_besties_paginated)
+      end  
     end
   end
 
@@ -152,7 +200,7 @@ describe DashboardController do
     get :index
     
     response.should be_success
-    assigns[:besties].should eq(twitter_besties)
+    assigns[:besties].should eq(twitter_besties_paginated)
   end
   
   it 'GET tool should be successful' do
@@ -166,8 +214,14 @@ describe DashboardController do
   end
   
   it 'GET blastout should be successful' do
+    videos = [double(:guid => '123'), double(:guid => '456'), double(:guid => '567')]
+
+    current_user.should_receive(:videos).and_return(videos)
+    
     get :blastout
+
     response.should be_success
+    assigns[:videos].should eq(videos)
   end
   
   it 'GET shoutout should be successful' do

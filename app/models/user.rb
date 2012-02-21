@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :mentions
   has_many :replies
   has_many :besties, :class_name => 'Bestie'
+  has_many :videos
   
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])

@@ -14,10 +14,19 @@
       .content-bubble.span-6.left.clear
         .bubble-top
         .bubble-body
-          %p Click Record, we'll auto stop (Counting Down from 60 Seconds), save, assign a shortened URL, and add it to your Video Library, OR stop it manually when you're ready, then click save...
+          %p Click Record, we'll auto stop (counting down from 30 seconds), save, assign a shortened URL, and add it to your Video Library, OR stop it manually when you're ready, then click save...
         .bubble-bottom
       .span-9.left
-        = render 'nimbb'
+        = render 'nimbb_recorder'
+      %hr.space
+      .content-bubble.span-6.left.clear
+        .bubble-top
+        .bubble-body
+          %p Your Mashoutable Video Library
+        .bubble-bottom
+      .span-9.left
+        - @videos.each do |video| 
+          = render 'nimbb_video', :video => video
     = render 'target_list_item', :item_number => 2
     = render 'hashtag_list_item', :item_number => 3
     = render 'trend_list_item', :item_number => 4

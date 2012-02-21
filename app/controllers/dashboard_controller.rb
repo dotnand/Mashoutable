@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
   before_filter :current_tool, :auth_required
   
   def index
-    @besties = current_user.twitter_besties
+    @besties = get_besties
   end
   
   def tool
@@ -53,6 +53,13 @@ class DashboardController < ApplicationController
   end
   
   def blastout
+    begin 
+      current_user.videos << Video.new(:guid => params['guid']) if params['guid'].present?
+    rescue Exception => ex
+      logger.error ex
+    end
+  
+    @videos = current_user.videos
   end
   
   def shoutout
@@ -67,8 +74,7 @@ class DashboardController < ApplicationController
   end
   
   def besties
-    @besties = current_user.twitter_besties
-    render :partial => 'besties'
+    render_besties
   end
   
   def delete_bestie
@@ -76,13 +82,25 @@ class DashboardController < ApplicationController
 
     if bestie.present?
       bestie.destroy
-      @message = 'Removed ' << bestie.screen_name
+      @message = 'Removed ' << bestie.screen_name << ' bestie'
     else 
-      @message = params['bestie'] << ' not found'
+      @message = 'Bestie ' << params['bestie'] << ' not found'
     end 
 
-    @besties = current_user.twitter_besties
-    render :partial => 'besties'
+    render_besties
+  end
+  
+  def create_bestie
+    bestie_screen_name = params['bestie']
+    bestie_screen_name.insert(0, '@') if bestie_screen_name[0] != '@'
+    
+    if current_user.besties.create(:screen_name => bestie_screen_name).save
+      @message = 'Bestie ' << bestie_screen_name << ' created'
+    else
+      @message = 'Unable to create ' << bestie_screen_name
+    end
+    
+    render_besties
   end
   
   protected 
@@ -119,5 +137,14 @@ class DashboardController < ApplicationController
       rescue Exception => e
         flash[:error] = 'Unable to update your Twitter Timeline. ' << e.message
       end 
+    end
+    
+    def render_besties
+      @besties = get_besties
+      render :partial => 'besties'   
+    end
+    
+    def get_besties
+      current_user.twitter_besties.sort_by{|bestie| bestie.id}.paginate(:page => page, :per_page => per_page(7))
     end
 end

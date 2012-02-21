@@ -12,6 +12,7 @@ describe User do
   it { should have_many(:mentions) }
   it { should have_many(:replies) }
   it { should have_many(:besties) }
+  it { should have_many(:videos) }
   
   it 'should create a user given a hash' do
     param = {'info' => {'name' => 'jane_doe'}}

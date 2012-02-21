@@ -5,6 +5,7 @@ Mashoutable::Application.routes.draw do
   match 'mashout/create'    => 'dashboard#create_mashout',  :via => :post,    :as => :mashout_create
   match 'shoutout/create'   => 'dashboard#create_shoutout', :via => :post,    :as => :shoutout_create
   match 'bestie/delete'     => 'dashboard#delete_bestie',   :via => :delete,  :as => :delete_bestie
+  match 'bestie/new'        => 'dashboard#create_bestie',      :via => :post,    :as => :create_bestie
 
   match 'contact-us/message' => 'content#message', :via => :post, :as => :contact_us_message
   

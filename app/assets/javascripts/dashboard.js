@@ -53,10 +53,18 @@ function bindUpdateBestieEditor(sourceId, editorId, value) {
 }
 
 function handleDeleteBestie(editorId, path) {
+    handleBestieAction('DELETE', editorId, path);
+}
+
+function handleAddBestie(editorId, path) {
+    handleBestieAction('POST', editorId, path);
+}
+
+function handleBestieAction(method, editorId, path) {
     var params = {'bestie': $(editorId).val()};
 
     $.ajax({url: path, 
-            type: 'DELETE',
+            type: method,
             data: params, 
             success: function(data) { $("#besties").replaceWith(data); },
             async: false});
@@ -65,7 +73,27 @@ function handleDeleteBestie(editorId, path) {
 }
 
 function bindDeleteBestieButton(buttonId, editorId, path) {
-    $("#delete-bestie-button").click(function() { 
+    $(buttonId).click(function() { 
         handleDeleteBestie(editorId, path);
     }); 
 }
+
+function bindAddBestieButton(buttonId, editorId, path) { 
+    $(buttonId).click(function() { 
+        handleAddBestie(editorId, path);
+    }); 
+}
+
+function ajaxifyPagination(targetId, path) {
+    $(targetId + " .pagination a").click(function() {
+        var queryString = $(this).attr('href').split('?');
+        $.ajax({
+          type: "GET",
+          url: path + (queryString[1] == undefined ? '' : '?' + queryString[1]),
+          success: function(data) { $(targetId).replaceWith(data); }
+        });
+        
+        return false;
+    });
+}
+

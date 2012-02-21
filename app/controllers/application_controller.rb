@@ -18,4 +18,12 @@ class ApplicationController < ActionController::Base
       @current_user = user
       session[:user_id] = user.id
     end
+    
+    def page(default = 1)
+      params[:page] || default
+    end
+    
+    def per_page(default = 10)
+      params[:per_page] || default
+    end
 end

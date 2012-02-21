@@ -40,7 +40,6 @@ GEM
       ZenTest (= 4.5)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
-    cancan (1.6.7)
     capybara (1.0.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -219,6 +218,7 @@ GEM
       multi_json (>= 1.0.2)
     warden (1.1.0)
       rack (>= 1.0)
+    will_paginate (3.0.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -228,7 +228,6 @@ PLATFORMS
 DEPENDENCIES
   autotest (~> 4.4.6)
   autotest-rails (~> 4.1.1)
-  cancan
   capybara (~> 1.0.1)
   cucumber-rails (~> 1.0.2)
   database_cleaner (~> 0.6.7)
@@ -255,3 +254,4 @@ DEPENDENCIES
   turn
   twitter (~> 2.0.2)
   uglifier
+  will_paginate (~> 3.0.3)

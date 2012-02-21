@@ -654,6 +654,7 @@ input[type='text'], textarea {
     min-height: 200px;}
 
 
+/*TODO: remove*/
 /*Pager*/
 #content-wrapper .pager {
     height: 37px;
@@ -677,6 +678,33 @@ input[type='text'], textarea {
 
 #content-wrapper .pager a:hover,
 #content-wrapper .pager a.active {
+    background: #e1e1e1;
+    color: #121212; }
+
+
+/*Page NEW*/
+#content-wrapper .pagination {
+    height: 37px;
+    margin: 10px 0 0 0;
+    padding: 0; 
+    float: right;}
+
+#content-wrapper .pagination span,
+#content-wrapper .pagination li,
+#content-wrapper .pagination em,
+#content-wrapper .pagination a {
+    float: left;
+    text-align: center;
+    padding: 5px;
+    min-width: 20px;
+    border: 1px solid #dddddd;
+    background: #f0f0f0;
+    margin: 5px 0 5px 5px;
+    font-weight: bold;
+    text-decoration: none; }
+
+#content-wrapper .pagination a:hover,
+#content-wrapper .pagination a.active {
     background: #e1e1e1;
     color: #121212; }
 
