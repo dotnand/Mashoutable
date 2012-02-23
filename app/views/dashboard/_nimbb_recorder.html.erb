@@ -25,19 +25,30 @@
     <span id='video-name-message'></span>
     <script type='text/javascript'>
       //<![CDATA[
+      function onCreateVideo(data) {
+          $('#video-name-message').html(data);
+
+          if(data.length < 2) {
+            $('#video-name-container').remove();
+            
+            $.ajax({url: '<%= dashboard_videos_path %>', 
+                    success: function(data) { $('#videos').replaceWith(data); },
+                    async: false
+            });
+          }
+      }
+      
       $(function() { 
           $("#save-video-button").click(function() {
               var videoName = $('#video-name').val();
               var guid = $('#video-guid').val();
 
-              alert(videoName + ' ' + guid);
-                    
               $.ajax({url: '<%= create_video_path %>', 
                       type: 'POST',
                       data: {'name': videoName, 'guid': guid}, 
-                      success: function(data) { $('#video-name-container').replaceWith(data); },
-                      error: function(data) { $('#video-name-message').html(data); },
-                      async: false});
+                      success: function(data) { onCreateVideo(data); },
+                      async: false
+              });
                       
               return false;
           });

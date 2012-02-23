@@ -1,0 +1,17 @@
+<%= render 'nimbb_video', :video => video %>
+<h4><%= video.name %></h4>
+<a id='<%= "video-#{video.guid}" %>' rel='nofollow' href='#'>Delete</a>
+<script type='text/javascript'>
+    //<![CDATA[
+    $(function() {
+        $('<%= "#video-#{video.guid}" %>').click(function() {
+            $.ajax({url:'<%= "#{delete_video_path(video.guid)}" %>',
+                    type: 'DELETE',
+                    success: function(data) { $('#videos').replaceWith(data); }
+            });
+                    
+            return false;
+        });
+    });
+    //]]>
+</script>

@@ -87,10 +87,10 @@ function bindAddBestieButton(buttonId, editorId, path) {
 function ajaxifyPagination(targetId, path) {
     $(targetId + " .pagination a").click(function() {
         var queryString = $(this).attr('href').split('?');
-        $.ajax({
-          type: "GET",
-          url: path + (queryString[1] == undefined ? '' : '?' + queryString[1]),
-          success: function(data) { $(targetId).replaceWith(data); }
+        
+        $.ajax({type: "GET",
+                url: path + (queryString[1] == undefined ? '' : '?' + queryString[1]),
+                success: function(data) { $(targetId).replaceWith(data); }
         });
         
         return false;

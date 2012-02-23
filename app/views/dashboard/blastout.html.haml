@@ -19,9 +19,12 @@
       .span-9.left
         = render 'nimbb_recorder'
       %hr.space
-      .span-6.left.clear
-        &nbsp;
-      = render 'videos'
+      .content-bubble.span-6.left.clear
+        .bubble-top
+        .bubble-body
+          %p Mashoutable Video Library
+        .bubble-bottom
+      = render 'blastout_videos'
     = render 'target_list_item', :item_number => 2
     = render 'hashtag_list_item', :item_number => 3
     = render 'trend_list_item', :item_number => 4

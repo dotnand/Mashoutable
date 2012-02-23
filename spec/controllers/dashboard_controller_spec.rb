@@ -256,6 +256,19 @@ describe DashboardController do
     flash[:success].should eq('Your video has been saved')
   end
   
+  it 'should DELETE a video given a guid' do
+    user_videos = mock('videos')
+    
+    videos_paginated.first.should_receive(:destroy)
+    videos.should_receive(:find_by_guid).with('123').and_return(videos_paginated.first)
+    current_user.should_receive(:videos).exactly(2).times.and_return(videos)
+    
+    delete :delete_video, {'guid' => '123'}
+    
+    response.should be_success
+    assigns[:videos].should_not be_nil
+  end
+  
   it 'POST should not create a video if validation error ' do
     FactoryGirl.create(:video, :guid => '1234', :user => current_user)
     post :create_video, {'guid' => '1234'}

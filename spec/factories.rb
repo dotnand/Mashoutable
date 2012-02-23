@@ -34,6 +34,7 @@ FactoryGirl.define do
   
   factory :video do
     user
+    sequence(:name) {|n| "name#{n}"}
     sequence(:guid) {|n| "video#{n}"}
   end
 end

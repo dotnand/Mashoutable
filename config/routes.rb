@@ -7,6 +7,7 @@ Mashoutable::Application.routes.draw do
   match 'besties/delete'     => 'dashboard#delete_bestie',   :via => :delete,  :as => :delete_bestie
   match 'besties/new'        => 'dashboard#create_bestie',   :via => :post,    :as => :create_bestie
   match 'videos/new'         => 'dashboard#create_video',    :via => :post,    :as => :create_video
+  match 'videos/:guid'       => 'dashboard#delete_video',    :via => :delete,  :as => :delete_video
 
   match 'contact-us/message' => 'content#message', :via => :post, :as => :contact_us_message
   

@@ -790,17 +790,15 @@ input[type='text'], textarea {
 
 /*Videos partial*/
 #content-wrapper #video-library {
-    width: 275px;
-    min-height: 430px;
-    padding: 0;
-    margin-top: 15px;}
+    min-height: 410px;
+    padding: 0;}
 
 #content-wrapper #video-library object {
     padding-right: 10px;}
 
 #content-wrapper #video-library #videos {
-    min-height: 430px; 
-    margin: 25px 0 0 0;
+    min-height: 350px; 
+    margin: 0;
     padding: 0;}
 
 #content-wrapper #video-library #videos ul {
@@ -819,12 +817,8 @@ input[type='text'], textarea {
 #content-wrapper #video-library #videos ul li {
     list-style-type: none;
     display: block;
-    margin-bottom: 35px;
+    margin-bottom: 55px;
     clear:left;}
-    
-#content-wrapper #video-library #videos {
-    min-height: 370px;
-}
 
 
 /*Forms*/

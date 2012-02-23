@@ -1,11 +1,8 @@
-#video-library.left
-  %h4 Mashoutable Video Library
-  %a{:href => "#"} Add a Video
-  #videos
-    %ul
-      - @videos.each do |video| 
-        %li
-          = render 'nimbb_video', :video => video
+#videos
+  %ul
+    - @videos.each do |video| 
+      %li
+        = render 'video', :video => video
   = will_paginate @videos
   :javascript
-    $(function() { ajaxifyPagination("#video-library", "#{dashboard_videos_path}"); });
+    $(function() { ajaxifyPagination("#videos", "#{dashboard_videos_path}"); });

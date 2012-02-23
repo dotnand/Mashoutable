@@ -102,21 +102,33 @@ class DashboardController < ApplicationController
   end
   
   def videos
-    @videos = get_videos
-    render :partial => 'videos'
+    render_videos
   end
   
   def create_video
-    name = params['name']
-    guid = params['guid']
+    name  = params['name']
+    guid  = params['guid']
+    video = Video.new(:guid => guid, :name => name, :user => current_user)
   
     if guid.blank?
-      render :text => 'Video was not supplied', :status => 500 
+      message = 'Video was not supplied'
     elsif name.blank?
-      render :text => 'Please supply a name', :status => 500
-    elsif Video.new(:guid => guid, :user => current_user).save
-      render :text => 'Your video has been saved'
+      message = 'Please supply a video name'
+    elsif video.save
+      message = nil
+    elsif video.errors['guid'].count > 0
+      message = 'Video has already been saved' 
+    elsif video.errors['name'].count > 0
+      message = 'Video name already has been taken'
     end
+    
+    render :text => message
+  end
+  
+  def delete_video
+    video = current_user.videos.find_by_guid(params['guid'])
+    video.destroy if video.present?
+    render_videos
   end
   
   protected 
@@ -167,4 +179,9 @@ class DashboardController < ApplicationController
     def get_videos
       current_user.videos.paginate(:page => page, :per_page => per_page(4))
     end    
+    
+    def render_videos
+      @videos = get_videos
+      render :partial => 'videos'
+    end
 end

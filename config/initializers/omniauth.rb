@@ -1,15 +1,12 @@
-TWITTER_CONFIG  = YAML.load_file("#{Rails.root}/config/twitter.yml")[Rails.env]
-FACEBOOK_CONFIG = YAML.load_file("#{Rails.root}/config/facebook.yml")[Rails.env]
-
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :twitter, TWITTER_CONFIG['CONSUMER_KEY'], TWITTER_CONFIG['CONSUMER_SECRET']
-  provider :facebook, FACEBOOK_CONFIG['APP_ID'], FACEBOOK_CONFIG['APP_SECRET'], :scope => 'email,offline_access,read_stream'
+  provider :twitter, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
+  provider :facebook, ENV['APP_ID'], ENV['APP_SECRET'], :scope => 'email,offline_access,read_stream'
 end
 
-OmniAuth.config.full_host = 'http://localhost:3000'
+OmniAuth.config.full_host = 'http://localhost:3000' if not Rails.env.production?
 
-  Twitter.configure do |config|
-  config.consumer_key = TWITTER_CONFIG['CONSUMER_KEY']
-  config.consumer_secret = TWITTER_CONFIG['CONSUMER_SECRET']
+Twitter.configure do |config|
+  config.consumer_key = ENV['CONSUMER_KEY']
+  config.consumer_secret = ENV['CONSUMER_SECRET']
 end
 
