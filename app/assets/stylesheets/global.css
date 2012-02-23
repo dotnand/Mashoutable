@@ -72,6 +72,11 @@ h3.list-item {
     border: 1px solid #eebea3;
     background: #faf9f9;}
 
+#content-wrapper input.text,
+#content-wrapper input[type="text"] {
+    width: 260px;
+    padding: 5px; }
+
 
 /*social media icons*/
 .icons-twitter {
@@ -781,6 +786,45 @@ input[type='text'], textarea {
     margin-top: -10px;
     width: 35px;
     float: left; }
+
+
+/*Videos partial*/
+#content-wrapper #video-library {
+    width: 275px;
+    min-height: 430px;
+    padding: 0;
+    margin-top: 15px;}
+
+#content-wrapper #video-library object {
+    padding-right: 10px;}
+
+#content-wrapper #video-library #videos {
+    min-height: 430px; 
+    margin: 25px 0 0 0;
+    padding: 0;}
+
+#content-wrapper #video-library #videos ul {
+    padding-left:0;}
+
+#content-wrapper #video-library #videos label {
+    font-weight: normal;}
+
+#content-wrapper #video-library #videos h4,
+#content-wrapper #video-library h4 {
+    margin-bottom: 0;}
+    
+#content-wrapper #video-library #videos h4 {
+    color: #d05407;}
+    
+#content-wrapper #video-library #videos ul li {
+    list-style-type: none;
+    display: block;
+    margin-bottom: 35px;
+    clear:left;}
+    
+#content-wrapper #video-library #videos {
+    min-height: 370px;
+}
 
 
 /*Forms*/

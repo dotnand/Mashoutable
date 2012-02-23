@@ -19,14 +19,9 @@
       .span-9.left
         = render 'nimbb_recorder'
       %hr.space
-      .content-bubble.span-6.left.clear
-        .bubble-top
-        .bubble-body
-          %p Your Mashoutable Video Library
-        .bubble-bottom
-      .span-9.left
-        - @videos.each do |video| 
-          = render 'nimbb_video', :video => video
+      .span-6.left.clear
+        &nbsp;
+      = render 'videos'
     = render 'target_list_item', :item_number => 2
     = render 'hashtag_list_item', :item_number => 3
     = render 'trend_list_item', :item_number => 4

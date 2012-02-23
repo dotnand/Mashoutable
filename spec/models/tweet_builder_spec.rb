@@ -207,11 +207,12 @@ describe TweetBuilder do
       end
       
       it 'should build given besties' do
+        besties = [double(:screen_name => '@bestie1'), double(:screen_name => '@bestie2'), double(:screen_name => '@bestie3')]
         twitter = mock('twitter')
         
         twitter.should_receive(:users).with(['bestie1', 'bestie2', 'bestie3']).and_return(users)
         user.should_receive(:twitter).and_return(twitter)
-        user.should_receive(:besties).and_return(['@bestie1', '@bestie2', '@bestie3'])
+        user.should_receive(:besties).and_return(besties)
       
         besties, profiles = builder.target('BESTIES')
 

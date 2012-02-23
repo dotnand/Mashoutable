@@ -1,11 +1,12 @@
 Mashoutable::Application.routes.draw do
   match '/auth/:provider/callback' => 'authorization#create'
 
-  match 'mashout/preview'   => 'dashboard#preview_mashout', :via => :get,     :as => :mashout_preview
-  match 'mashout/create'    => 'dashboard#create_mashout',  :via => :post,    :as => :mashout_create
-  match 'shoutout/create'   => 'dashboard#create_shoutout', :via => :post,    :as => :shoutout_create
-  match 'bestie/delete'     => 'dashboard#delete_bestie',   :via => :delete,  :as => :delete_bestie
-  match 'bestie/new'        => 'dashboard#create_bestie',      :via => :post,    :as => :create_bestie
+  match 'mashouts/preview'   => 'dashboard#preview_mashout', :via => :get,     :as => :mashout_preview
+  match 'mashouts/create'    => 'dashboard#create_mashout',  :via => :post,    :as => :mashout_create
+  match 'shoutouts/create'   => 'dashboard#create_shoutout', :via => :post,    :as => :shoutout_create
+  match 'besties/delete'     => 'dashboard#delete_bestie',   :via => :delete,  :as => :delete_bestie
+  match 'besties/new'        => 'dashboard#create_bestie',   :via => :post,    :as => :create_bestie
+  match 'videos/new'         => 'dashboard#create_video',    :via => :post,    :as => :create_video
 
   match 'contact-us/message' => 'content#message', :via => :post, :as => :contact_us_message
   
@@ -16,6 +17,7 @@ Mashoutable::Application.routes.draw do
   match 'dashboard'           => 'dashboard#index'
   match 'dashboard/tool'      => 'dashboard#tool'
   match 'dashboard/besties'   => 'dashboard#besties'
+  match 'dashboard/videos'    => 'dashboard#videos'
   match 'dashboard/mashout'   => 'dashboard#mashout'
   match 'dashboard/blastout'  => 'dashboard#blastout'
   match 'dashboard/shoutout'  => 'dashboard#shoutout'

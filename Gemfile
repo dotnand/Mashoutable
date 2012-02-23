@@ -11,10 +11,10 @@ gem 'twitter',                    '~> 2.0.2'
 gem 'nokogiri',                   '~> 1.5.0'
 gem 'will_paginate',              '~> 3.0.3'
 gem 'therubyracer'
-gem 'mysql2'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'sass'
+gem 'thin'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -38,6 +38,10 @@ group :test do
   gem 'autotest-rails',     '~> 4.1.1'
 end
 
+group :production do
+  gem 'pg'
+end
+
 group :development do
   gem 'rspec-rails', '~> 2.8.0'
   gem 'ruby-debug19'
@@ -50,3 +54,6 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development, :test do
+  gem 'mysql2'  
+end

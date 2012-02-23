@@ -16,4 +16,33 @@
        pluginspage="http://www.adobe.com/go/getflashplayer" 
        type="application/x-shockwave-flash"></embed>
 </object>
+<% if @guid.present? %>
+  <div id='video-name-container'>
+    <%= hidden_field_tag 'video-guid', @guid, :id => 'video-guid' %>
+    <%= label_tag 'video-name', 'Name of Video' %>
+    <%= text_field_tag 'video-name', '', :id => 'video-name' %>
+    <%= submit_tag 'Save', :id => 'save-video-button', :class => 'button' %>
+    <span id='video-name-message'></span>
+    <script type='text/javascript'>
+      //<![CDATA[
+      $(function() { 
+          $("#save-video-button").click(function() {
+              var videoName = $('#video-name').val();
+              var guid = $('#video-guid').val();
 
+              alert(videoName + ' ' + guid);
+                    
+              $.ajax({url: '<%= create_video_path %>', 
+                      type: 'POST',
+                      data: {'name': videoName, 'guid': guid}, 
+                      success: function(data) { $('#video-name-container').replaceWith(data); },
+                      error: function(data) { $('#video-name-message').html(data); },
+                      async: false});
+                      
+              return false;
+          });
+      });
+      //]]>
+    </script>
+  </div>
+<% end %>

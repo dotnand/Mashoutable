@@ -3,7 +3,8 @@ class DashboardController < ApplicationController
   before_filter :current_tool, :auth_required
   
   def index
-    @besties = get_besties
+    @besties  = get_besties
+    @videos   = get_videos
   end
   
   def tool
@@ -53,13 +54,10 @@ class DashboardController < ApplicationController
   end
   
   def blastout
-    begin 
-      current_user.videos << Video.new(:guid => params['guid']) if params['guid'].present?
-    rescue Exception => ex
-      logger.error ex
-    end
-  
-    @videos = current_user.videos
+    @guid   = params['guid']
+    @videos = get_videos
+    
+    flash[:notice] = 'Please give your video a name' if @guid.present?
   end
   
   def shoutout
@@ -103,9 +101,27 @@ class DashboardController < ApplicationController
     render_besties
   end
   
+  def videos
+    @videos = get_videos
+    render :partial => 'videos'
+  end
+  
+  def create_video
+    name = params['name']
+    guid = params['guid']
+  
+    if guid.blank?
+      render :text => 'Video was not supplied', :status => 500 
+    elsif name.blank?
+      render :text => 'Please supply a name', :status => 500
+    elsif Video.new(:guid => guid, :user => current_user).save
+      render :text => 'Your video has been saved'
+    end
+  end
+  
   protected 
     def current_tool
-      case(params[:action].to_sym)
+      case params[:action].to_sym
         when :index then @current_tool = dashboard_path
         when :mashout then @current_tool = dashboard_mashout_path
         when :create_mashout then @current_tool = dashboard_mashout_path
@@ -145,6 +161,10 @@ class DashboardController < ApplicationController
     end
     
     def get_besties
-      current_user.twitter_besties.sort_by{|bestie| bestie.id}.paginate(:page => page, :per_page => per_page(7))
+      current_user.twitter_besties.sort_by{|bestie| bestie.id}.paginate(:page => page, :per_page => per_page(9))
     end
+    
+    def get_videos
+      current_user.videos.paginate(:page => page, :per_page => per_page(4))
+    end    
 end

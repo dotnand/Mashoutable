@@ -1,9 +1,11 @@
 require 'shared_context/twitter_besties'
+require 'shared_context/videos'
 require 'spec_helper'
 
 describe DashboardController do
   include_context 'twitter besties'
-
+  include_context 'user videos'
+  
   let(:current_user) { FactoryGirl.create(:user) }  
   
   before do
@@ -12,6 +14,10 @@ describe DashboardController do
 
   def setup_current_user_twitter_besties
     current_user.should_receive(:twitter_besties).and_return(twitter_besties)
+  end
+  
+  def setup_current_user_videos
+    current_user.should_receive(:videos).and_return(videos)
   end
 
   context 'besties' do
@@ -79,6 +85,13 @@ describe DashboardController do
         assigns[:besties].should eq(twitter_besties_paginated)
       end  
     end
+  end
+
+  it 'should GET videos' do
+    setup_current_user_videos
+    get :videos
+    response.should be_success
+    assigns[:videos].should eq(videos_paginated)
   end
 
   context 'build a tweet' do
@@ -197,10 +210,13 @@ describe DashboardController do
   
   it 'GET index should be successful' do
     setup_current_user_twitter_besties
+    setup_current_user_videos
+    
     get :index
     
     response.should be_success
     assigns[:besties].should eq(twitter_besties_paginated)
+    assigns[:videos].should eq(videos_paginated)
   end
   
   it 'GET tool should be successful' do
@@ -214,14 +230,12 @@ describe DashboardController do
   end
   
   it 'GET blastout should be successful' do
-    videos = [double(:guid => '123'), double(:guid => '456'), double(:guid => '567')]
-
-    current_user.should_receive(:videos).and_return(videos)
+    setup_current_user_videos
     
     get :blastout
 
     response.should be_success
-    assigns[:videos].should eq(videos)
+    assigns[:videos].should eq(videos_paginated)
   end
   
   it 'GET shoutout should be successful' do
@@ -232,6 +246,27 @@ describe DashboardController do
   it 'GET pickout should be successful' do
     get :pickout
     response.should be_success
+  end
+    
+  it 'POST should create video should be successful' do
+    video = double(:save => true)
+    Video.should_receive(:new).and_return(video)
+    post :create_video, {'guid' => '1245'}
+    response.should redirect_to(dashboard_blastout_path)
+    flash[:success].should eq('Your video has been saved')
+  end
+  
+  it 'POST should not create a video if validation error ' do
+    FactoryGirl.create(:video, :guid => '1234', :user => current_user)
+    post :create_video, {'guid' => '1234'}
+    response.should redirect_to(dashboard_blastout_path)
+    flash[:error].should_not be_empty
+  end
+  
+  it 'GET should create video should redirect if no guid supplied' do
+    post :create_video
+    response.should redirect_to(dashboard_blastout_path)
+    flash[:error].should eq('Video was not supplied')
   end
     
   it 'should know the current tool' do
