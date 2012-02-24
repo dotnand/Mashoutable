@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_filter :basic_authentication
+  
   include ApplicationHelper
   layout 'inner'
   protect_from_forgery
@@ -25,5 +27,9 @@ class ApplicationController < ActionController::Base
     
     def per_page(default = 10)
       params[:per_page] || default
+    end
+    
+    def basic_authentication
+      http_basic_authenticate_with :name => 'mashoutable', :password => 'phlmashout11' if ENV['PROTECT_WITH_HTTP_BASIC_AUTH'].present?
     end
 end
