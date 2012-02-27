@@ -16,9 +16,10 @@
           - sanitized_screen_name = sanitize_twitter_screen_name(bestie.screen_name)
           - real_screen_name = '@' << bestie.screen_name
           %a.left{:id => "#{sanitized_screen_name}", :href => "#"}= real_screen_name
-          %img{:alt => "avatar", :float => "right", :src => bestie.profile_image_url, :width => "32", :height => "32"}/
+          %img{:alt => "avatar", :src => bestie.profile_image_url, :width => "32", :height => "32"}/
           :javascript
             $(function() { bindUpdateBestieEditor("##{sanitized_screen_name}", '#bestie-editor', "#{real_screen_name}") });
   = will_paginate @besties
   :javascript
     $(function() { ajaxifyPagination("#besties", "#{dashboard_besties_path}"); });
+

@@ -4,27 +4,60 @@
 - content_for :content_body do
   / content section
   #hours-saved.clear
-    %h3 Mashoutable has saved you 9 hours and 40 minutes
+    %h3
+      Mashoutable has saved you
+      %span.counter
+        9
+      hours and
+      %span.counter
+        4
+      %span.counter
+        0
+      minutes
   #tool-buttons.left.clear
-    %h4.left
-      %a{:href => "#"} MASHOUT
-    %h4.left
-      %a{:href => "#"} BLASTOUT
-    %h4.left
-      %a{:href => "#"} SHOUTOUT
-    %h4.left
-      %a{:href => "#"} PICKOUT
-    %h4.left
-      %a{:href => "#"} LOOKOUT
-    %h4.left
-      %a{:href => "#"} COMING SOON
+    .button.left
+      %h4.mashout.inset-type
+        %a{:href => "#"}
+          %span.orange
+            &#35;Targeted
+          MASHOUT&#8482;
+    .button.left
+      %h4.left.blastout.inset-type
+        %a{:href => "#"}
+          %span.blue
+            &#35;Video
+          BLASTOUT&#8482;
+    .button.left
+      %h4.left.shoutout.inset-type
+        %a{:href => "#"}
+          %span.green
+            &#35;Top Trend
+          SHOUTOUT&#8482;
+    .button.left
+      %h4.left.pickout.inset-type
+        %a{:href => "#"}
+          %span.red
+            &#35;Credible Winner
+          PICKOUT&#8482;
+    .button.left
+      %h4.left.lookout.inset-type
+        %a{:href => "#"}
+          %span.orange
+            &#35;Lookout
+          LOOKOUT&#8482;
+    .button.left
+      %h4.left.coming-soon.inset-type
+        %a{:href => "#"} &#35;COMING SOON
   #dropdown-buttons.left.clear
-    %h4.left
-      %a{:href => "#", :id => "pickouts"} MY PICKOUTS
-    %h4.left
-      %a{:href => "#", :id => "analytics"} OUT.AM ANALYTICS
-    %h4.left.active
-      %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
+    .button.left
+      %h4.left.inset-type
+        %a{:href => "#", :id => "pickouts"} MY PICKOUTS
+    .button.left
+      %h4.left.inset-type
+        %a{:href => "#", :id => "analytics"} OUT.AM ANALYTICS
+    .button.left
+      %h4.left.inset-type
+        %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
     .pickouts.clear.hidden
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
@@ -91,7 +124,7 @@
               %td 1
               %td
                 %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-      %ul.pager.right
+      %ul.pager.right.clear
         %li
           %a.active{:href => "#"} 1
         %li
