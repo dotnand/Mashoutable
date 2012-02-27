@@ -11,14 +11,14 @@
           .box
             %p
               %span#mashout-chars-left
-                140 
+                140
               Characters Left
             .clear.left
               = form_tag form_path do
                 %textarea#out{:maxlength => '140', :name => 'out'}
                   = @out
                 .align-right.span-7
-                  %input.button{:type => "submit", :value => "Send Tweet!"}
+                  %input.button{:type => "submit", :value => "Send"}
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
                   %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
         .bottom
@@ -26,3 +26,4 @@
   :javascript
     bindMashoutPreviewClick("#{mashout_preview_path}")
     bindMashoutClearPreviewClick();
+

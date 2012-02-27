@@ -75,8 +75,15 @@ h3.list-item {
 #content-wrapper input.text,
 #content-wrapper input[type="text"] {
     width: 260px;
-    padding: 5px; }
+    padding: 5px;
+    display: block;
+    float: left;
+    margin: 3px 0; }
 
+#content-wrapper input.checkbox,
+#content-wrapper input[type="checkbox"] {
+    float: left;
+    clear: both; }
 
 /*social media icons*/
 .icons-twitter {
@@ -112,7 +119,11 @@ input[type='text'], textarea {
     color: #000000;
     margin: 0 -1px;
     text-align: center;
-    padding: 4px; }
+    padding: 4px;
+    font-weight: bold; }
+
+h4 span.counter {
+    font-size: 1.38em; }
 
 .orange {
     color: #d05407;
@@ -239,7 +250,7 @@ input[type='text'], textarea {
 /*Black bar at top and main background*/
 #top {
     background: url('top-bg.jpg') repeat-x;
-    min-height: 800px;}
+    min-height: 800px; }
 
 #top #top-bar {
     font-style: italic;
@@ -576,7 +587,10 @@ input[type='text'], textarea {
 /*Main content*/
 #content-wrapper {
     margin-left: -20px;
-    width: 975px;}
+    width: 975px;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px; }
 
 #content-wrapper #main-content {
     width: 650px;}
@@ -585,21 +599,33 @@ input[type='text'], textarea {
     background:url('content-top.png');
     background-repeat:no-repeat;
     width: 650px;
-    height:20px;}
+    height:20px; }
+
+#content-wrapper.span-all #content-top {
+    background:url('content-top-dashboard.png');
+    background-repeat:no-repeat;
+    width: 975px;
+    height:20px; }
 
 #content-wrapper #main-content #content-body {
     background:url('content-bg.png');
     background-repeat: repeat-y;
     width: 650px;
+    min-height: 500px; color:#363636; }
+
+#content-wrapper.span-all #content-body {
+    background:url('content-bg-dashboard.png');
+    background-repeat: repeat-y;
+    width: 975px;
     min-height: 500px; color:#363636;}
 
 #content-wrapper #main-content #content-body #content-inner {
     width: 628px;
     margin: -9px 11px;}
 
-#content-wrapper #main-content #content-body #content-inner {
-    width: 628px;
-    margin: -9px 11px;}
+#content-wrapper.span-all #content-body #content-inner {
+    width: 955px;
+    margin: -9px 10px; }
 
 #content-wrapper #main-content #content-body #content-inner h1{
     font-style: italic;
@@ -629,16 +655,25 @@ input[type='text'], textarea {
     width: 650px;
     height: 16px;}
 
-#content-wrapper #main-content #title {
+#content-wrapper.span-all #content-bottom {
+    background:url('content-bot-dashboard.png');
+    background-repeat: no-repeat;
+    width: 975px;
+    height: 16px;}
+
+#content-wrapper #main-content #title,
+#content-wrapper.span-all #title {
     border-bottom: 1px dashed #7faac5;
     background: url('title-bg.jpg') repeat;
     min-height: 50px;
     padding: 10px 10px 0 10px;}
 
-#content-wrapper #main-content #content-body #content-inner #title h2{
+#content-wrapper #main-content #content-body #content-inner #title h2,
+#content-wrapper.span-all #content-body #content-inner #title h2 {
     font-size: 2em;}
 
-#content-wrapper #main-content #content-body #content-inner #title-subtitle {
+#content-wrapper #main-content #content-body #content-inner #title-subtitle,
+#content-wrapper.span-all #content-body #content-inner #title-subtitle {
     font-style: italic;
     margin: 0;}
 
@@ -810,38 +845,13 @@ input[type='text'], textarea {
     float: left; }
 
 
-/*Videos partial*/
-#content-wrapper #video-library {
-    min-height: 410px;
-    padding: 0;}
-
-#content-wrapper #video-library object {
-    padding-right: 10px;}
-
-#content-wrapper #video-library #videos {
-    min-height: 350px;
-    margin: 0;
-    padding: 0;}
-
-#content-wrapper #video-library #videos ul {
-    padding-left:0;}
-
-#content-wrapper #video-library #videos label {
-    font-weight: normal;}
-
-#content-wrapper #video-library #videos h4 {
-    color: #d05407;}
-
-#content-wrapper #video-library #videos ul li {
-    list-style-type: none;
-    display: block;
-    margin-bottom: 55px;
-    clear:left; }
-
-
 /*Forms*/
 label {
-    color: #494949;}
+    color: #494949;
+    display: block;
+    float: left;
+    min-width: 85px;
+    line-height:2em; }
 
 #out {
     height: 100px;}
@@ -851,6 +861,5 @@ label {
 		overflow-y: auto;}
 
 #mashout-chars-left {
-    width: 40px;
-}
+    width: 40px; }
 
