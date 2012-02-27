@@ -104,8 +104,30 @@ input[type='text'], textarea {
 }
 
 /*misc*/
+.counter {
+    background: url('counter.png');
+    background-repeat: no-repeat;
+    width: 21px;
+    height: 29px;
+    color: #000000;
+    margin: 0 -1px;
+    text-align: center;
+    padding: 4px; }
+
 .orange {
     color: #d05407;
+    border-bottom: 0;}
+
+.blue {
+    color: #43ADD5;
+    border-bottom: 0;}
+
+.green {
+    color: #93C734;
+    border-bottom: 0;}
+
+.red {
+    color: #FF0B00;
     border-bottom: 0;}
 
 .inset-type{
@@ -553,7 +575,7 @@ input[type='text'], textarea {
 /*------------------Sub Pages------------------*/
 /*Main content*/
 #content-wrapper {
-    margin-left: -20px; 
+    margin-left: -20px;
     width: 975px;}
 
 #content-wrapper #main-content {
@@ -646,16 +668,16 @@ input[type='text'], textarea {
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content img {
     margin-top:5px;
     float:right;}
-    
+
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content {
     padding:5px;
     background:#fbfbfb;
     border:solid 1px #a7dcf0;
     overflow:hidden;
     margin-bottom:3px;}
-    
-#wrapper, #welcome, #footer { 
-    min-width: 960px; 
+
+#wrapper, #welcome, #footer {
+    min-width: 960px;
     min-height: 200px;}
 
 
@@ -691,7 +713,7 @@ input[type='text'], textarea {
 #content-wrapper .pagination {
     height: 37px;
     margin: 10px 0 0 0;
-    padding: 0; 
+    padding: 0;
     float: right;}
 
 #content-wrapper .pagination span,
@@ -797,7 +819,7 @@ input[type='text'], textarea {
     padding-right: 10px;}
 
 #content-wrapper #video-library #videos {
-    min-height: 350px; 
+    min-height: 350px;
     margin: 0;
     padding: 0;}
 
@@ -807,18 +829,14 @@ input[type='text'], textarea {
 #content-wrapper #video-library #videos label {
     font-weight: normal;}
 
-#content-wrapper #video-library #videos h4,
-#content-wrapper #video-library h4 {
-    margin-bottom: 0;}
-    
 #content-wrapper #video-library #videos h4 {
     color: #d05407;}
-    
+
 #content-wrapper #video-library #videos ul li {
     list-style-type: none;
     display: block;
     margin-bottom: 55px;
-    clear:left;}
+    clear:left; }
 
 
 /*Forms*/
@@ -827,11 +845,12 @@ label {
 
 #out {
     height: 100px;}
-      
+
 .ui-autocomplete {
 		max-height: 250px;
 		overflow-y: auto;}
-		
+
 #mashout-chars-left {
     width: 40px;
 }
+
