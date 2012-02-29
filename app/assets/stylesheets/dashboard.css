@@ -2,64 +2,29 @@
  *= require jquery-ui-1.8.16.custom
  */
 
- /*dashboard*/
-#content-wrapper.dashboard #title {
-    border-bottom: 1px dashed #7faac5;
-    background: url('title-bg.jpg') repeat;
-    min-height: 50px;
-    padding: 10px 10px 0 10px;}
-
-#content-wrapper.dashboard #content-body #content-inner #title h2 {
-    font-size: 2em;}
-
-#content-wrapper.dashboard #content-body #content-inner #title-subtitle {
-    font-style: italic;
-    margin: 0;}
-
-#content-wrapper.dashboard #content-top {
-    background:url('content-top-dashboard.png');
-    background-repeat:no-repeat;
-    width: 975px;
-    height:20px; }
-
-#content-wrapper.dashboard #content-body {
-    background:url('content-bg-dashboard.png');
-    background-repeat: repeat-y;
-    width: 975px;
-    min-height: 500px; color:#363636;}
-
-#content-wrapper.dashboard #content-body #content-inner {
-    width: 955px;
-    margin: -9px 10px; }
-
-#content-wrapper.dashboard #content-bottom {
-    background:url('content-bot-dashboard.png');
-    background-repeat: no-repeat;
-    width: 975px;
-    height: 16px;}
-
-#content-wrapper.dashboard #hours-saved {
+ /*Dashboard*/
+#content-wrapper.span-all #hours-saved {
     text-align: center;
     padding: 30px; }
 
-#content-wrapper.dashboard #dropdown-buttons {
+#content-wrapper.span-all #dropdown-buttons {
     border-bottom: 1px solid #bdbdbd;
     border-top: 1px solid #bdbdbd; }
 
-#content-wrapper.dashboard #dropdown-buttons .pickouts,
-#content-wrapper.dashboard #dropdown-buttons .analytics,
-#content-wrapper.dashboard #dropdown-buttons .networks {
+#content-wrapper.span-all #dropdown-buttons .pickouts,
+#content-wrapper.span-all #dropdown-buttons .analytics,
+#content-wrapper.span-all #dropdown-buttons .networks {
     padding: 0 25px;}
 
-#content-wrapper.dashboard #dropdown-buttons h4 {
+#content-wrapper.span-all #dropdown-buttons h4 {
     margin: 0;}
 
-#content-wrapper.dashboard #dropdown-buttons {
+#content-wrapper.span-all #dropdown-buttons {
     background: #dddddd;
     width: 100%; }
 
-#content-wrapper.dashboard #tool-buttons h4 a,
-#content-wrapper.dashboard #dropdown-buttons h4 a {
+#content-wrapper.span-all #tool-buttons h4 a,
+#content-wrapper.span-all #dropdown-buttons h4 a {
     display: block;
     background: url('button-bg.jpg');
     padding: 10px 25px 25px 25px;
@@ -76,8 +41,8 @@
     line-height: 1em;
     width: 217px; }
 
-#content-wrapper.dashboard #tool-buttons .button,
-#content-wrapper.dashboard #dropdown-buttons .button {
+#content-wrapper.span-all #tool-buttons .button,
+#content-wrapper.span-all #dropdown-buttons .button {
     background: #84a7bf;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -89,111 +54,144 @@
     padding: 5px;
     outline: 0; }
 
-#content-wrapper.dashboard #tool-buttons .button {
+#content-wrapper.span-all #tool-buttons .button {
     min-height: 98px;}
 
-#content-wrapper.dashboard #tool-buttons h4 a span {
+#content-wrapper.span-all #tool-buttons h4 a span {
     font-size: 0.5em; }
 
-#content-wrapper.dashboard .inset-type {
+#content-wrapper.span-all .inset-type {
     text-shadow: #000000 0px -1px 0; }
 
-#content-wrapper.dashboard #tool-buttons h4 {
+#content-wrapper.span-all #tool-buttons h4 {
     line-height: 1em;
     margin-bottom: 0; }
 
-#content-wrapper.dashboard #tool-buttons h4 a {
+#content-wrapper.span-all #tool-buttons h4 a {
     font-style: italic;
     font-size: 2.1em;
     line-height: 0.8em;
     min-height: 63px; }
 
-#content-wrapper.dashboard #tool-buttons h4.coming-soon a {
+#content-wrapper.span-all #tool-buttons h4.coming-soon a {
     color: #B6EBD9;
     padding: 25px 40px 10px 40px;
     width: 187px; }
 
-#content-wrapper.dashboard #dropdown-buttons h4 a {
+#content-wrapper.span-all #dropdown-buttons h4 a {
     padding: 20px 10px;
     width: 247px;
     height: 15px; }
 
-#content-wrapper.dashboard #tool-buttons .button:hover,
-#content-wrapper.dashboard #dropdown-buttons .button:hover,
-#content-wrapper.dashboard #dropdown-buttons .button:hover {
+#content-wrapper.span-all #tool-buttons .button:hover,
+#content-wrapper.span-all #dropdown-buttons .button:hover,
+#content-wrapper.span-all #dropdown-buttons .button:hover {
     background: #d05407; }
 
-#content-wrapper.dashboard #besties,
-#content-wrapper.dashboard #video-library,
-#content-wrapper.dashboard #interactions {
+#content-wrapper.span-all #besties,
+#content-wrapper.span-all #video-library,
+#content-wrapper.span-all #interactions {
     width: 275px;
     min-height: 530px;
     padding: 0 20px;
-    margin-top: 30px;
     border-left: 1px solid #bdbdbd; }
 
-#content-wrapper.dashboard #besties #list-people,
-#content-wrapper.dashboard #video-library #videos,
-#content-wrapper.dashboard #interactions #list-interactions {
-    min-height: 393px; }
+#content-wrapper #video-library,
+#content-wrapper.span-all #video-library {
+    border: 0;}
 
-#content-wrapper.dashboard #besties {
-    border: 0; }
+#content-wrapper.span-all #besties #list-people,
+#content-wrapper #video-library #videos,
+#content-wrapper.span-all #interactions #list-interactions {
+    min-height: 435px; }
 
-#content-wrapper.dashboard table {
+#content-wrapper.span-all #besties {
+    border-left: 0;
+    border-right: 1px solid #bdbdbd; }
+
+#content-wrapper.span-all table {
     margin-bottom: 0.6em; }
 
-#content-wrapper.dashboard table td {
+#content-wrapper.span-all table td {
     width: 80%;
     padding: 5px; }
 
-#content-wrapper.dashboard table td+td,
-#content-wrapper.dashboard table td+td+td  {
+#content-wrapper.span-all table td+td,
+#content-wrapper.span-all table td+td+td  {
     text-align: center;}
 
-#content-wrapper.dashboard #interactions tbody tr:nth-child(even) td, tbody tr.even td {
+#content-wrapper.span-all #interactions tbody tr:nth-child(even) td, tbody tr.even td {
     background: #dddddd; }
 
-#content-wrapper.dashboard #video-library img,
 #content-wrapper #video-library object {
-    padding-right: 10px;}
+    padding-right: 10px;
+    float: left; }
 
-#content-wrapper.dashboard #video-library #videos {
-    margin-top: 24px;
+#content-wrapper #video-library #videos {
+    min-height: 350px;
     padding-bottom: 20px; }
 
-#content-wrapper.dashboard #video-library #videos label {
+#content-wrapper #video-library a.add-video {
+    padding-bottom: 24px; }
+
+#content-wrapper #video-library #videos ul {
+    padding-left:0;
+    min-height: 377px; }
+
+#content-wrapper #video-library #videos label {
     font-weight: normal; }
 
-#content-wrapper.dashboard #video-library #videos h4 {
+#content-wrapper #video-library #videos h4 {
     margin-bottom: 0;
-    color: #d05407; }
+    color: #d05407;
+    float: left; }
 
-#content-wrapper.dashboard #besties ul {
-    margin: 10px 0 0 0;
-    padding: 0; }
+#content-wrapper.span-all #besties ul {
+    margin-top: 10px;
+    margin-right: 0;
+    padding: 0;
+    width: 275px; }
 
-#content-wrapper.dashboard #besties #list-people ul li a{
-    width: 235px;
+#content-wrapper.span-all #besties #list-people ul li a{
+    width: 243px;
     display: block; }
 
-#content-wrapper.dashboard #besties input.text,
-#content-wrapper.dashboard #besties input[type="text"] {
+#content-wrapper.span-all #besties input.text,
+#content-wrapper.span-all #besties input[type="text"] {
     width: 260px;
     padding: 5px; }
 
-#content-wrapper.dashboard #besties input.submit,
-#content-wrapper.dashboard #besties input[type="submit"] {
+#content-wrapper.span-all #besties input.submit,
+#content-wrapper.span-all #besties input[type="submit"] {
     width: 125px; }
 
-#content-wrapper.dashboard #besties ul li,
-#content-wrapper.dashboard #video-library ul li {
+#content-wrapper.span-all #besties ul li,
+#content-wrapper #video-library ul li {
     list-style-type: none;
     display: block; }
 
-#content-wrapper.dashboard #extra-info {
+#content-wrapper #video-library #videos ul li {
+    padding-bottom: 18px;
+    clear: both;
+    height: 80px;
+    float: left; }
+
+#content-wrapper.span-all #extra-info {
     background: #ededed;
-    width: 100%; }
+    width: 100%;
+    padding-top: 30px; }
+
+#content-wrapper.span-all .button {
+    position: relative; }
+
+#content-wrapper.span-all .button .in-development {
+    background: url(development-ribbon.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    width: 80px;
+    height: 80px; }
 
 .hidden { display: none; }
 .unhidden { display: block; }

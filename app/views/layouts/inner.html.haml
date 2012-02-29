@@ -1,7 +1,8 @@
 - content_for :body do
-  #content-wrapper.clear.span-24{:class => on_dashboard_index? ? 'dashboard' : nil}
+
+  #content-wrapper.clear.span-24{:class => large_content? ? 'span-all' : nil}
     / left content box
-    - conditional_div(!on_dashboard_index?, {:id => 'main-content', :class => 'left'}) do
+    - conditional_div(!large_content?, {:id => 'main-content', :class => 'left'}) do
       #content-top.clear
       #content-body.left
         / start content
@@ -13,7 +14,8 @@
           = yield :content_body
       #content-bottom.clear
       %hr.space/
-    - if !on_dashboard_index?
+    - if !large_content?
       = yield :out
-        
+
 = render :template => 'layouts/application'
+

@@ -3,8 +3,8 @@
     %option{:value => "NONE"} Select One...
     %option{:value => "TWEOPLE"} Tweople (Twitter Users who are likely online NOW
     %option{:value => "FOLLOWER"} Follower Tweeps (Twitter Users Following Me)
-    %option{:value => "FOLLOWED_BY_I_FOLLOW"} Tweeps (I follow/Am followed by) 
-    %option{:value => "I_FOLLOW"} I Follow (Tweople who haven't reciprocated...YET) 
+    %option{:value => "FOLLOWED_BY_I_FOLLOW"} Tweeps (I follow/Am followed by)
+    %option{:value => "I_FOLLOW"} I Follow (Tweople who haven't reciprocated...YET)
     %option{:value => "TODAYS_MENTIONS"} Today's @Mentions
     %option{:value => "TODAYS_SHOUTOUTS"} Today's #shoutouts
     %option{:value => "TODAYS_RTS"} Today's #RT's (Your Tweets retweeted)
@@ -35,7 +35,7 @@
               :javascript
                 $(function() { bindMashoutShowMoreTweets(); });
               #target-tweets-slider{:style => 'display:none;'}
-                - statuses.each do |target| 
+                - statuses.each do |target|
                   = render 'target_tweets', :target => target, :sanitized_screen_name => sanitized_screen_name
       - elsif not @profiles.nil? and @profiles.count > 0
         #mashout-target-checkboxes
@@ -44,17 +44,17 @@
             - sanitized_screen_name = sanitize_twitter_screen_name(profile[:screen_name])
             .target-content
               .append-bottom
+                %input{:name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
+                %label= profile[:screen_name]
+                %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}/
+              .span-6.prepend-1
                 %p
-                  %input{:name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
-                  %label= profile[:screen_name]
-                  %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}/
-                .span-6.prepend-1
-                  %p
-                    %em= profile[:description]
-                  %p
-                    = profile[:location]
-                
+                  %em= profile[:description]
+                %p
+                  = profile[:location]
+
       - else
         %p No tweets were found
   :javascript
     bindTargetAutoCompleteSelectAndHandle('#mashout-target-container', '#mashout-target-selection', "#{target_source_path}")
+
