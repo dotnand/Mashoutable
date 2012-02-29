@@ -1,9 +1,12 @@
 #videos
-  %ul
-    - @videos.each do |video|
-      %li
-        = render 'video', :video => video
-  = will_paginate @videos
-  :javascript
-    $(function() { ajaxifyPagination("#videos", "#{dashboard_videos_path}"); });
+  - if @videos.present? and @videos.count > 0
+    %ul
+      - @videos.each do |video|
+        %li
+          = render 'video', :video => video
+    = will_paginate @videos
+    :javascript
+      $(function() { ajaxifyPagination("#videos", "#{dashboard_videos_path}"); });
+  - else
+    %em You currently have no Mashoutable Videos
 

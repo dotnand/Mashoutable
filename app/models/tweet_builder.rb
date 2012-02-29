@@ -3,10 +3,11 @@ class TweetBuilder
   
   attr_reader :tweet
 
-  def initialize(user)
-    @user   = user
-    @tweet  = ''
-    @parts  = []
+  def initialize(user, video_url = nil)
+    @user       = user
+    @tweet      = ''
+    @parts      = []
+    @video_url  = video_url
   end
 
   def build(params)
@@ -18,6 +19,7 @@ class TweetBuilder
     self.comment(params['mashout-comment'])
     self.target(params['mashout-target'])
     self.targets(params['mashout-targets'])
+    self.video(params['mashout-video'])
 
     @tweet.strip
   end
@@ -42,6 +44,12 @@ class TweetBuilder
     end
     
     [targets, profiles]
+  end
+  
+  def video(value)
+    return '' if value == 'NONE' or value.nil? or @video_url.nil?
+    response = Bitly::Client.shorten(@video_url.call(value))
+    add_to_tweet(response['data']['url']) if @user.videos.find_by_guid(value).present? and response['status_code'] == 200
   end
   
   def targets(targets)

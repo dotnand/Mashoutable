@@ -1,7 +1,8 @@
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+<object id="nimbb" 
+        classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
         width="320" 
         height="240" 
-        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+        codebase= "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
 <param name="movie" 
        value="http://player.nimbb.com/nimbb.swf?mode=record&simplepage=1&key=b47ef629cb&redirecturl=/dashboard/blastout" />
 <param name="allowScriptAccess" value="always" />
@@ -16,44 +17,22 @@
        pluginspage="http://www.adobe.com/go/getflashplayer" 
        type="application/x-shockwave-flash"></embed>
 </object>
-<% if @guid.present? %>
-  <div id='video-name-container'>
-    <%= hidden_field_tag 'video-guid', @guid, :id => 'video-guid' %>
-    <%= label_tag 'video-name', 'Name of Video' %>
-    <%= text_field_tag 'video-name', '', :id => 'video-name' %>
-    <%= submit_tag 'Save', :id => 'save-video-button', :class => 'button' %>
-    <span id='video-name-message'></span>
-    <script type='text/javascript'>
-      //<![CDATA[
-      function onCreateVideo(data) {
-          $('#video-name-message').html(data);
-
-          if(data.length < 2) {
-            $('#video-name-container').remove();
-            
-            $.ajax({url: '<%= dashboard_videos_path %>', 
-                    success: function(data) { $('#videos').replaceWith(data); },
-                    async: false
-            });
-          }
-      }
-      
-      $(function() { 
-          $("#save-video-button").click(function() {
-              var videoName = $('#video-name').val();
-              var guid = $('#video-guid').val();
-
-              $.ajax({url: '<%= create_video_path %>', 
-                      type: 'POST',
-                      data: {'name': videoName, 'guid': guid}, 
-                      success: function(data) { onCreateVideo(data); },
-                      async: false
-              });
-                      
-              return false;
-          });
-      });
-      //]]>
-    </script>
-  </div>
-<% end %>
+<script type='text/javascript'>
+    //<![CDATA[  
+    var _Nimbb_state;
+    
+    function Nimbb_recordingStopped(idPlayer) {
+        if(!recorder.isReadOnly()) {
+            document[idPlayer].saveVideo();
+        }
+    }
+    
+    function Nimbb_stateChanged(idPlayer, state) {
+        if(_Nimbb_state == 'recording' && state == 'ready') {
+            document[idPlayer].saveVideo();
+        }
+        
+        _Nimbb_state = state;
+    }
+    //]]>
+</script>

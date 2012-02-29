@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   protected
+    def default_url_options
+      if Rails.env.development? or Rails.env.test?
+        { :host => "127.0.0.1" }
+      else  
+        {}
+      end
+    end
+  
     def current_user
       @current_user ||= User.find_by_id(session[:user_id])
     end

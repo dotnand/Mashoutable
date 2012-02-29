@@ -1,6 +1,7 @@
 class DashboardController < ApplicationController
   layout 'dashboard'
-  before_filter :current_tool, :auth_required
+  before_filter :current_tool
+  before_filter :auth_required, :except => :video_playback
   
   def index
     @besties  = get_besties
@@ -49,15 +50,22 @@ class DashboardController < ApplicationController
     redirect_to dashboard_shoutout_path
   end
   
+  def create_blastout
+    create_out(params)
+    redirect_to dashboard_blastout_path
+  end
+  
   def preview_mashout
-    render :text => TweetBuilder.new(self.current_user).build(params)
+    render :text => TweetBuilder.new(self.current_user, lambda {|guid| video_playback_url(guid) }).build(params)
   end
   
   def blastout
-    @guid   = params['guid']
-    @videos = get_videos
+    if (guid = params['guid']).present?
+      video = Video.new(:guid => guid, :name => current_user.name << ' (' << guid << ')', :user => current_user)
+      flash[:errors] = 'Sorry, but we are unable to save your video' if not video.save
+    end
     
-    flash[:notice] = 'Please give your video a name' if @guid.present?
+    @videos = get_videos
   end
   
   def shoutout
@@ -125,10 +133,40 @@ class DashboardController < ApplicationController
     render :text => message
   end
   
+  def update_video
+    guid    = params['guid']
+    name    = params['name']
+    message = nil
+    
+    if name.blank?
+      message = 'Name is blank'
+    elsif (video = current_user.videos.find_by_guid(guid)).present?
+      video.name = name
+      message = 'Unable to save' if not video.save
+    end
+    
+    if message.present?
+      render :text => message, :content_type => :text
+    else
+      render_videos
+    end
+  end
+  
   def delete_video
     video = current_user.videos.find_by_guid(params['guid'])
     video.destroy if video.present?
     render_videos
+  end
+  
+  def video_playback
+    guid = params['guid']
+    if guid.present?
+      @video = Video.find_by_guid(guid)
+      render 'video_playback'
+    else 
+      flash[:notice] = 'Sorry, but the video you requested was not found'
+      redirect_to root_url
+    end
   end
   
   protected 
@@ -177,7 +215,7 @@ class DashboardController < ApplicationController
     end
     
     def get_videos
-      current_user.videos.paginate(:page => page, :per_page => per_page(4))
+      current_user.videos.order('id DESC').paginate(:page => page, :per_page => per_page(4))
     end    
     
     def render_videos

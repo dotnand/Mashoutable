@@ -1,0 +1,8 @@
+- content_for :optional_javascript do
+  = javascript_include_tag 'mashout'
+
+- content_for :content_body do
+  #video-player
+    = render 'nimbb_video', :video => @video, :width => 500, :height => 500
+  :javascript
+    $(function() { $('html,body').animate({scrollTop: $('#video-player').offset().top - 85}, 'slow'); });

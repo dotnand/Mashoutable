@@ -137,7 +137,8 @@ function bindMashoutPreviewClick(path) {
                  'mashout-comment=' + $('#mashout-comment').val() + '&' +
                  'trend-location=' + $('#mashout-location-selection').val() + '&' +
                  'trend-source=' + $('#mashout-trend-selection').val() + '&' +
-                 'trend-region=' + $('#mashout-region-selection').val();
+                 'trend-region=' + $('#mashout-region-selection').val() + '&' +
+                 'mashout-video=' + $('.mashout-video:checked').val();
 
         $("#mashout-hashtag-checkboxes :checked").each(function() {
             params += '&mashout-hashtag[]=' + $(this).val();
@@ -180,7 +181,7 @@ function bindMashoutMasterTargetToChildTargets(masterTargetId) {
 
 function bindMashoutShowMoreTweets() {
     $('#target-tweets-toggle').click(function() { 
-      $("#target-tweets-slider").slideToggle(); 
-      return false;
+        $("#target-tweets-slider").slideToggle(); 
+        return false;
     });
 }

@@ -92,6 +92,34 @@ describe DashboardController do
     get :videos
     response.should be_success
     assigns[:videos].should eq(videos_paginated)
+  end  
+  
+  context 'update a video' do
+    it 'should be successful given a guid and name' do
+      post :update_video, {:guid => '1234', :name => 'new video name'}
+      response.should be_success
+    end
+    
+    it 'should not be successful without a name' do
+      post :update_video, {:guid => '1234'}
+      response.body.should eq('Name is blank')
+    end
+  end
+  
+  context 'video playback' do
+    let(:playback_videos) { mock('videos') }
+
+    it 'should play when given a guid' do
+      Video.should_receive(:find_by_guid).with('123').and_return(videos_paginated.first)
+      get :video_playback, :guid => '123'
+      assigns[:video].should eq(videos_paginated.first)
+    end
+    
+    it 'should redirect to homepage if video was not found or given' do
+      get :video_playback
+      response.should be_redirect
+      flash[:notice].should eq('Sorry, but the video you requested was not found')
+    end    
   end
 
   context 'build a tweet' do
@@ -145,8 +173,7 @@ describe DashboardController do
       setup_emitter(params, tweet)
     
       post :create_mashout, params
-      
-      response.should redirect_to(dashboard_mashout_url)
+    
       flash[:notice].should eq('Ooops, your tweet is empty!')
       assigns[:out].should eq(tweet)
     end
@@ -249,11 +276,14 @@ describe DashboardController do
   end
     
   it 'POST should create video should be successful' do
-    video = double(:save => true)
-    Video.should_receive(:new).and_return(video)
-    post :create_video, {'guid' => '1245'}
-    response.should redirect_to(dashboard_blastout_path)
-    flash[:success].should eq('Your video has been saved')
+    video = mock('video')
+
+    video.should_receive(:save).and_return(true)
+    Video.should_receive(:new).with(:guid => '1245', :name => 'my video', :user => current_user).and_return(video)
+
+    post :create_video, {'guid' => '1245', 'name' => 'my video'}
+
+    response.should be_success
   end
   
   it 'should DELETE a video given a guid' do
@@ -269,17 +299,32 @@ describe DashboardController do
     assigns[:videos].should_not be_nil
   end
   
-  it 'POST should not create a video if validation error ' do
-    FactoryGirl.create(:video, :guid => '1234', :user => current_user)
-    post :create_video, {'guid' => '1234'}
-    response.should redirect_to(dashboard_blastout_path)
-    flash[:error].should_not be_empty
-  end
-  
-  it 'GET should create video should redirect if no guid supplied' do
-    post :create_video
-    response.should redirect_to(dashboard_blastout_path)
-    flash[:error].should eq('Video was not supplied')
+  context 'POST video' do
+    it 'should fail given no guid and name' do
+      post :create_video
+      response.should be_success
+      response.body.should eq('Video was not supplied')
+    end
+    
+    it 'should fail given guid and no name' do
+      post :create_video, {'guid' => '1234'}
+      response.should be_success
+      response.body.should eq('Please supply a video name')
+    end
+    
+    it 'should fail if video guid has been already taken' do
+      FactoryGirl.create(:video, :guid => '1234', :user => current_user)
+      post :create_video, {'guid' => '1234', 'name' => 'my video'}
+      response.should be_success
+      response.body.should eq('Video has already been saved')
+    end    
+    
+    it 'should fail if video name has been already taken' do
+      FactoryGirl.create(:video, :guid => '1234', :name => 'my video', :user => current_user)
+      post :create_video, {'guid' => '9999', 'name' => 'my video'}
+      response.should be_success
+      response.body.should eq('Video name already has been taken')
+    end    
   end
     
   it 'should know the current tool' do

@@ -16,3 +16,4 @@
 /config/twitter.yml
 /config/facebook.yml
 /config/heroku_env.rb
+/config/bitly.yml

@@ -824,7 +824,8 @@ input[type='text'], textarea {
     padding: 0;}
 
 #content-wrapper #video-library #videos ul {
-    padding-left:0;}
+    padding-left:0;
+    margin: 0 0.5em 1.5em 0}
 
 #content-wrapper #video-library #videos label {
     font-weight: normal;}
@@ -832,11 +833,22 @@ input[type='text'], textarea {
 #content-wrapper #video-library #videos h4 {
     color: #d05407;}
 
+
 #content-wrapper #video-library #videos ul li {
-    list-style-type: none;
-    display: block;
-    margin-bottom: 55px;
-    clear:left; }
+    list-style-type:none;
+    display:block;
+    min-height:90px;
+    clear:left;}
+    
+#content-wrapper #video-player object {
+    text-align:center;
+    width:100%;}
+    
+#content-wrapper #video-library #videos .edit-video-container {
+    display:none;}
+    
+#content-wrapper #video-library #videos .edit-video-container input[type='text'] {
+    width:100px;}
 
 
 /*Forms*/
