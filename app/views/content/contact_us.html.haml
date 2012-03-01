@@ -4,17 +4,17 @@
       %h2.inset-type Contact Us
 
 - content_for :content_body do
-  .span-13.box
+  .span-15.box
     = form_for @message, :url => contact_us_message_path do |form|
       = form.label :name
-      = form.text_field :name
+      = form.text_field :name, :class => 'span-10'
       = form.label :email, :class => 'clear'
-      = form.text_field :email
+      = form.text_field :email, :class => 'span-10'
       = form.label :subject, :class => 'clear'
-      = form.text_field :subject
+      = form.text_field :subject, :class => 'span-10'
       = form.label :body, :class => 'clear'
-      = form.text_area :body, :cols => nil, :class => 'left'
+      = form.text_area :body, :cols => nil, :class => 'left span-10'
 
-      %div{:class => 'span-13 align-right'}
+      %div{:class => 'span-12 align-right'}
         %input.button{:type => 'submit', :value => 'Send'}
 

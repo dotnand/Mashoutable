@@ -171,10 +171,11 @@
     display: block; }
 
 #content-wrapper #video-library #videos ul li {
-    padding-bottom: 18px;
+    padding-bottom: 8px;
     clear: both;
     height: 80px;
-    float: left; }
+    float: left;
+    width: 280px; }
 
 #content-wrapper.span-all #extra-info {
     background: #ededed;

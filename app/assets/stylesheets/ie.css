@@ -2,10 +2,16 @@
     margin-right: 5px;}
 
 .ui-button-icon-only .ui-button-text {
-    padding: 0.35em 0.35em 0.2em 0.35em;
-    margin-top: 5px;}
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0.75em;
+    padding-left: 0.75em;
+    margin-top: 9px; }
+
+button {
+    top: 0.2em; }
 
 #footer #back-to-top {
-    margin-top: -20px;
+    margin-top: 15px;
     padding: 0;}
 

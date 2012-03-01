@@ -17,12 +17,16 @@
               = form_tag form_path do
                 %textarea#out{:maxlength => '140', :name => 'out'}
                   = @out
-                .align-right.span-7
-                  %input.button{:type => "submit", :value => "Send"}
-                  %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
-                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
+                .left
+                  %input.toggle-twitter-off.left{:type => 'submit', :id => 'toggle-twitter', :value => ''}
+                  %input.toggle-facebook-off.left{:type => 'submit', :id => 'toggle-facebook', :value => ''}
+                .right
+                  %input.button{:type => "submit", :value => "Send"}/
+                  %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}/
+                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}/
         .bottom
-        %h6.quoted-by.clear.last.right
+        %span.quoted-by.clear.last
+          %span.icon.right
   :javascript
     bindMashoutPreviewClick("#{mashout_preview_path}")
     bindMashoutClearPreviewClick();
