@@ -57,6 +57,11 @@ textarea {
 .box {
     background: none; }
 
+.success,
+.error,
+.notice {
+    margin-top: 15px; }
+
 /*input buttons*/
 .button {
     outline: 1px solid #ffffff;
@@ -104,7 +109,7 @@ textarea {
     background-position: 0 1px;
     margin-top: -3px; }
 
-.toggle-twitter-on {
+#toggle-twitter.on {
     display: block;
     width: 35px;
     height: 32px;
@@ -114,7 +119,7 @@ textarea {
     border: 0;
     cursor: pointer; }
 
-.toggle-twitter-off {
+#toggle-twitter {
     display: block;
     width: 35px;
     height: 32px;
@@ -124,19 +129,19 @@ textarea {
     border: 0;
     cursor: pointer; }
 
-.toggle-facebook-on {
+#toggle-facebook.on {
     display: block;
-    width: 35px;
+    width: 32px;
     height: 32px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: 0 -118px;
+    background-position: -1px -118px;
     border: 0;
     cursor: pointer; }
 
-.toggle-facebook-off {
+#toggle-facebook {
     display: block;
-    width: 35px;
+    width: 32px;
     height: 32px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
@@ -945,7 +950,11 @@ label {
 
 .ui-autocomplete {
 		max-height: 250px;
-		overflow-y: auto;}
+		overflow-y: auto;
+		overflow-x: hidden; }
+
+.ui-autocomplete a {
+		text-align: left;}
 
 #mashout-chars-left {
     width: 40px; }

@@ -17,9 +17,9 @@
               = form_tag form_path do
                 %textarea#out{:maxlength => '140', :name => 'out'}
                   = @out
-                .left
-                  %input.toggle-twitter-off.left{:type => 'submit', :id => 'toggle-twitter', :value => ''}
-                  %input.toggle-facebook-off.left{:type => 'submit', :id => 'toggle-facebook', :value => ''}
+                .left.toggle
+                  %a.left#toggle-twitter{:href => '#'}
+                  %a.left#toggle-facebook{:href => '#'}
                 .right
                   %input.button{:type => "submit", :value => "Send"}/
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}/

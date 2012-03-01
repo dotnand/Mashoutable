@@ -43,11 +43,17 @@ $(document).ready(function () {
         $('#dropdown-buttons h4').removeClass('active');
         $(this).addClass('active');
     });
+
+    /*Toggle sidebar twitter and facebook buttons*/
+    $(".toggle a").click(function(){
+        $(".toggle a").removeClass('on');
+        $(this).addClass('on');
+    });
 });
 
 function bindUpdateBestieEditor(sourceId, editorId, value) {
     $(sourceId).click(function() {
-        $(editorId).val(value); 
+        $(editorId).val(value);
         return false;
     });
 }
@@ -63,36 +69,36 @@ function handleAddBestie(editorId, path) {
 function handleBestieAction(method, editorId, path) {
     var params = {'bestie': $(editorId).val()};
 
-    $.ajax({url: path, 
+    $.ajax({url: path,
             type: method,
-            data: params, 
+            data: params,
             success: function(data) { $("#besties").replaceWith(data); },
             async: false});
-        
+
     return false;
 }
 
 function bindDeleteBestieButton(buttonId, editorId, path) {
-    $(buttonId).click(function() { 
+    $(buttonId).click(function() {
         handleDeleteBestie(editorId, path);
-    }); 
+    });
 }
 
-function bindAddBestieButton(buttonId, editorId, path) { 
-    $(buttonId).click(function() { 
+function bindAddBestieButton(buttonId, editorId, path) {
+    $(buttonId).click(function() {
         handleAddBestie(editorId, path);
-    }); 
+    });
 }
 
 function ajaxifyPagination(targetId, path) {
     $(targetId + " .pagination a").click(function() {
         var queryString = $(this).attr('href').split('?');
-        
+
         $.ajax({type: "GET",
                 url: path + (queryString[1] == undefined ? '' : '?' + queryString[1]),
                 success: function(data) { $(targetId).replaceWith(data); }
         });
-        
+
         return false;
     });
 }
