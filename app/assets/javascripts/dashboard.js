@@ -3,53 +3,72 @@
 
 $(document).ready(function () {
     // setup hidden dashboard components
-    $('.pickouts').hide();
-    $('.analytics').hide();
-    $('.networks').hide();
-    $('#dropdown-buttons h4').removeClass('active');
-
     $('#pickouts').click(function () {
+        hideDivs('pickouts');
         if ($('.pickouts').is(':hidden')) {
+            $(this).parents().addClass('active');
             $('.pickouts').slideDown('200');
-        } else if ( $(this).hasClass('active') ){
-            $('.pickouts').slideUp('200');
-            $(this).removeClass('active');
+        } else {
+            $('.pickouts').slideUp('slow');
         }
-
-        $('#dropdown-buttons h4').removeClass('active');
-        $(this).addClass('active');
     });
 
     $('#analytics').click(function () {
+        hideDivs('analytics');
         if ($('.analytics').is(':hidden')) {
+            $(this).parents().addClass('active');
             $('.analytics').slideDown('200');
-        } else if ( $(this).hasClass('active') ){
-            $('.analytics').slideUp('200');
-            $(this).removeClass('active');
+        } else {
+            $('.analytics').slideUp('slow');
         }
-
-        $('#dropdown-buttons h4').removeClass('active');
-        $(this).addClass('active');
     });
 
     $('#networks').click(function () {
+        hideDivs('networks');
         if ($('.networks').is(':hidden')) {
+            $(this).parents().addClass('active');
             $('.networks').slideDown('200');
-        } else if ( $(this).hasClass('active') ){
-            $('.networks').slideUp('200');
-            $(this).removeClass('active');
+        } else {
+            $('.networks').slideUp('slow');
         }
-
-        $('#dropdown-buttons h4').removeClass('active');
-        $(this).addClass('active');
     });
 
     /*Toggle sidebar twitter and facebook buttons*/
-    $(".toggle a").click(function(){
-        $(".toggle a").removeClass('on');
-        $(this).addClass('on');
+    $("#toggle-twitter").click(function(){
+        if(!$(this).hasClass('on')) {
+           $(this).addClass('on');
+        } else {
+            $(this).removeClass('on');
+        }
+        return false;
+    });
+
+    $("#toggle-facebook").click(function(){
+        if(!$(this).hasClass('on')) {
+           $(this).addClass('on');
+        } else {
+            $(this).removeClass('on');
+        }
+        return false;
     });
 });
+
+function hideDivs(className){
+    if (className != 'pickouts') {
+        $('.button').removeClass('active');
+        $('.pickouts').slideUp('slow').hide();
+    }
+
+    if (className != 'analytics') {
+        $('.button').removeClass('active');
+        $('.analytics').slideUp('slow').hide();
+    }
+
+    if (className != 'networks') {
+        $('.button').removeClass('active');
+        $('.networks').slideUp('slow').hide();
+    }
+}
 
 function bindUpdateBestieEditor(sourceId, editorId, value) {
     $(sourceId).click(function() {

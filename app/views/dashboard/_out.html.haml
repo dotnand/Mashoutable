@@ -18,8 +18,8 @@
                 %textarea#out{:maxlength => '140', :name => 'out'}
                   = @out
                 .left.toggle
-                  %a.left#toggle-twitter{:href => '#'}
-                  %a.left#toggle-facebook{:href => '#'}
+                  %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+                  %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
                 .right
                   %input.button{:type => "submit", :value => "Send"}/
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}/

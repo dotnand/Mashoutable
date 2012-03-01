@@ -3,6 +3,7 @@
 
 - content_for :optional_javascript do
   = javascript_include_tag 'dashboard'
+  = javascript_include_tag 'mashout'
 
 - content_for :title do
   .left
@@ -22,5 +23,6 @@
     :javascript
       $(function(){ $("#tool").next().val($("#tool option[value='#{@current_tool}']").text()).blur(); });
       $(function(){ $("#tool-selector").bind("autocompleteselect", function (event, ui) { $("#tool-selection").val(ui.item.option.value); $("#tool-form").submit(); }); });
-      
+
 = render :template => 'layouts/inner'
+

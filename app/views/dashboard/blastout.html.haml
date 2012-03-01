@@ -1,8 +1,5 @@
-- content_for :optional_javascript do
-  = javascript_include_tag 'mashout'
-
 - content_for :content_body do
-  = form_tag shoutout_create_path do  
+  = form_tag shoutout_create_path do
     .span-15.box
       %h1.left.clear  1.
       %h3.list-item
@@ -32,3 +29,4 @@
 
 - content_for :out do
   = render "out", :form_path => blastout_create_path
+
