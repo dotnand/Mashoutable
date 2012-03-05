@@ -21,7 +21,8 @@
 
 #content-wrapper.span-all #dropdown-buttons {
     background: #dddddd;
-    width: 100%; }
+    width: 100%;
+    min-height: 100px; }
 
 #content-wrapper.span-all #tool-buttons h4 a,
 #content-wrapper.span-all #dropdown-buttons h4 a {
@@ -85,7 +86,8 @@
 
 #content-wrapper.span-all #tool-buttons .button:hover,
 #content-wrapper.span-all #dropdown-buttons .button:hover,
-#content-wrapper.span-all #dropdown-buttons .button:hover {
+#content-wrapper.span-all #dropdown-buttons .button:hover,
+#content-wrapper.span-all #dropdown-buttons .button.active {
     background: #d05407; }
 
 #content-wrapper.span-all #besties,
@@ -128,12 +130,12 @@
     float: left; }
 
 #content-wrapper #video-library #videos {
-    min-height: 350px;
+    min-height: 377px;
     padding-bottom: 20px; }
 
 #content-wrapper #video-library #videos ul {
     padding-left:0;
-    min-height: 377px; }
+    min-height: 375px; }
 
 #content-wrapper #video-library #videos label {
     font-weight: normal; }
@@ -147,7 +149,8 @@
     margin-top: 10px;
     margin-right: 0;
     padding: 0;
-    width: 275px; }
+    width: 275px;
+    margin-left: 1px; }
 
 #content-wrapper.span-all #besties #list-people ul li a{
     width: 243px;
@@ -168,10 +171,11 @@
     display: block; }
 
 #content-wrapper #video-library #videos ul li {
-    padding-bottom: 18px;
+    padding-bottom: 8px;
     clear: both;
     height: 80px;
-    float: left; }
+    float: left;
+    width: 280px; }
 
 #content-wrapper.span-all #extra-info {
     background: #ededed;

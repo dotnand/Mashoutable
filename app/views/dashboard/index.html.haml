@@ -1,6 +1,3 @@
-- content_for :optional_javascript do
-  = javascript_include_tag 'mashout'
-
 - content_for :content_body do
   / content section
   #hours-saved.clear
@@ -17,25 +14,25 @@
   #tool-buttons.left.clear
     .button.left
       %h4.mashout.inset-type
-        %a{:href => "#"}
+        %a{:href => "#{dashboard_mashout_path}"}
           %span.orange
             &#35;Targeted
           MASHOUT&#8482;
     .button.left
       %h4.left.blastout.inset-type
-        %a{:href => "#"}
+        %a{:href => "#{dashboard_blastout_path}"}
           %span.blue
             &#35;Video
           BLASTOUT&#8482;
     .button.left
       %h4.left.shoutout.inset-type
-        %a{:href => "#"}
+        %a{:href => "#{dashboard_shoutout_path}"}
           %span.green
             &#35;Top Trend
           SHOUTOUT&#8482;
     .button.left
       %h4.left.pickout.inset-type
-        %a{:href => "#"}
+        %a{:href => "#{dashboard_pickout_path}"}
           %span.red
             &#35;Credible Winner
           PICKOUT&#8482;
@@ -59,13 +56,16 @@
     .button.left
       %h4.left.inset-type
         %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
-    .pickouts.clear.hidden
+    .pickouts.clear.hidden.left
+      %h4 test
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
-    .analytics.clear.hidden
+    .analytics.clear.hidden.left
+      %h4 test 2
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
-    .networks.clear.hidden
+    .networks.clear.hidden.left
+      %h4 test 3
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
   #extra-info.left
