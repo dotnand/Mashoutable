@@ -33,17 +33,8 @@ $(document).ready(function () {
         }
     });
 
-    /*Toggle sidebar twitter and facebook buttons*/
-    $("#toggle-twitter").click(function(){
-        if(!$(this).hasClass('on')) {
-           $(this).addClass('on');
-        } else {
-            $(this).removeClass('on');
-        }
-        return false;
-    });
-
-    $("#toggle-facebook").click(function(){
+    /*Toggle network buttons*/
+    $(".network-toggle input").click(function(){
         if(!$(this).hasClass('on')) {
            $(this).addClass('on');
         } else {
