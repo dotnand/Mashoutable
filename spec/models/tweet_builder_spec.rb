@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe TweetBuilder do
   let(:user) { FactoryGirl.build(:user) }
-  let(:builder) { TweetBuilder.new(user, Rails.application.routes.url_helpers.root_url) }
+  let(:bitly) { mock('bitly') }
+  let(:builder) { TweetBuilder.new(user, bitly) }
 
   it 'should have a limit' do
     TweetBuilder::LIMIT.should be >= 140
@@ -71,10 +72,12 @@ describe TweetBuilder do
   end
   
   it 'should build with with video' do
-    videos = mock('videos')
+    videos    = mock('videos')
+    long_url  = Rails.application.routes.url_helpers.root_url << 'abc123'
 
+    bitly.should_receive(:shorten).and_return(long_url)
+    bitly.should_receive(:shortened_url).and_return('http://out.am/oix')
     videos.should_receive(:find_by_guid).and_return(double(:guid => 'abc123'))
-    Bitly::Client.should_receive(:shorten).with(Rails.application.routes.url_helpers.root_url + '&guid=abc123').and_return('http://out.am/oix')
     user.should_receive(:videos).and_return(videos)
 
     builder.video('abc123').should eq('http://out.am/oix ')

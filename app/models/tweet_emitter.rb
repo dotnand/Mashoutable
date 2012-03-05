@@ -9,9 +9,10 @@ class TweetEmitter
     
     return if content.blank?
 
-    self.send(content, replies)
-    self.capture_mentions(content)
-    self.capture_replies(replies)
+    send(content, replies)
+    capture_mentions(content)
+    capture_replies(replies)
+    capture_interactions(content)
     
     content
   end
@@ -25,10 +26,19 @@ class TweetEmitter
   end
   
   def capture_mentions(content)
-    content.split(' ').select{ |snippet| snippet =~ /@\w+/i }.each { |who| @user.mentions.find_or_create_by_who(who) }
+    parse_mentions(content).each { |who| @user.mentions.find_or_create_by_who(who) }
   end
   
   def capture_replies(replies)
     replies.each { |reply| @user.replies.find_or_create_by_status_id(reply) } if replies.present?
   end
+  
+  def capture_interactions(content)
+    parse_mentions(content).each { |reply| @user.interactions.create(:content => content, :target => reply) }
+  end
+  
+  protected
+    def parse_mentions(content)
+      content.split(' ').select{ |snippet| snippet =~ /@\w+/i }
+    end
 end

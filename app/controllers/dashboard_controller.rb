@@ -5,8 +5,9 @@ class DashboardController < ApplicationController
   before_filter :auth_required, :except => :video_playback
   
   def index
-    @besties  = get_besties
-    @videos   = get_videos
+    @besties      = get_besties
+    @videos       = get_videos
+    @interactions = get_interactions
   end
 
   def tool
@@ -57,7 +58,8 @@ class DashboardController < ApplicationController
   end
   
   def preview_mashout
-    render :text => TweetBuilder.new(self.current_user, lambda {|guid| video_playback_url(guid) }).build(params)
+    bitly = Bitly::Client.new(video_playback_url(params['guid']))
+    render :text => TweetBuilder.new(self.current_user, bitly).build(params)
   end
 
   def blastout
@@ -170,6 +172,11 @@ class DashboardController < ApplicationController
     end
   end
   
+  def interactions
+    @interactions = get_interactions
+    render :partial => 'interactions'
+  end
+  
   protected
     def current_tool
       case params[:action].to_sym
@@ -222,6 +229,10 @@ class DashboardController < ApplicationController
     def render_videos
       @videos = get_videos
       render :partial => 'videos'
+    end
+    
+    def get_interactions
+      current_user.grouped_augmented_interactions(:group => 'target', :order => 'id DESC').paginate(:page => page, :per_page => per_page(8))
     end
 end
 

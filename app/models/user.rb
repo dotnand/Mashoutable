@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :replies
   has_many :besties, :class_name => 'Bestie'
   has_many :videos
+  has_many :interactions
   
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])
@@ -83,6 +84,18 @@ class User < ActiveRecord::Base
   def twitter_besties
     local_besties = self.besties
     return self.twitter.users(local_besties.map { |bestie| bestie.screen_name.gsub('@', '') }) if local_besties.count > 0
+    []
+  end
+  
+  def grouped_augmented_interactions(params)
+    local_interactions  = self.interactions.count(:all, params)
+    twitter_users       = self.twitter.users(local_interactions.map { |target, count| target.gsub('@', '') }) if local_interactions.count > 0
+    
+    return twitter_users.map do |twitter_user| 
+      {:screen_name       => '@' << twitter_user.screen_name, 
+       :profile_image_url => twitter_user.profile_image_url, 
+       :count             => local_interactions['@' << twitter_user.screen_name]}
+    end if twitter_users.present?
     []
   end
   

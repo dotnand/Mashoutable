@@ -37,5 +37,11 @@ FactoryGirl.define do
     sequence(:name) {|n| "name#{n}"}
     sequence(:guid) {|n| "video#{n}"}
   end
+  
+  factory :interaction do
+    user
+    sequence(:content)  {|n| "content #{n}"}
+    sequence(:target)   {|n| "user_#{n}"}
+  end
 end
 

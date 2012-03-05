@@ -1,8 +1,12 @@
+require 'shared_context/twitter_profiles'
+require 'shared_context/grouped_augmented_interactions'
 require 'shared_context/twitter_besties'
 require 'shared_context/videos'
 require 'spec_helper'
 
 describe DashboardController do
+  include_context 'twitter profiles'
+  include_context 'grouped augmented interactions'
   include_context 'twitter besties'
   include_context 'user videos'
   
@@ -18,6 +22,10 @@ describe DashboardController do
   
   def setup_current_user_videos
     current_user.should_receive(:videos).and_return(videos)
+  end
+
+  def setup_current_user_grouped_augmented_interactions
+   current_user.should_receive(:grouped_augmented_interactions).and_return(grouped_augmented_interactions)
   end
 
   context 'besties' do
@@ -238,12 +246,14 @@ describe DashboardController do
   it 'GET index should be successful' do
     setup_current_user_twitter_besties
     setup_current_user_videos
+    setup_current_user_grouped_augmented_interactions
     
     get :index
     
     response.should be_success
     assigns[:besties].should eq(twitter_besties_paginated)
     assigns[:videos].should eq(videos_paginated)
+    assigns[:interactions].should eq(grouped_augmented_interactions)
   end
   
   it 'GET tool should be successful' do
@@ -329,6 +339,7 @@ describe DashboardController do
     
   it 'should know the current tool' do
     setup_current_user_twitter_besties
+    setup_current_user_grouped_augmented_interactions
     
     get :index
     assigns[:current_tool].should eq(dashboard_path)

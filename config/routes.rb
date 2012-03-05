@@ -29,20 +29,22 @@ Mashoutable::Application.routes.draw do
   match 'blog'                => 'content#blog'
   
   # dashboard
-  match 'dashboard'           => 'dashboard#index'
-  match 'dashboard/tool'      => 'dashboard#tool'
-  match 'dashboard/besties'   => 'dashboard#besties'
-  match 'dashboard/videos'    => 'dashboard#videos'
-  match 'dashboard/mashout'   => 'dashboard#mashout'
-  match 'dashboard/blastout'  => 'dashboard#blastout'
-  match 'dashboard/shoutout'  => 'dashboard#shoutout'
-  match 'dashboard/pickout'   => 'dashboard#pickout'
-  match 'dashboard/signout'   => 'dashboard#signout'
-  match 'dashboard/trends'    => 'dashboard#trends',    :via => :get, :as => :trend_source
-  match 'dashboard/targets'   => 'dashboard#targets',   :via => :get, :as => :target_source
+  match 'dashboard'               => 'dashboard#index'
+  match 'dashboard/tool'          => 'dashboard#tool'
+  match 'dashboard/besties'       => 'dashboard#besties'
+  match 'dashboard/videos'        => 'dashboard#videos'
+  match 'dashboard/mashout'       => 'dashboard#mashout'
+  match 'dashboard/blastout'      => 'dashboard#blastout'
+  match 'dashboard/shoutout'      => 'dashboard#shoutout'
+  match 'dashboard/pickout'       => 'dashboard#pickout'
+  match 'dashboard/interactions'  => 'dashboard#interactions'
+  match 'dashboard/signout'       => 'dashboard#signout'
+  match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source
+  match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
+  
+  # default
+  match '/' => 'content#home',        :as => :home
   
   # root
-  match '/'                   => 'content#home',        :as => :home
-  
   root :to => "content#home"
 end

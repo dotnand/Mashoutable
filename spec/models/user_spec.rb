@@ -1,7 +1,12 @@
+require 'shared_context/grouped_augmented_interactions'
+require 'shared_context/twitter_profiles'
 require 'shared_context/twitter_besties'
 require 'spec_helper'
 
 describe User do
+  include_context 'twitter profiles'
+  include_context 'grouped augmented interactions'
+
   let!(:twitter) { mock('object') }
   
   before do
@@ -13,6 +18,7 @@ describe User do
   it { should have_many(:replies) }
   it { should have_many(:besties) }
   it { should have_many(:videos) }
+  it { should have_many(:interactions) }
   
   it 'should create a user given a hash' do
     param = {'info' => {'name' => 'jane_doe'}}
@@ -110,6 +116,20 @@ describe User do
       twitter.should_receive(:users).with([100, 55, 3]).and_return([user1, user2, user3])
       
       subject.verified(:follower_ids).should eq([user1, user3])
+    end
+    
+    it 'should have augmented interactions' do
+      grouped_interactions  = {'@twitter_1' => 3, '@twitter_2' => 2}
+      interactions          = mock('interactions')
+      
+      interactions.should_receive(:count).with(:all, :group => 'target', :order => 'id DESC').and_return(grouped_interactions)
+      subject.should_receive(:interactions).and_return(interactions)
+      twitter.should_receive(:users).with(['twitter_1', 'twitter_2'])
+                                    .and_return([Hashie::Mash.new({:screen_name => twitter_profile1.screen_name.gsub('@', ''), :profile_image_url => twitter_profile1.profile_image_url}), 
+                                                 Hashie::Mash.new({:screen_name => twitter_profile2.screen_name.gsub('@', ''), :profile_image_url => twitter_profile2.profile_image_url})])
+        
+      subject.grouped_augmented_interactions({:group => 'target', :order => 'id DESC'})
+             .should eq([grouped_augmented_interaction1.symbolize_keys, grouped_augmented_interaction2.symbolize_keys])
     end
   end
   
