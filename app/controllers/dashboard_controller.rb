@@ -58,7 +58,7 @@ class DashboardController < ApplicationController
   end
   
   def preview_mashout
-    bitly = Bitly::Client.new(video_playback_url(params['guid']))
+    bitly = Bitly::Client.new(video_playback_url(params['mashout-video']))
     render :text => TweetBuilder.new(self.current_user, bitly).build(params)
   end
 

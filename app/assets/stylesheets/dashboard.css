@@ -175,7 +175,7 @@
     clear: both;
     height: 80px;
     float: left;
-    width: 280px; }
+    min-width: 280px; }
 
 #content-wrapper.span-all #extra-info {
     background: #ededed;

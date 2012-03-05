@@ -2,58 +2,46 @@
 //= require select
 
 $(document).ready(function () {
-    // setup hidden dashboard components
-    $('#pickouts').click(function () {
-        hideDivs('pickouts');
-        if ($('.pickouts').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.pickouts').slideDown('200');
-        } else {
-            $('.pickouts').slideUp('slow');
-        }
-    });
+    // setup hidden dashboard settings
+    bindSettingsPanelButton('pickouts');
+    bindSettingsPanelButton('analytics');
+    bindSettingsPanelButton('networks');
 
-    $('#analytics').click(function () {
-        hideDivs('analytics');
-        if ($('.analytics').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.analytics').slideDown('200');
-        } else {
-            $('.analytics').slideUp('slow');
-        }
-    });
-
-    $('#networks').click(function () {
-        hideDivs('networks');
-        if ($('.networks').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.networks').slideDown('200');
-        } else {
-            $('.networks').slideUp('slow');
-        }
-    });
-
-    /*Toggle sidebar twitter and facebook buttons*/
-    $("#toggle-twitter").click(function(){
-        if(!$(this).hasClass('on')) {
-           $(this).addClass('on');
-        } else {
-            $(this).removeClass('on');
-        }
-        return false;
-    });
-
-    $("#toggle-facebook").click(function(){
-        if(!$(this).hasClass('on')) {
-           $(this).addClass('on');
-        } else {
-            $(this).removeClass('on');
-        }
-        return false;
-    });
+    /* toggle sidebar twitter and facebook buttons*/
+    bindNetworkToggleButton('#toggle-twitter');
+    bindNetworkToggleButton('#toggle-facebook');
 });
 
-function hideDivs(className){
+function bindNetworkToggleButton(buttonId) {
+    $(buttonId).click(function() {
+        if(!$(this).hasClass('on')) {
+           $(this).addClass('on');
+        } else {
+            $(this).removeClass('on');
+        }
+        
+        return false;
+    });
+}
+
+function bindSettingsPanelButton(settingsName) {      
+      $('#' + settingsName).click(function () {
+          var settingsClassName = '.' + settingsName;
+      
+          hideDashboardSettings(settingsName);
+              
+          if ($(settingsClassName).is(':hidden')) {
+              $(this).parents().addClass('active');
+              $(settingsClassName).slideDown('200');
+          } else {
+              $(settingsClassName).slideUp('slow');
+          }
+
+          return false;
+      });
+}
+
+function hideDashboardSettings(className) {
     if (className != 'pickouts') {
         $('.button').removeClass('active');
         $('.pickouts').slideUp('slow').hide();
