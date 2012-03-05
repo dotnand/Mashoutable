@@ -232,7 +232,7 @@ class DashboardController < ApplicationController
     end
     
     def get_interactions
-      current_user.grouped_augmented_interactions(:group => 'target', :order => 'id DESC').paginate(:page => page, :per_page => per_page(8))
+      current_user.grouped_augmented_interactions(:group => 'target').paginate(:page => page, :per_page => per_page(8))
     end
 end
 
