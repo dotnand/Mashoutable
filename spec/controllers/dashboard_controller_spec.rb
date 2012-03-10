@@ -10,10 +10,14 @@ describe DashboardController do
   include_context 'twitter besties'
   include_context 'user videos'
   
-  let(:current_user) { FactoryGirl.create(:user) }  
+  let(:current_user)  { FactoryGirl.create(:user) }
+  let(:twitter)       { mock('twitter') }
+  let(:facebook)      { mock('facebook') }
   
   before do
     subject.stub(:current_user) { current_user }
+    current_user.stub(:twitter) { twitter }
+    current_user.stub(:facebook) { facebook }
   end
 
   def setup_current_user_twitter_besties
@@ -131,59 +135,113 @@ describe DashboardController do
   end
 
   context 'build a tweet' do
-    let(:params) { {'controller'       => 'dashboard',
-                    'action'           => 'create_mashout'} }
+    let(:params)  { {} }
     let(:emitter) { mock('emitter') }
+    let(:tweet)   { 'trend1 #trend2' }
     
     def setup_emitter(params, tweet)
       TweetEmitter.should_receive(:new).with(current_user).and_return(emitter)
       emitter.should_receive(:emit).with(params).and_return(tweet)
     end
     
-    it 'GET preview mashout' do
-      pending
-    end    
+    def build_params(action)
+      params.merge!({'out'                      => tweet, 
+                     'trend-source'             => 'Google', 
+                     'mashout-trend'            => ['trend1', '#trend2'], 
+                     'mashout-network-twitter'  => 'true',
+                     'controller'               => 'dashboard',
+                     'action'                   => action})
+    end
     
-    context 'POST create' do
-      let!(:tweet) { 'trend1 #trend2' }
+    it 'should GET preview mashout' do
+      build_params('preview_mashout')
+      
+      get :preview_mashout, params
+
+      response.should be_success
+      response.body.should eq('trend1 #trend2')
+    end  
+    
+    it 'should GET preview mashout with video' do
+      video_guid  = '123abc'
+      bitly       = mock('bitly')
+      
+      FactoryGirl.create(:video, :guid => video_guid, :user => current_user)
+      
+      bitly.should_receive(:shorten) { true }
+      bitly.should_receive(:shortened_url).and_return('http://out.am/9a8b7c')
+      Bitly::Client.should_receive(:new).with("http://127.0.0.1/videos/#{video_guid}").and_return(bitly)
+          
+      build_params('preview_mashout')
+      
+      get :preview_mashout, params.merge!({'mashout-video' => video_guid})
+
+      response.should be_success
+      response.body.should eq('trend1 #trend2 http://out.am/9a8b7c')
+    end
+    
+    context 'POST' do    
+      def create_out_should_be_successful(redirected_to, tweet)
+        flash[:success].should eq('Created your MASHOUT!')
+        assigns[:out].should eq(tweet)
+      end  
     
       before do
-        params.merge!({'out'              => tweet, 
-                       'trend-source'     => 'Google', 
-                       'mashout-trend[]'  => 'trend1', 
-                       'mashout-trend[]'  => '#trend2'})      
         setup_emitter(params, tweet)
       end
     
-      def create_out_should_be_successful(redirected_to, tweet)
-        
-        flash[:success].should eq('Created your MASHOUT!')
-        assigns[:out].should eq(tweet)
-      end
-    
       it 'should create a shoutout' do
+        build_params('create_shoutout')
+        
         post :create_shoutout, params
+        
         create_out_should_be_successful(dashboard_shoutout_path, tweet)
         response.should be_redirect
       end
       
       it 'should create a mashout' do
+        build_params('create_mashout')
+        
         post :create_mashout, params
+        
         create_out_should_be_successful(dashboard_mashout_path, tweet)
+        response.should be_redirect
+      end
+      
+      it 'should create a blastout' do
+        build_params('create_blastout')
+        
+        post :create_blastout, params
+        
+        create_out_should_be_successful(dashboard_blastout_path, tweet)
         response.should be_redirect
       end
     end
     
+    [[:create_shoutout, 'create shoutout'], [:create_mashout, 'create mashout'], [:create_blastout, 'create blastout']].each do |action, desc|
+      it "should not redirect on create #{desc} failure" do
+        TweetEmitter.should_receive(:new).with(current_user) { raise Exception.new('test failure') }
+        post action, params.merge!({'mashout-network-twitter'  => 'true'})
+        flash[:error].should eq('Unable to your send your OUT.  test failure')
+      end
+    end
+    
     it 'should warn if the tweet content is blank' do
-      tweet   = ''
+      tweet = ''
       
-      params.merge!({'out' => ''})
+      build_params('create_mashout')
+      params['out'] = ''
       setup_emitter(params, tweet)
-    
+
       post :create_mashout, params
+
+      flash[:notice].should eq('Oops, your tweet is empty!')
+      assigns[:out].should eq('')
+    end
     
-      flash[:notice].should eq('Ooops, your tweet is empty!')
-      assigns[:out].should eq(tweet)
+    it 'should error if there no networks have been selected' do
+      post :create_blastout
+      flash[:error].should eq('You did not select a network')
     end
   end
  
@@ -254,6 +312,7 @@ describe DashboardController do
     assigns[:besties].should eq(twitter_besties_paginated)
     assigns[:videos].should eq(videos_paginated)
     assigns[:interactions].should eq(grouped_augmented_interactions)
+    assigns[:networks].should_not be_nil
   end
   
   it 'GET tool should be successful' do

@@ -9,7 +9,7 @@ class TweetEmitter
     
     return if content.blank?
 
-    send(content, replies)
+    send(content, replies, params['mashout-network-twitter'], params['mashout-network-facebook'])
     capture_mentions(content)
     capture_replies(replies)
     capture_interactions(content)
@@ -17,11 +17,17 @@ class TweetEmitter
     content
   end
   
-  def send(content, replies)
-    if replies.present?
-      replies.each { |reply_to| @user.twitter.update(content, :in_reply_to_status_id => reply_to) }
-    else 
-      @user.twitter.update(content)
+  def send(content, replies, twitter_network, facebook_network)
+    if twitter_network == 'true'
+      if replies.present?
+        replies.each { |reply_to| @user.twitter.update(content, :in_reply_to_status_id => reply_to) }
+      else 
+        @user.twitter.update(content)
+      end
+    end
+    
+    if facebook_network == 'true'
+      @user.facebook.feed!(:message => content)
     end
   end
   

@@ -330,7 +330,7 @@ h4 span.counter {
     margin-left: 90px;
     margin-bottom: -10px;}
 
-#top #call-to-action #sign-in-twitter {
+#sign-in-twitter {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
@@ -339,7 +339,7 @@ h4 span.counter {
     height:40px;
     margin-left: 15px;}
 
-#top #call-to-action #sign-in-facebook {
+#sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
@@ -945,7 +945,7 @@ label {
     min-width: 85px;
     line-height:2em; }
 
-#out {
+#out-preview {
     height: 100px;}
 
 .ui-autocomplete {

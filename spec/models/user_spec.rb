@@ -26,25 +26,39 @@ describe User do
     User.create_from_hash!(param)
   end
   
-  it 'should have twitter access if a twitter user' do
-    twitter   = mock('object')
-    all_auths = mock('object')
-    user      = FactoryGirl.build(:user)
-    auth      = FactoryGirl.build(:authorization)
+  context 'authorization' do
+    let(:twitter)   { mock('twitter') }
+    let(:facebook)  { mock('facebook') }
+    let(:all_auths) { mock('all_auths') }
+    let(:user)      { FactoryGirl.build(:user) }
+    let(:auth)      { FactoryGirl.build(:authorization) }
+
+    before do
+      all_auths.should_receive('find_by_provider').and_return(auth)
+      user.should_receive('authorizations').and_return(all_auths)
+    end
+  
+    it 'should have twitter access if a twitter user' do
+      Twitter::Client.should_receive('new').and_return(twitter)
+      user.twitter.should eq(twitter)
+    end
     
-    Twitter::Client.should_receive('new').and_return(twitter)
-    all_auths.should_receive('find_by_provider').and_return(auth)
-    user.should_receive('authorizations').and_return(all_auths)
-    
-    user.twitter.should eq(twitter)
+    it 'should have facebook access if a facebook user' do
+      token     = 'abc123'
+      
+      FbGraph::User.should_receive(:me).with(token).and_return(facebook)
+      auth.should_receive(:token).and_return(token)
+      
+      user.facebook.should eq(facebook)
+    end
   end
   
   context 'relationships' do
     include_context 'twitter besties' 
   
-    let!(:user1)     { double(:id => 1, :screen_name => 'john_doe1', :verified => true) }
-    let!(:user2)     { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
-    let!(:user3)     { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
+    let!(:user1) { double(:id => 1, :screen_name => 'john_doe1', :verified => true) }
+    let!(:user2) { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
+    let!(:user3) { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
     context 'tweople' do  
       let!(:out_mention1)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe1') }

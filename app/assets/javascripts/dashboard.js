@@ -1,24 +1,35 @@
 //= require jquery-ui-1.8.16.custom.min
 //= require select
 
-$(document).ready(function () {
-    // setup hidden dashboard settings
-    bindSettingsPanelButton('pickouts');
-    bindSettingsPanelButton('analytics');
-    bindSettingsPanelButton('networks');
-
-    /* toggle sidebar twitter and facebook buttons*/
-    bindNetworkToggleButton('#toggle-twitter');
-    bindNetworkToggleButton('#toggle-facebook');
-});
-
-function bindNetworkToggleButton(buttonId) {
+function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
     $(buttonId).click(function() {
-        if(!$(this).hasClass('on')) {
-           $(this).addClass('on');
-        } else {
-            $(this).removeClass('on');
-        }
+        var out       = $(outId);
+        var outTarget = $(outTargetId);
+
+        outTarget.val(out.val());
+        $(formId).submit();
+        
+        return false;
+    })
+}
+
+function enableNetworkButton(buttonId, enabled) {
+    var button = $(buttonId);
+    
+    if(enabled) {
+        button.addClass('on');
+    } else {
+        button.removeClass('on');
+    }
+}
+
+function bindNetworkToggleButton(buttonId, targetId) {
+    $(buttonId).click(function() {
+        var button  = $(this);
+        var isOn    = button.hasClass('on');
+        
+        enableNetworkButton(buttonId, !isOn);
+        $(targetId).val(!isOn);
         
         return false;
     });

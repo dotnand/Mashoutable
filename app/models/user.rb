@@ -12,11 +12,20 @@ class User < ActiveRecord::Base
   
   def twitter
     unless @twitter_client
-      provider = self.authorizations.find_by_provider('twitter')
-      @twitter_client = Twitter::Client.new(:oauth_token => provider.token, :oauth_token_secret => provider.secret) rescue nil
+      provider        = self.authorizations.find_by_provider('twitter')
+      @twitter_client = Twitter::Client.new(:oauth_token => provider.token, :oauth_token_secret => provider.secret) rescue nil if provider.present?
     end
     
     @twitter_client
+  end
+  
+  def facebook
+    unless @facebook_client
+      provider          = self.authorizations.find_by_provider('facebook')
+      @facebook_client ||= FbGraph::User.me(provider.token) rescue nil if provider.present? 
+    end
+    
+    @facebook_client
   end
   
   def tweople

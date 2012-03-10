@@ -1,4 +1,4 @@
-<%- if params[:action] == 'blastout' %>
+<%- if defined? @tool and @tool == dashboard_blastout_path %>
   <div class='span-1 left'>
     <input type="radio" name="mashout-video" value=<%= "#{video.guid}" %> class='mashout-video' />
   </div>
@@ -13,7 +13,7 @@
   <input id='<%= "edit-video-name-#{video.guid}" %>' type='text' name='edit-video-name-#{video.guid}' />
   &nbsp;
   <input id='<%= "edit-video-button-#{video.guid}" %>' type='button' value='Save' class='button' />
-  <p>
+  <p class='span-4'>
     <span id='<%= "edit-video-name-message-#{video.guid}" %>'>&nbsp;</span>
   </p>
 </div>
@@ -35,6 +35,7 @@
         $('<%= "#delete-video-#{video.guid}" %>').click(function() {
             $.ajax({url:'<%= "#{delete_video_path(video.guid)}" %>',
                     type: 'DELETE',
+                    data: {'source': '<%= "#{@tool}" %>'},
                     success: function(data) { $('#videos').replaceWith(data); },
                     async: false
             });
@@ -50,7 +51,7 @@
         $('<%= "#edit-video-button-#{video.guid}" %>').click(function() {
             $.ajax({url:'<%= update_video_path(video.guid) %>',
                     type: 'POST',
-                    data: {'name': $('<%= "#edit-video-name-#{video.guid}" %>').val()},
+                    data: {'name': $('<%= "#edit-video-name-#{video.guid}" %>').val(), 'source': '<%= "#{@tool}" %>'},
                     success: function(response, status, xhr) { onUpdateVideo(response, status, xhr); },
                     async: false
             });

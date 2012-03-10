@@ -47,7 +47,7 @@ class TweetBuilder
   end
   
   def video(value)
-    return '' if value == 'NONE' or value.nil? or @bitly.nil?
+    return '' if value == 'NONE' or value.nil? or @bitly.nil?  
     add_to_tweet(@bitly.shortened_url) if @user.videos.find_by_guid(value).present? and @bitly.shorten
   end
   

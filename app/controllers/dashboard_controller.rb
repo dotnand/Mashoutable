@@ -3,6 +3,9 @@ class DashboardController < ApplicationController
 
   before_filter :current_tool
   before_filter :auth_required, :except => :video_playback
+  before_filter :available_networks, :if => :signed_in?
+  
+  # TODO: refactor into separate controllers
   
   def index
     @besties      = get_besties
@@ -68,6 +71,7 @@ class DashboardController < ApplicationController
       flash[:errors] = 'Sorry, but we are unable to save your video' if not video.save
     end
     
+    @tool   = @current_tool
     @videos = get_videos
   end
 
@@ -137,6 +141,7 @@ class DashboardController < ApplicationController
   end
   
   def update_video
+    @tool   = params['source']
     guid    = params['guid']
     name    = params['name']
     message = nil
@@ -156,7 +161,9 @@ class DashboardController < ApplicationController
   end
   
   def delete_video
+    @tool = params['source']
     video = current_user.videos.find_by_guid(params['guid'])
+    
     video.destroy if video.present?
     render_videos
   end
@@ -198,19 +205,32 @@ class DashboardController < ApplicationController
       end
     end
 
+    def available_networks
+      @networks = {:twitter => current_user.twitter.present?, 
+                   :facebook => current_user.facebook.present?}
+    end
+
     def create_out(params)
      begin
+        # TODO: extract into out model
+        if params['mashout-network-twitter'] != 'true' and params['mashout-network-facebook'] != 'true'
+          flash[:error] = 'You did not select a network'
+          return flash[:success].present?
+        end
+     
         @out    = params['out']
         @tweet  = TweetEmitter.new(self.current_user).emit(params)
-
-        if @tweet.blank?
-          flash[:notice] = 'Ooops, your tweet is empty!'
+        
+        if @tweet.blank? 
+          flash[:notice] = 'Oops, your tweet is empty!'
         else
           flash[:success] = 'Created your MASHOUT!'
         end
       rescue Exception => e
-        flash[:error] = 'Unable to update your Twitter Timeline. ' << e.message
+        flash[:error] = 'Unable to your send your OUT.  ' << e.message
       end
+      
+      flash[:success].present?
     end
 
     def render_besties
