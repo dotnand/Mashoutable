@@ -390,6 +390,11 @@ h4 span.counter {
     width:231px;
     height:40px;}
 
+#sign-in-youtube {
+    display: block;
+    background-image: url("youtube-logo.jpg");
+    width:231px;
+    height:164px;}
 
 /*Home page welcome*/
 #welcome {

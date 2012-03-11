@@ -51,6 +51,10 @@ describe User do
       
       user.facebook.should eq(facebook)
     end
+    
+    it 'should have youtube access if a youtube user' do
+      pending
+    end
   end
   
   context 'relationships' do

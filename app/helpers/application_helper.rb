@@ -6,6 +6,10 @@ module ApplicationHelper
   def facebook_auth_path
     '/auth/facebook'
   end
+  
+  def youtube_auth_path
+    '/auth/google'
+  end
 
   def group_hash_by(hashes, group_by)
     return nil if hashes.nil?

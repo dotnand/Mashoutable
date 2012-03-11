@@ -10,8 +10,12 @@ describe ApplicationHelper do
     helper.twitter_auth_path.should eq('/auth/twitter')   
   end
   
-  it 'should hav a facebook auth path' do
+  it 'should have a facebook auth path' do
     helper.facebook_auth_path.should eq('/auth/facebook')
+  end
+
+  it 'should have a youtube auth path' do
+    helper.youtube_auth_path.should eq('/auth/google')
   end
   
   it 'should group an array of hashes given a key' do
