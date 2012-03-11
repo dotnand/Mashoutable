@@ -13,9 +13,7 @@
   <input id='<%= "edit-video-name-#{video.guid}" %>' type='text' name='edit-video-name-#{video.guid}' />
   &nbsp;
   <input id='<%= "edit-video-button-#{video.guid}" %>' type='button' value='Save' class='button' />
-  <p class='span-4'>
-    <span id='<%= "edit-video-name-message-#{video.guid}" %>'>&nbsp;</span>
-  </p>
+  <span class="clear left" id='<%= "edit-video-name-message-#{video.guid}" %>'>&nbsp;</span>
 </div>
 <script type='text/javascript'>
     //<![CDATA[
@@ -24,14 +22,14 @@
             var contentType = xhr.getResponseHeader('content-type') || '';
             var isHtml      = contentType.indexOf('html') > -1;
             var isText      = contentType.indexOf('text') > -1;
-            
+
             if(isHtml) {
               $('#videos').replaceWith(response);
             } else if(isText) {
               $('<%= "#edit-video-name-message-#{video.guid}" %>').html(xhr.responseText);
             }
         }
-    
+
         $('<%= "#delete-video-#{video.guid}" %>').click(function() {
             $.ajax({url:'<%= "#{delete_video_path(video.guid)}" %>',
                     type: 'DELETE',
@@ -42,12 +40,12 @@
 
             return false;
         });
-        
+
         $('<%= "#edit-video-#{video.guid}" %>').click(function() {
             $('<%= "#edit-video-container-#{video.guid}" %>').show();
             return false;
         });
-        
+
         $('<%= "#edit-video-button-#{video.guid}" %>').click(function() {
             $.ajax({url:'<%= update_video_path(video.guid) %>',
                     type: 'POST',

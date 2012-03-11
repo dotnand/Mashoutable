@@ -54,12 +54,12 @@ class DashboardController < ApplicationController
     create_out(params)
     redirect_to dashboard_shoutout_path
   end
-  
+
   def create_blastout
     create_out(params)
     redirect_to dashboard_blastout_path
   end
-  
+
   def preview_mashout
     bitly = Bitly::Client.new(video_playback_url(params['mashout-video']))
     render :text => TweetBuilder.new(self.current_user, bitly).build(params)
@@ -139,27 +139,27 @@ class DashboardController < ApplicationController
 
     render :text => message
   end
-  
+
   def update_video
     @tool   = params['source']
     guid    = params['guid']
     name    = params['name']
     message = nil
-    
+
     if name.blank?
       message = 'Name is blank'
     elsif (video = current_user.videos.find_by_guid(guid)).present?
       video.name = name
       message = 'Unable to save' if not video.save
     end
-    
+
     if message.present?
       render :text => message, :content_type => :text
     else
       render_videos
     end
   end
-  
+
   def delete_video
     @tool = params['source']
     video = current_user.videos.find_by_guid(params['guid'])
@@ -167,13 +167,13 @@ class DashboardController < ApplicationController
     video.destroy if video.present?
     render_videos
   end
-  
+
   def video_playback
     guid = params['guid']
     if guid.present?
       @video = Video.find_by_guid(guid)
       render 'video_playback'
-    else 
+    else
       flash[:notice] = 'Sorry, but the video you requested was not found'
       redirect_to root_url
     end
@@ -239,12 +239,12 @@ class DashboardController < ApplicationController
     end
 
     def get_besties
-      current_user.twitter_besties.sort_by{|bestie| bestie.id}.paginate(:page => page, :per_page => per_page(9))
+      current_user.twitter_besties.sort_by{|bestie| bestie.id}.paginate(:page => page, :per_page => per_page(10))
     end
 
     def get_videos
       current_user.videos.order('id DESC').paginate(:page => page, :per_page => per_page(4))
-    end    
+    end
 
     def render_videos
       @videos = get_videos

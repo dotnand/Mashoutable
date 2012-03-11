@@ -164,7 +164,7 @@
       o.avatar = o.avatar_size ?
         t('<a class="tweet_avatar" href="{user_url}"><img src="{avatar_url}" height="{avatar_size}" width="{avatar_size}" alt="{screen_name}\'s avatar" title="{screen_name}\'s avatar" border="0"/></a>', o) : '';
       o.time = t('<div class="tweet-time clear span-4 right">@Mashoutable</div>', o);
-      o.text = t('<div class="tweet-text">{tweet_text_fancy}</div>', o);
+      o.text = t('<div class="tweet-text"><p>{tweet_text_fancy}</p></div>', o);
       o.reply_action = t('<a class="tweet_action tweet_reply" href="{reply_url}">reply</a>', o);
       o.retweet_action = t('<a class="tweet_action tweet_retweet" href="{retweet_url}">retweet</a>', o);
       o.favorite_action = t('<a class="tweet_action tweet_favorite" href="{favorite_url}">favorite</a>', o);

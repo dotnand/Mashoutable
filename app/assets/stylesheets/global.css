@@ -48,10 +48,17 @@ h3.list-item {
     margin-left: 25px;
     width: 206px;}
 
+p + p {
+    margin-top: 1em;
+    text-indent: 0; }
+
+input::-moz-focus-inner {
+  border: 0; }
+
 input[type='text'],
 textarea {
-  margin: 6px 1px 6px 1px;
-  padding: 1px 0px 1px 0px;
+    margin: 6px 1px 6px 1px;
+    padding: 1px 0px 1px 0px;
 }
 
 .box {
@@ -86,9 +93,12 @@ textarea {
     margin: 3px 0; }
 
 #content-wrapper input.checkbox,
-#content-wrapper input[type="checkbox"] {
+#content-wrapper input[type="checkbox"],
+#content-wrapper input.radio,
+#content-wrapper input[type="radio"] {
     float: left;
-    clear: both; }
+    clear: both;
+    display: block; }
 
 /*social media icons*/
 .icons-twitter {
@@ -109,43 +119,72 @@ textarea {
     background-position: 0 1px;
     margin-top: -3px; }
 
-#toggle-twitter.on {
+.network-toggle {
+    margin-top: 2px; }
+
+.network-toggle input {
+    margin-right: 2px; }
+
+.network-toggle input:last-child{
+    margin-right: 0px; }
+
+.network-toggle #toggle-twitter.on {
     display: block;
-    width: 35px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: 0px -86px;
+    background-position: 0px -85px;
     border: 0;
     cursor: pointer; }
 
-#toggle-twitter {
+.network-toggle #toggle-twitter {
     display: block;
-    width: 35px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: -35px -86px;
+    background-position: -28px -85px;
     border: 0;
     cursor: pointer; }
 
-#toggle-facebook.on {
+.network-toggle #toggle-facebook.on {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: -1px -118px;
+    background-position: 0px -110px;
     border: 0;
     cursor: pointer; }
 
-#toggle-facebook {
+.network-toggle #toggle-facebook {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 26px;
+    height: 26px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: -36px -118px;
+    background-position: -28px -110px;
+    border: 0;
+    cursor: pointer; }
+
+.network-toggle #toggle-youtube.on {
+    display: block;
+    width: 26px;
+    height: 26px;
+    background: url("social-icons.png");
+    background-repeat: no-repeat;
+    background-position: 0px -136px;
+    border: 0;
+    cursor: pointer; }
+
+.network-toggle #toggle-youtube {
+    display: block;
+    width: 26px;
+    height: 26px;
+    background: url("social-icons.png");
+    background-repeat: no-repeat;
+    background-position: -28px -136px;
     border: 0;
     cursor: pointer; }
 
@@ -169,6 +208,10 @@ h4 span.counter {
 
 .orange {
     color: #d05407;
+    border-bottom: 0;}
+
+.tool-orange {
+    color: #fe680e;
     border-bottom: 0;}
 
 .blue {
@@ -535,7 +578,8 @@ h4 span.counter {
 /*Tools bubbles*/
 #top #tools {
     margin-left: -10px;
-    float: left;}
+    margin-top: -25px;
+    float: left; }
 
 #top #tools .box {
     float: left;
@@ -552,15 +596,6 @@ h4 span.counter {
 #top #tools .tool-inner:first-child {
     margin-left: -20px;}
 
-#top #tools .tool-inner h2,
-#top #tools .tool-inner h2 a:link,
-#top #tools .tool-inner h2 a:hover,
-#top #tools .tool-inner h2 a:active,
-#top #tools .tool-inner h2 a:visited{
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;}
-
 #top #tools .tool-inner .box{
     margin-top: 65px;}
 
@@ -570,41 +605,28 @@ h4 span.counter {
     padding: 15px 0 5px 0;
     font-style: italic;}
 
-#top #tools #mashout-tool h4,
-#top #tools #mashout-tool h4 a:link,
-#top #tools #mashout-tool h4 a:hover,
-#top #tools #mashout-tool h4 a:active,
-#top #tools #mashout-tool h4 a:visited {
-    color: #fe680e;
-    margin-bottom: 5px;
-    text-decoration: none;}
-
-#top #tools #blastout-tool h4,
-#top #tools #blastout-tool h4 a:link,
-#top #tools #blastout-tool h4 a:hover,
-#top #tools #blastout-tool h4 a:active,
-#top #tools #blastout-tool h4 a:visited  {
-    color: #43add5;
+#top #tools h4,
+#top #tools h4 a {
+    color: #FFFFFF;
+    font-size: 1.4em;
+    line-height: 1.1em;
+    font-weight: bold;
     text-decoration: none;
-    margin-bottom: 5px;}
+    margin-bottom: 0; }
 
-#top #tools #shoutout-tool h4,
-#top #tools #shoutout-tool h4 a:link,
-#top #tools #shoutout-tool h4 a:hover,
-#top #tools #shoutout-tool h4 a:active,
-#top #tools #shoutout-tool h4 a:visited  {
-    color: #93c734;
-    text-decoration: none;
-    margin-bottom: 5px;}
+#top #tools h4 a {
+    display: block;
+    width: 188px;
+    height: 73px;
+    padding: 70px 0;
+    text-decoration: none; }
 
-#top #tools #pickout-tool h4,
-#top #tools #pickout-tool h4 a:link,
-#top #tools #pickout-tool h4 a:hover,
-#top #tools #pickout-tool h4 a:active,
-#top #tools #pickout-tool h4 a:visited  {
-    color: #ff0b00;
-    text-decoration: none;
-    margin-bottom: 5px;}
+#top #tools h4 .tool-orange,
+#top #tools h4 .green,
+#top #tools h4 .blue,
+#top #tools h4 .red {
+    font-size: 0.7em;
+    line-height: 1em; }
 
 #top #tools #mashout-tool .tool-inner,
 #top #tools #blastout-tool .tool-inner,
@@ -623,7 +645,9 @@ h4 span.counter {
 
 #top #tools #coming-soon-tool h2 {
     color: #b6ebd9;
-    margin-top:5px;}
+    width: 156px;
+    height: 50px;
+    padding: 80px 15px; }
 
 
 /*------------------Sub Pages------------------*/
@@ -709,16 +733,20 @@ h4 span.counter {
     border-bottom: 1px dashed #7faac5;
     background: url('title-bg.jpg') repeat;
     min-height: 50px;
-    padding: 10px 10px 0 10px;}
+    padding: 10px; }
 
 #content-wrapper #main-content #content-body #content-inner #title h2,
 #content-wrapper.span-all #content-body #content-inner #title h2 {
-    font-size: 2em;}
+    font-size: 2em; }
 
 #content-wrapper #main-content #content-body #content-inner #title-subtitle,
 #content-wrapper.span-all #content-body #content-inner #title-subtitle {
     font-style: italic;
-    margin: 0;}
+    margin: 0; }
+
+#content-wrapper #main-content #content-body #content-inner #title img.out,
+#content-wrapper.span-all #content-body #content-inner #title img.out {
+    margin-top: -15px; }
 
 #content-wrapper #main-content #content-body #content-inner .content-bubble .bubble-top {
     background: url('bubbles.png') no-repeat;
@@ -792,7 +820,8 @@ h4 span.counter {
     height: 37px;
     margin: 10px 0 0 0;
     padding: 0;
-    float: right;}
+    float: right;
+    padding-bottom: 10px; }
 
 #content-wrapper .pagination span,
 #content-wrapper .pagination li,
@@ -830,6 +859,9 @@ h4 span.counter {
     width: 307px;
     padding: 5px;
     z-index: 1337; }
+
+#content-wrapper #sidebar #ready-to-mashout .button {
+    padding: 5px 3px; }
 
 #content-wrapper #sidebar #ready-to-mashout .content {
     position: absolute;
@@ -886,14 +918,6 @@ h4 span.counter {
     margin-top: -10px;
     width: 295px; }
 
-#content-wrapper #sidebar #ready-to-mashout #quote .quoted-by .icon {
-    background-image: url("social-icons.png");
-    background-position: 0 -48px;
-    background-repeat: no-repeat;
-    display: block;
-    height: 33px;
-    width: 35px;
-    border: 0; }
 
 
 /*Videos partial*/
@@ -931,7 +955,8 @@ h4 span.counter {
     width:100%;}
 
 #content-wrapper #video-library #videos .edit-video-container {
-    display:none;}
+    display:none;
+    min-width: 350px; }
 
 #content-wrapper #video-library #videos .edit-video-container input[type='text'] {
     width:100px; }

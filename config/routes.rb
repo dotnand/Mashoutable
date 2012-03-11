@@ -8,15 +8,15 @@ Mashoutable::Application.routes.draw do
 
   # shoutouts
   match 'shoutouts/create'    => 'dashboard#create_shoutout', :via => :post,    :as => :shoutout_create
-  
+
   # blastouts
   match 'blastouts/create'    => 'dashboard#create_blastout', :via => :post,    :as => :blastout_create
-  
+
   # besties
   match 'besties/delete'      => 'dashboard#delete_bestie',   :via => :delete,  :as => :delete_bestie
   match 'besties/new'         => 'dashboard#create_bestie',   :via => :post,    :as => :create_bestie
 
-  # videos  
+  # videos
   match 'videos/new'          => 'dashboard#create_video',    :via => :post,    :as => :create_video
   match 'videos/:guid'        => 'dashboard#delete_video',    :via => :delete,  :as => :delete_video
   match 'videos/(:guid)'      => 'dashboard#video_playback',  :via => :get,     :as => :video_playback
@@ -27,7 +27,11 @@ Mashoutable::Application.routes.draw do
   match 'contact-us'          => 'content#contact_us',  :as => :contact_us
   match 'about-us'            => 'content#about_us',    :as => :about_us
   match 'blog'                => 'content#blog'
-  
+  match 'mashout'             => 'content#mashout',     :as => :mashout
+  match 'blastout'            => 'content#blastout',    :as => :blastout
+  match 'shoutout'            => 'content#shoutout',    :as => :shoutout
+  match 'pickout'             => 'content#pickout',     :as => :pickout
+
   # dashboard
   match 'dashboard'               => 'dashboard#index'
   match 'dashboard/tool'          => 'dashboard#tool'
@@ -36,6 +40,7 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/mashout'       => 'dashboard#mashout'
   match 'dashboard/blastout'      => 'dashboard#blastout'
   match 'dashboard/shoutout'      => 'dashboard#shoutout'
+  # the following tool is temporarily unavailable 
   match 'dashboard/pickout'       => 'dashboard#pickout'
   match 'dashboard/interactions'  => 'dashboard#interactions'
   match 'dashboard/signout'       => 'dashboard#signout'
@@ -43,8 +48,9 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
   
   # default
-  match '/' => 'content#home',        :as => :home
+  match '/' => 'content#home', :as => :home
   
   # root
-  root :to => "content#home"
+  root :to  => 'content#home'
 end
+

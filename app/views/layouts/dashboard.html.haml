@@ -6,24 +6,25 @@
   = javascript_include_tag 'dashboard'
   = javascript_include_tag 'mashout'
 
-- content_for :title do
-  .left
-    %h2.inset-type What do you want to do today?
-    %p#title-subtitle Use the drop down menu on the right to select your tool!
-  %img.left{:alt => "Pick your tool", :src => "#{asset_path('arrow.png')}"}
-  = form_tag(dashboard_tool_path, :method => :get, :id => 'tool-form') do
-    #tool-selector.right.ui-combobox
-      %select{:id => 'tool', :style => "display: none;"}
-        %option{:value => "#{dashboard_path}"} Dashboard
-        %option{:value => "#{dashboard_mashout_path}"} Targeted MASHOUT&trade;
-        %option{:value => "#{dashboard_blastout_path}"} Video BLASTOUT&trade;
-        %option{:value => "#{dashboard_shoutout_path}"} Top Trend SHOUTOUT&trade;
-        /%option{:value => "#{dashboard_pickout_path}"} Credible Winner PICKOUT&trade;
-        %option{:value => "#{dashboard_signout_path}"} Sign Out
-      = hidden_field_tag 'tool-selection'
-    :javascript
-      $(function(){ $("#tool").next().val($("#tool option[value='#{@current_tool}']").text()).blur(); });
-      $(function(){ $("#tool-selector").bind("autocompleteselect", function (event, ui) { $("#tool-selection").val(ui.item.option.value); $("#tool-form").submit(); }); });
+- if controller.controller_name == 'dashboard' and controller.action_name != 'video_playback'
+  - content_for :title do
+    .left
+      %h2.inset-type What do you want to do today?
+      %p#title-subtitle Use the drop down menu on the right to select your tool!
+    %img.left{:alt => "Pick your tool", :src => "#{asset_path('arrow.png')}"}
+    = form_tag(dashboard_tool_path, :method => :get, :id => 'tool-form') do
+      #tool-selector.right.ui-combobox
+        %select{:id => 'tool', :style => "display: none;"}
+          %option{:value => "#{dashboard_path}"} Dashboard
+          %option{:value => "#{dashboard_mashout_path}"} Targeted MASHOUT&trade;
+          %option{:value => "#{dashboard_blastout_path}"} Video BLASTOUT&trade;
+          %option{:value => "#{dashboard_shoutout_path}"} Top Trend SHOUTOUT&trade;
+          /%option{:value => "#{dashboard_pickout_path}"} Credible Winner PICKOUT&trade;
+          %option{:value => "#{dashboard_signout_path}"} Sign Out
+        = hidden_field_tag 'tool-selection'
+      :javascript
+        $(function(){ $("#tool").next().val($("#tool option[value='#{@current_tool}']").text()).blur(); });
+        $(function(){ $("#tool-selector").bind("autocompleteselect", function (event, ui) { $("#tool-selection").val(ui.item.option.value); $("#tool-form").submit(); }); });
 
 = render :template => 'layouts/inner'
 

@@ -94,7 +94,7 @@
 #content-wrapper.span-all #video-library,
 #content-wrapper.span-all #interactions {
     width: 275px;
-    min-height: 530px;
+    min-height: 560px;
     padding: 0 20px;
     border-left: 1px solid #bdbdbd; }
 
@@ -105,7 +105,7 @@
 #content-wrapper.span-all #besties #list-people,
 #content-wrapper #video-library #videos,
 #content-wrapper.span-all #interactions #list-interactions {
-    min-height: 435px; }
+    min-height: 466px; }
 
 #content-wrapper.span-all #besties {
     border-left: 0;
@@ -135,7 +135,7 @@
 
 #content-wrapper #video-library #videos ul {
     padding-left:0;
-    min-height: 375px; }
+    min-height: 406px; }
 
 #content-wrapper #video-library #videos label {
     font-weight: normal; }
@@ -149,11 +149,11 @@
     margin-top: 10px;
     margin-right: 0;
     padding: 0;
-    width: 275px;
-    margin-left: 1px; }
+    width: 270px;
+    margin-left: 2px; }
 
 #content-wrapper.span-all #besties #list-people ul li a{
-    width: 243px;
+    width: 238px;
     display: block; }
 
 #content-wrapper.span-all #besties input.text,
@@ -173,7 +173,7 @@
 #content-wrapper #video-library #videos ul li {
     padding-bottom: 8px;
     clear: both;
-    height: 80px;
+    min-height: 98px;
     float: left;
     min-width: 280px; }
 
@@ -194,6 +194,8 @@
     width: 80px;
     height: 80px; }
 
+#video-player {
+    margin: 15px; }
+
 .hidden { display: none; }
-.unhidden { display: block; }
 
