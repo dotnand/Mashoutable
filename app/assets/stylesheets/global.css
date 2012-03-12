@@ -351,27 +351,38 @@ h4 span.counter {
 
 #top #call-to-action #cta-steps {
     margin-top: -30px;
-    padding: 10px 0;}
+    padding: 10px 0;
+    margin-left: 20px; }
 
 #top #call-to-action #cta-steps .box {
     padding: 10px 10px 0 10px;
-    margin-bottom:0;}
+    margin-bottom:0;
+    display: block; }
 
-#top #call-to-action #cta-steps img {
-    padding: 8px 0 3px 0;}
+#top #call-to-action #cta-steps .box.first {
+    margin-left: 55px; }
 
 #top #call-to-action #cta-steps h1 {
-    padding-bottom: 25px;}
+    display: block;
+    height: 85px; }
 
 #top #call-to-action #cta-steps h3 {
     background: none;}
 
 #top #call-to-action #home-sign-in {
-    margin: 0 auto;}
+    margin: 0 auto;
+    background: url('social-banner.png');
+    background-repeat: no-repeat;
+    width: 977px;
+    height: 130px;
+    position: relative;
+    margin-bottom: -25px;
+    margin-left: -40px; }
 
 #top #call-to-action #sign-in-arrow {
-    margin-left: 90px;
-    margin-bottom: -10px;}
+    position: absolute;
+    top: 80px;
+    left: 225px; }
 
 #top #call-to-action #sign-in-twitter {
     display: block;
@@ -380,15 +391,20 @@ h4 span.counter {
     background-position: 0 0;
     width:231px;
     height:40px;
-    margin-left: 15px;}
+    top: 27px;
+    right: 190px;
+    position: absolute; }
 
 #top #call-to-action #sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
     background-position: -300px 0;
-    width:231px;
-    height:40px;}
+    width: 231px;
+    height: 40px;
+    position: absolute;
+    top: 27px;
+    left: 250px; }
 
 
 /*Home page welcome*/
