@@ -128,12 +128,12 @@ input[type="submit"]:hover,
 .network-toggle input:last-child{
     margin-right: 0px; }
 
-.network-toggle #twitter.on,
-.network-toggle #twitter,
-.network-toggle #facebook.on,
-.network-toggle #facebook,
-.network-toggle #youtube.on,
-.network-toggle #youtube {
+.network-toggle #toggle-twitter.on,
+.network-toggle #toggle-twitter,
+.network-toggle #toggle-facebook.on,
+.network-toggle #toggle-facebook,
+.network-toggle #toggle-youtube.on,
+.network-toggle #toggle-youtube {
     display: block;
     width: 26px;
     height: 26px;
@@ -142,22 +142,22 @@ input[type="submit"]:hover,
     border: 0;
     cursor: pointer; }
 
-.network-toggle #twitter.on {
+.network-toggle #toggle-twitter.on {
     background-position: 0px -85px; }
 
-.network-toggle #twitter {
+.network-toggle #toggle-twitter {
     background-position: -28px -85px; }
 
-.network-toggle #facebook.on {
+.network-toggle #toggle-facebook.on {
     background-position: 0px -110px; }
 
-.network-toggle #facebook {
+.network-toggle #toggle-facebook {
     background-position: -28px -110px; }
 
-.network-toggle #youtube.on {
+.network-toggle #toggle-youtube.on {
     background-position: 0px -136px; }
 
-.network-toggle #youtube {
+.network-toggle #toggle-youtube {
     background-position: -28px -136px; }
 
 /*misc*/
@@ -356,8 +356,8 @@ h4 span.counter {
     top: 80px;
     left: 225px; }
 
-#top #call-to-action #sign-in-twitter,
-#top #call-to-action #sign-in-facebook {
+#sign-in-twitter,
+#sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
@@ -365,12 +365,12 @@ h4 span.counter {
     height:40px;
     position: absolute; }
 
-#top #call-to-action #sign-in-twitter {
+#sign-in-twitter {
     background-position: 0 0;
     top: 27px;
     right: 190px; }
 
-#top #call-to-action #sign-in-facebook {
+#sign-in-facebook {
     background-position: -300px 0;
     top: 27px;
     left: 250px; }
@@ -964,7 +964,7 @@ label {
     min-width: 85px;
     line-height:2em; }
 
-#out {
+#out-preview {
     height: 100px;}
 
 .ui-autocomplete {

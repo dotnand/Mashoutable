@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :replies
   has_many :besties, :class_name => 'Bestie'
   has_many :videos
+  has_many :interactions
   
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])
@@ -11,11 +12,20 @@ class User < ActiveRecord::Base
   
   def twitter
     unless @twitter_client
-      provider = self.authorizations.find_by_provider('twitter')
-      @twitter_client = Twitter::Client.new(:oauth_token => provider.token, :oauth_token_secret => provider.secret) rescue nil
+      provider        = self.authorizations.find_by_provider('twitter')
+      @twitter_client = Twitter::Client.new(:oauth_token => provider.token, :oauth_token_secret => provider.secret) rescue nil if provider.present?
     end
     
     @twitter_client
+  end
+  
+  def facebook
+    unless @facebook_client
+      provider          = self.authorizations.find_by_provider('facebook')
+      @facebook_client ||= FbGraph::User.me(provider.token) rescue nil if provider.present? 
+    end
+    
+    @facebook_client
   end
   
   def tweople
@@ -83,6 +93,18 @@ class User < ActiveRecord::Base
   def twitter_besties
     local_besties = self.besties
     return self.twitter.users(local_besties.map { |bestie| bestie.screen_name.gsub('@', '') }) if local_besties.count > 0
+    []
+  end
+  
+  def grouped_augmented_interactions(params)
+    local_interactions  = self.interactions.count(:all, params)
+    twitter_users       = self.twitter.users(local_interactions.map { |target, count| target.gsub('@', '') }) if local_interactions.count > 0
+    
+    return twitter_users.map do |twitter_user| 
+      {:screen_name       => '@' << twitter_user.screen_name, 
+       :profile_image_url => twitter_user.profile_image_url, 
+       :count             => local_interactions['@' << twitter_user.screen_name]}
+    end if twitter_users.present?
     []
   end
   

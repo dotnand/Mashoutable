@@ -3,10 +3,14 @@ class DashboardController < ApplicationController
 
   before_filter :current_tool
   before_filter :auth_required, :except => :video_playback
-
+  before_filter :available_networks, :if => :signed_in?
+  
+  # TODO: refactor into separate controllers
+  
   def index
-    @besties  = get_besties
-    @videos   = get_videos
+    @besties      = get_besties
+    @videos       = get_videos
+    @interactions = get_interactions
   end
 
   def tool
@@ -57,7 +61,8 @@ class DashboardController < ApplicationController
   end
 
   def preview_mashout
-    render :text => TweetBuilder.new(self.current_user, lambda {|guid| video_playback_url(guid) }).build(params)
+    bitly = Bitly::Client.new(video_playback_url(params['mashout-video']))
+    render :text => TweetBuilder.new(self.current_user, bitly).build(params)
   end
 
   def blastout
@@ -65,7 +70,8 @@ class DashboardController < ApplicationController
       video = Video.new(:guid => guid, :name => current_user.name << ' (' << guid << ')', :user => current_user)
       flash[:errors] = 'Sorry, but we are unable to save your video' if not video.save
     end
-
+    
+    @tool   = @current_tool
     @videos = get_videos
   end
 
@@ -135,6 +141,7 @@ class DashboardController < ApplicationController
   end
 
   def update_video
+    @tool   = params['source']
     guid    = params['guid']
     name    = params['name']
     message = nil
@@ -154,7 +161,9 @@ class DashboardController < ApplicationController
   end
 
   def delete_video
+    @tool = params['source']
     video = current_user.videos.find_by_guid(params['guid'])
+    
     video.destroy if video.present?
     render_videos
   end
@@ -169,7 +178,12 @@ class DashboardController < ApplicationController
       redirect_to root_url
     end
   end
-
+  
+  def interactions
+    @interactions = get_interactions
+    render :partial => 'interactions'
+  end
+  
   protected
     def current_tool
       case params[:action].to_sym
@@ -191,19 +205,32 @@ class DashboardController < ApplicationController
       end
     end
 
+    def available_networks
+      @networks = {:twitter => current_user.twitter.present?, 
+                   :facebook => current_user.facebook.present?}
+    end
+
     def create_out(params)
      begin
+        # TODO: extract into out model
+        if params['mashout-network-twitter'] != 'true' and params['mashout-network-facebook'] != 'true'
+          flash[:error] = 'You did not select a network'
+          return flash[:success].present?
+        end
+     
         @out    = params['out']
         @tweet  = TweetEmitter.new(self.current_user).emit(params)
-
-        if @tweet.blank?
-          flash[:notice] = 'Ooops, your tweet is empty!'
+        
+        if @tweet.blank? 
+          flash[:notice] = 'Oops, your tweet is empty!'
         else
           flash[:success] = 'Created your MASHOUT!'
         end
       rescue Exception => e
-        flash[:error] = 'Unable to update your Twitter Timeline. ' << e.message
+        flash[:error] = 'Unable to your send your OUT.  ' << e.message
       end
+      
+      flash[:success].present?
     end
 
     def render_besties
@@ -222,6 +249,10 @@ class DashboardController < ApplicationController
     def render_videos
       @videos = get_videos
       render :partial => 'videos'
+    end
+    
+    def get_interactions
+      current_user.grouped_augmented_interactions(:group => 'target').paginate(:page => page, :per_page => per_page(8))
     end
 end
 

@@ -27,27 +27,30 @@ Mashoutable::Application.routes.draw do
   match 'contact-us'          => 'content#contact_us',  :as => :contact_us
   match 'about-us'            => 'content#about_us',    :as => :about_us
   match 'blog'                => 'content#blog'
-  match 'mashout'            => 'content#mashout',    :as => :mashout
+  match 'mashout'             => 'content#mashout',     :as => :mashout
   match 'blastout'            => 'content#blastout',    :as => :blastout
   match 'shoutout'            => 'content#shoutout',    :as => :shoutout
-  match 'pickout'            => 'content#pickout',    :as => :pickout
+  match 'pickout'             => 'content#pickout',     :as => :pickout
 
   # dashboard
-  match 'dashboard'           => 'dashboard#index'
-  match 'dashboard/tool'      => 'dashboard#tool'
-  match 'dashboard/besties'   => 'dashboard#besties'
-  match 'dashboard/videos'    => 'dashboard#videos'
-  match 'dashboard/mashout'   => 'dashboard#mashout'
-  match 'dashboard/blastout'  => 'dashboard#blastout'
-  match 'dashboard/shoutout'  => 'dashboard#shoutout'
-  match 'dashboard/pickout'   => 'dashboard#pickout'
-  match 'dashboard/signout'   => 'dashboard#signout'
-  match 'dashboard/trends'    => 'dashboard#trends',    :via => :get, :as => :trend_source
-  match 'dashboard/targets'   => 'dashboard#targets',   :via => :get, :as => :target_source
-
+  match 'dashboard'               => 'dashboard#index'
+  match 'dashboard/tool'          => 'dashboard#tool'
+  match 'dashboard/besties'       => 'dashboard#besties'
+  match 'dashboard/videos'        => 'dashboard#videos'
+  match 'dashboard/mashout'       => 'dashboard#mashout'
+  match 'dashboard/blastout'      => 'dashboard#blastout'
+  match 'dashboard/shoutout'      => 'dashboard#shoutout'
+  # the following tool is temporarily unavailable 
+  match 'dashboard/pickout'       => 'dashboard#pickout'
+  match 'dashboard/interactions'  => 'dashboard#interactions'
+  match 'dashboard/signout'       => 'dashboard#signout'
+  match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source
+  match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
+  
+  # default
+  match '/' => 'content#home', :as => :home
+  
   # root
-  match '/'                   => 'content#home',        :as => :home
-
-  root :to => "content#home"
+  root :to  => 'content#home'
 end
 

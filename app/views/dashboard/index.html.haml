@@ -71,84 +71,24 @@
       %h4 Connected Networks
       .network-toggle.left
         .left.clear.item
-          %input.left{:id => 'twitter', :value => '', :type => 'submit'}
+          %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
           %span.left
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
         .left.clear.item
-          %input.left{:id => 'facebook', :value => '', :type => 'submit'}
+          %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
           %span.left
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
         .left.clear.item
-          %input.left{:id => 'youtube', :value => '', :type => 'submit'}
+          %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
           %span.left
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
       %input.span-3.left{:value => 'Save', :type => 'submit'}
   #extra-info.left
     = render 'besties'
     = render 'dashboard_videos'
-    #interactions.left
-      %h4 Interactions
-      #list-interactions
-        %table
-          %tbody
-            %tr
-              %th Name
-              %th Count
-              %th Picture
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td facebook_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 10
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td facebook_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-            %tr
-              %td @Twitter_1
-              %td 1
-              %td
-                %img{:alt => "avatar", :src => asset_path("avatar.jpg")}/
-      %ul.pager.right.clear
-        %li
-          %a.active{:href => "#"} 1
-        %li
-          %a{:href => "#"} 2
-        %li
-          %a{:href => "#"} 3
-        %li
-          %a{:href => "#"} 4
-        %li
-          %a{:href => "#"} 5
+    = render 'interactions'
+  :javascript
+    bindSettingsPanelButton('pickouts');
+    bindSettingsPanelButton('analytics');
+    bindSettingsPanelButton('networks');
 

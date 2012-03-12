@@ -1,56 +1,58 @@
 //= require jquery-ui-1.8.16.custom.min
 //= require select
 
-$(document).ready(function () {
-    // setup hidden dashboard components
-    $('#pickouts').click(function () {
-        hideDivs('pickouts');
-        if ($('.pickouts').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.pickouts').slideDown('200').animate({ scrollTop: 0 }, 0);
-            return false;
-        } else {
-            $('.pickouts').slideUp('slow').animate({ scrollTop: 0 }, 0);
-            return false;
-        }
-    });
+function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
+    $(buttonId).click(function() {
+        var out       = $(outId);
+        var outTarget = $(outTargetId);
 
-    $('#analytics').click(function () {
-        hideDivs('analytics');
-        if ($('.analytics').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.analytics').slideDown('200').animate({ scrollTop: 0 }, 0);
-            return false;
-        } else {
-            $('.analytics').slideUp('slow').animate({ scrollTop: 0 }, 0);
-            return false;
-        }
-    });
+        outTarget.val(out.val());
+        $(formId).submit();
 
-    $('#networks').click(function () {
-        hideDivs('networks');
-        if ($('.networks').is(':hidden')) {
-            $(this).parents().addClass('active');
-            $('.networks').slideDown('200').animate({ scrollTop: 0 }, 0);
-            return false;
-        } else {
-            $('.networks').slideUp('slow').animate({ scrollTop: 0 }, 0);
-            return false;
-        }
-    });
+        return false;
+    })
+}
 
-    /*Toggle network buttons*/
-    $(".network-toggle input").click(function(){
-        if(!$(this).hasClass('on')) {
-           $(this).addClass('on');
-        } else {
-            $(this).removeClass('on');
-        }
+function enableNetworkButton(buttonId, enabled) {
+    var button = $(buttonId);
+
+    if(enabled) {
+        button.addClass('on');
+    } else {
+        button.removeClass('on');
+    }
+}
+
+function bindNetworkToggleButton(buttonId, targetId) {
+    $(buttonId).click(function() {
+        var button  = $(this);
+        var isOn    = button.hasClass('on');
+
+        enableNetworkButton(buttonId, !isOn);
+        $(targetId).val(!isOn);
+
         return false;
     });
-});
+}
 
-function hideDivs(className){
+function bindSettingsPanelButton(settingsName) {
+      $('#' + settingsName).click(function () {
+          var settingsClassName = '.' + settingsName;
+
+          hideDashboardSettings(settingsName);
+
+          if ($(settingsClassName).is(':hidden')) {
+              $(this).parents().addClass('active');
+              $(settingsClassName).slideDown('200').animate({ scrollTop: 0 }, 0);
+          } else {
+              $(settingsClassName).slideUp('slow').animate({ scrollTop: 0 }, 0);
+          }
+
+          return false;
+      });
+}
+
+function hideDashboardSettings(className) {
     if (className != 'pickouts') {
         $('.button').removeClass('active');
         $('.pickouts').slideUp('slow').hide();

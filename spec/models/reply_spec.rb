@@ -5,7 +5,7 @@ describe Reply do
     FactoryGirl.create(:reply)
   end
 
-  it { should belong_to(:user) }
-  it { should validate_presence_of(:status_id) }
-  it { should validate_uniqueness_of(:status_id) }
+  it { should belong_to :user }
+  it { should validate_presence_of :status_id }
+  it { should validate_uniqueness_of(:status_id).scoped_to(:user_id) }
 end

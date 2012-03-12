@@ -163,9 +163,6 @@
     min-height: 377px;
     padding-bottom: 20px; }
 
-#content-wrapper #video-library a.add-video {
-    padding-bottom: 24px; }
-
 #content-wrapper #video-library #videos ul {
     padding-left:0;
     min-height: 406px; }
@@ -225,12 +222,12 @@
 .networks .network-toggle .item {
     padding: 5px 0; }
 
-.networks .network-toggle #twitter.on,
-.networks .network-toggle #twitter,
-.networks .network-toggle #facebook.on,
-.networks .network-toggle #facebook,
-.networks .network-toggle #youtube.on,
-.networks .network-toggle #youtube {
+.networks .network-toggle #toggle-twitter.on,
+.networks .network-toggle #toggle-twitter,
+.networks .network-toggle #toggle-facebook.on,
+.networks .network-toggle #toggle-facebook,
+.networks .network-toggle #toggle-youtube.on,
+.networks .network-toggle #toggle-youtube {
     display: block;
     width: 77px;
     height: 77px;
@@ -239,22 +236,22 @@
     border: 0;
     cursor: pointer; }
 
-.networks .network-toggle #twitter.on {
+.networks .network-toggle #toggle-twitter.on {
     background-position: -3px -247px; }
 
-.networks .network-toggle #twitter {
+.networks .network-toggle #toggle-twitter {
     background-position: -80px -247px; }
 
-.networks .network-toggle #facebook.on {
+.networks .network-toggle #toggle-facebook.on {
     background-position: -3px -167px; }
 
-.networks .network-toggle #facebook {
+.networks .network-toggle #toggle-facebook {
     background-position: -80px -167px; }
 
-.networks .network-toggle #youtube.on {
+.networks .network-toggle #toggle-youtube.on {
     background-position: -3px -325px; }
 
-.networks .network-toggle #youtube {
+.networks .network-toggle #toggle-youtube {
     background-position: -81px -325px; }
 
 /*Misc*/

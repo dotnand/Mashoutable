@@ -1,3 +1,4 @@
+//= require fancybox/jquery.fancybox-1.3.4.pack
 
 $(function() {
     $('#mashout-target-container .ui-autocomplete-input').css('width','300px');
@@ -10,7 +11,7 @@ $(function() {
         return false;
     });
 
-    $("#out").keyup(function(){
+    $("#out-preview").keyup(function(){
         calculateCharsLeft();
     });
 
@@ -35,7 +36,7 @@ $(function() {
 });
 
 function calculateCharsLeft() {
-    $("#mashout-chars-left").text(140 - $('#out').val().length);
+    $("#mashout-chars-left").text(140 - $('#out-preview').val().length);
 }
 
 function decorateMashoutTrendAutoCompleteSelect() {
@@ -155,7 +156,7 @@ function bindMashoutPreviewClick(path) {
 
         $.ajax({url: path,
                 data: encodeURI(params),
-                success: function(data) { $('#out').val(data); calculateCharsLeft(); },
+                success: function(data) { $('#out-preview').val(data); calculateCharsLeft(); },
                 async: false});
 
         return false;
@@ -164,7 +165,7 @@ function bindMashoutPreviewClick(path) {
 
 function bindMashoutClearPreviewClick() {
     $('#preview-clear-out').click(function() {
-        $('#out').val('');
+        $('#out-preview').val('');
         calculateCharsLeft();
         return false;
     });

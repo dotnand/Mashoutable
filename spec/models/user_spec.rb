@@ -1,7 +1,12 @@
+require 'shared_context/grouped_augmented_interactions'
+require 'shared_context/twitter_profiles'
 require 'shared_context/twitter_besties'
 require 'spec_helper'
 
 describe User do
+  include_context 'twitter profiles'
+  include_context 'grouped augmented interactions'
+
   let!(:twitter) { mock('object') }
   
   before do
@@ -13,6 +18,7 @@ describe User do
   it { should have_many(:replies) }
   it { should have_many(:besties) }
   it { should have_many(:videos) }
+  it { should have_many(:interactions) }
   
   it 'should create a user given a hash' do
     param = {'info' => {'name' => 'jane_doe'}}
@@ -20,25 +26,39 @@ describe User do
     User.create_from_hash!(param)
   end
   
-  it 'should have twitter access if a twitter user' do
-    twitter   = mock('object')
-    all_auths = mock('object')
-    user      = FactoryGirl.build(:user)
-    auth      = FactoryGirl.build(:authorization)
+  context 'authorization' do
+    let(:twitter)   { mock('twitter') }
+    let(:facebook)  { mock('facebook') }
+    let(:all_auths) { mock('all_auths') }
+    let(:user)      { FactoryGirl.build(:user) }
+    let(:auth)      { FactoryGirl.build(:authorization) }
+
+    before do
+      all_auths.should_receive('find_by_provider').and_return(auth)
+      user.should_receive('authorizations').and_return(all_auths)
+    end
+  
+    it 'should have twitter access if a twitter user' do
+      Twitter::Client.should_receive('new').and_return(twitter)
+      user.twitter.should eq(twitter)
+    end
     
-    Twitter::Client.should_receive('new').and_return(twitter)
-    all_auths.should_receive('find_by_provider').and_return(auth)
-    user.should_receive('authorizations').and_return(all_auths)
-    
-    user.twitter.should eq(twitter)
+    it 'should have facebook access if a facebook user' do
+      token     = 'abc123'
+      
+      FbGraph::User.should_receive(:me).with(token).and_return(facebook)
+      auth.should_receive(:token).and_return(token)
+      
+      user.facebook.should eq(facebook)
+    end
   end
   
   context 'relationships' do
     include_context 'twitter besties' 
   
-    let!(:user1)     { double(:id => 1, :screen_name => 'john_doe1', :verified => true) }
-    let!(:user2)     { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
-    let!(:user3)     { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
+    let!(:user1) { double(:id => 1, :screen_name => 'john_doe1', :verified => true) }
+    let!(:user2) { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
+    let!(:user3) { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
     context 'tweople' do  
       let!(:out_mention1)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe1') }
@@ -110,6 +130,20 @@ describe User do
       twitter.should_receive(:users).with([100, 55, 3]).and_return([user1, user2, user3])
       
       subject.verified(:follower_ids).should eq([user1, user3])
+    end
+    
+    it 'should have augmented interactions' do
+      grouped_interactions  = {'@twitter_1' => 3, '@twitter_2' => 2}
+      interactions          = mock('interactions')
+      
+      interactions.should_receive(:count).with(:all, :group => 'target', :order => 'id DESC').and_return(grouped_interactions)
+      subject.should_receive(:interactions).and_return(interactions)
+      twitter.should_receive(:users).with(['twitter_1', 'twitter_2'])
+                                    .and_return([Hashie::Mash.new({:screen_name => twitter_profile1.screen_name.gsub('@', ''), :profile_image_url => twitter_profile1.profile_image_url}), 
+                                                 Hashie::Mash.new({:screen_name => twitter_profile2.screen_name.gsub('@', ''), :profile_image_url => twitter_profile2.profile_image_url})])
+        
+      subject.grouped_augmented_interactions({:group => 'target', :order => 'id DESC'})
+             .should eq([grouped_augmented_interaction1.symbolize_keys, grouped_augmented_interaction2.symbolize_keys])
     end
   end
   

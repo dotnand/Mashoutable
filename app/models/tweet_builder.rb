@@ -3,11 +3,11 @@ class TweetBuilder
   
   attr_reader :tweet
 
-  def initialize(user, video_url = nil)
-    @user       = user
-    @tweet      = ''
-    @parts      = []
-    @video_url  = video_url
+  def initialize(user, bitly = nil)
+    @user   = user
+    @tweet  = ''
+    @parts  = []
+    @bitly  = bitly
   end
 
   def build(params)
@@ -47,9 +47,8 @@ class TweetBuilder
   end
   
   def video(value)
-    return '' if value == 'NONE' or value.nil? or @video_url.nil?
-    response = Bitly::Client.shorten(@video_url.call(value))
-    add_to_tweet(response['data']['url']) if @user.videos.find_by_guid(value).present? and response['status_code'] == 200
+    return '' if value == 'NONE' or value.nil? or @bitly.nil?  
+    add_to_tweet(@bitly.shortened_url) if @user.videos.find_by_guid(value).present? and @bitly.shorten
   end
   
   def targets(targets)

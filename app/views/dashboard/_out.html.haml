@@ -15,18 +15,48 @@
               Characters Left
             .clear.left
               = form_tag form_path do
-                %textarea#out{:maxlength => '140', :name => 'out'}
+                %textarea#out-preview{:maxlength => '140', :name => 'out'}
                   = @out
                 .left.network-toggle
-                  %input.left{:id => 'twitter', :value => '', :type => 'submit'}
-                  %input.left{:id => 'facebook', :value => '', :type => 'submit'}
-                  %input.left{:id => 'youtube', :value => '', :type => 'submit'}
+                  - if @networks[:twitter].blank?
+                    %a{:id => 'twitter-auth-button', :href => '#twitter-auth'}
+                      %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+                    %div{:style => 'display:none;'}
+                      #twitter-auth
+                        Oops, just this once you'll need to
+                        %a{:href => twitter_auth_path}
+                          %span.prepend-top#sign-in-twitter
+                    :javascript
+                      $(function() { $('#twitter-auth-button').fancybox(); });
+                  - else
+                    %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+                    :javascript
+                      $(function() { enableNetworkButton('#toggle-twitter', true); });
+                      $(function() { bindNetworkToggleButton('#toggle-twitter', '#mashout-network-twitter'); });
+                  
+                  - if @networks[:facebook].blank?
+                    %a{:id => 'facebook-auth-button', :href => '#facebook-auth'}
+                      %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
+                    %div{:style => 'display:none;'}
+                      #facebook-auth
+                        Oops, just this once you'll need to
+                        %a{:href => facebook_auth_path}
+                          %span.prepend-top#sign-in-facebook
+                    :javascript
+                      $(function() { $('#facebook-auth-button').fancybox(); });
+                  - else 
+                    %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
+                    :javascript
+                      $(function() { enableNetworkButton('#toggle-facebook', true); });
+                      $(function() { bindNetworkToggleButton('#toggle-facebook', '#mashout-network-facebook'); });    
+                      
+                  %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}                  
                 .right
-                  %input.button{:type => "submit", :value => "Send"}/
-                  %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}/
-                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}/
+                  %input.button{:id => 'send-out', :type => "submit", :value => "Send", :onclick => 'return false;'}
+                  %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
+                  %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
         .bottom
   :javascript
-    bindMashoutPreviewClick("#{mashout_preview_path}")
-    bindMashoutClearPreviewClick();
-
+    $(function() { bindMashoutPreviewClick("#{mashout_preview_path}"); });
+    $(function() { bindMashoutClearPreviewClick(); });
+      

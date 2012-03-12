@@ -11,7 +11,7 @@ describe Authorization do
   
   describe 'returns an authorization given a hash' do
     let(:param) { {'provider' => 'provider a', 'uid' => 'uid a', 'credentials' => {'secret' => 'secret a', 'token' => 'token 1'}} }
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user)  { FactoryGirl.build(:user) }
   
     it 'should find authorization from given a hash' do
       Authorization.should_receive('find_by_provider_and_uid')

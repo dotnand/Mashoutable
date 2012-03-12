@@ -40,6 +40,10 @@ describe ApplicationHelper do
     pending
   end
   
+  it 'should detect large content' do
+    pending
+  end
+  
   it 'should sanitize twitter screen name' do
     helper.sanitize_twitter_screen_name('@foo_bar').should eq('foo_bar')
   end
