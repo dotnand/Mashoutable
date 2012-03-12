@@ -53,13 +53,12 @@ p + p {
     text-indent: 0; }
 
 input::-moz-focus-inner {
-  border: 0; }
+    border: 0; }
 
 input[type='text'],
 textarea {
     margin: 6px 1px 6px 1px;
-    padding: 1px 0px 1px 0px;
-}
+    padding: 1px 0px 1px 0px; }
 
 .box {
     background: none; }
@@ -101,92 +100,61 @@ textarea {
     display: block; }
 
 /*social media icons*/
-.icons-twitter {
-    display: block;
-    width: 25px;
-    height: 23px;
-    background-image: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: 0px -24px;
-    margin-top: -2px; }
-
+.icons-twitter,
 .icons-facebook {
     display: block;
     width: 25px;
-    height: 25px;
     background-image: url("social-icons.png");
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; }
+
+.icons-twitter {
+    background-position: 0px -24px;
+    margin-top: -2px;
+    height: 23px; }
+
+.icons-facebook {
+    height: 25px;
     background-position: 0 1px;
     margin-top: -3px; }
 
-.network-toggle {
-    margin-top: 2px; }
-
+.network-toggle,
 .network-toggle input {
-    margin-right: 2px; }
+    margin-top: 2px; }
 
 .network-toggle input:last-child{
     margin-right: 0px; }
 
-.network-toggle #twitter.on {
-    display: block;
-    width: 26px;
-    height: 26px;
-    background: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: 0px -85px;
-    border: 0;
-    cursor: pointer; }
-
-.network-toggle #twitter {
-    display: block;
-    width: 26px;
-    height: 26px;
-    background: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: -28px -85px;
-    border: 0;
-    cursor: pointer; }
-
-.network-toggle #facebook.on {
-    display: block;
-    width: 26px;
-    height: 26px;
-    background: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: 0px -110px;
-    border: 0;
-    cursor: pointer; }
-
-.network-toggle #facebook {
-    display: block;
-    width: 26px;
-    height: 26px;
-    background: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: -28px -110px;
-    border: 0;
-    cursor: pointer; }
-
-.network-toggle #youtube.on {
-    display: block;
-    width: 26px;
-    height: 26px;
-    background: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: 0px -136px;
-    border: 0;
-    cursor: pointer; }
-
+.network-toggle #twitter.on,
+.network-toggle #twitter,
+.network-toggle #facebook.on,
+.network-toggle #facebook,
+.network-toggle #youtube.on,
 .network-toggle #youtube {
     display: block;
     width: 26px;
     height: 26px;
     background: url("social-icons.png");
     background-repeat: no-repeat;
-    background-position: -28px -136px;
     border: 0;
     cursor: pointer; }
+
+.network-toggle #twitter.on {
+    background-position: 0px -85px; }
+
+.network-toggle #twitter {
+    background-position: -28px -85px; }
+
+.network-toggle #facebook.on {
+    background-position: 0px -110px; }
+
+.network-toggle #facebook {
+    background-position: -28px -110px; }
+
+.network-toggle #youtube.on {
+    background-position: 0px -136px; }
+
+.network-toggle #youtube {
+    background-position: -28px -136px; }
 
 /*misc*/
 .align-right {
@@ -206,25 +174,27 @@ textarea {
 h4 span.counter {
     font-size: 1.38em; }
 
-.orange {
-    color: #d05407;
+.orange,
+.tool-orange,
+.blue,
+.green,
+.red {
     border-bottom: 0;}
+
+.orange {
+    color: #d05407; }
 
 .tool-orange {
-    color: #fe680e;
-    border-bottom: 0;}
+    color: #fe680e; }
 
 .blue {
-    color: #43ADD5;
-    border-bottom: 0;}
+    color: #43ADD5; }
 
 .green {
-    color: #93C734;
-    border-bottom: 0;}
+    color: #93C734; }
 
 .red {
-    color: #FF0B00;
-    border-bottom: 0;}
+    color: #FF0B00; }
 
 .inset-type{
     text-shadow: #474747 0px -1px 0;}
@@ -262,44 +232,42 @@ h4 span.counter {
 
 #header h2 {
     color: #eb6b2a;
-    font-style: italic;}
+    font-style: italic; }
 
 #header #navigation-social {
-    margin-top: 40px;}
+    margin-top: 40px; }
 
 #header #navigation-social h4{
     font-weight: normal;
     font-style: normal;
     padding-bottom: 2px;
     color: #363636;
-    text-align: right;}
+    text-align: right; }
 
 #header #navigation-social #social-media,
 #header #navigation-social #time-savings {
     padding: 10px 0;
-    height: 40px;}
+    height: 40px; }
 
-#header #navigation-social #social-media #navigation-sign-in-twitter {
-    display: block;
-    background-image: url("buttons.png");
-    background-repeat: no-repeat;
-    background-position: 0 -163px;
-    width:210px;
-    height:35px;}
-
+#header #navigation-social #social-media #navigation-sign-in-twitter,
 #header #navigation-social #social-media #navigation-sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
-    background-position: -270px -163px;
-    width:210px;
-    height:35px;}
+    width: 210px;
+    height: 35px; }
+
+#header #navigation-social #social-media #navigation-sign-in-twitter {
+    background-position: 0 -163px; }
+
+#header #navigation-social #social-media #navigation-sign-in-facebook {
+    background-position: -270px -163px; }
 
 #header #navigation-social #h-navigation li:first-child {
-    border: none;}
+    border: none; }
 
 #header #navigation-social #h-navigation ul{
-    margin-right: -8px;}
+    margin-right: -8px; }
 
 #header #navigation-social #h-navigation li{
     display: block;
@@ -307,7 +275,7 @@ h4 span.counter {
     list-style: none;
     padding: 0 12px;
     border-left: 1px dotted #a2b0b6;
-    height: 38px;}
+    height: 38px; }
 
 #header #navigation-social #h-navigation li a:link,
 #header #navigation-social #h-navigation li a:visited {
@@ -321,11 +289,11 @@ h4 span.counter {
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     -khtml-border-radius: 20px;
-    border-radius: 20px;}
+    border-radius: 20px; }
 
 #header #navigation-social #h-navigation li.active {
     background: url('nav-active.png') center;
-    background-repeat: no-repeat;}
+    background-repeat: no-repeat; }
 
 #header #navigation-social #h-navigation li.active a,
 #header #navigation-social #h-navigation li a:hover {
@@ -384,25 +352,22 @@ h4 span.counter {
     top: 80px;
     left: 225px; }
 
-#top #call-to-action #sign-in-twitter {
-    display: block;
-    background-image: url("buttons.png");
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    width:231px;
-    height:40px;
-    top: 27px;
-    right: 190px;
-    position: absolute; }
-
+#top #call-to-action #sign-in-twitter,
 #top #call-to-action #sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
+    width:231px;
+    height:40px;
+    position: absolute; }
+
+#top #call-to-action #sign-in-twitter {
+    background-position: 0 0;
+    top: 27px;
+    right: 190px; }
+
+#top #call-to-action #sign-in-facebook {
     background-position: -300px 0;
-    width: 231px;
-    height: 40px;
-    position: absolute;
     top: 27px;
     left: 250px; }
 
@@ -512,7 +477,8 @@ h4 span.counter {
     padding: 6px 0px;
     margin-left: 13px; }
 
-#footer #blog-twitter #twitter .tweet ul.tweet-list .awesome, #blog-twitter #twitter .tweet ul.tweet-list .epic {
+#footer #blog-twitter #twitter .tweet ul.tweet-list .awesome,
+#blog-twitter #twitter .tweet ul.tweet-list .epic {
     text-transform: uppercase;}
 
 #footer #blog-twitter #twitter .tweet ul.tweet-list {
@@ -768,39 +734,39 @@ h4 span.counter {
     background: url('bubbles.png') no-repeat;
     background-position: 0px -693px;
     height: 8px;
-    width: 227px;}
+    width: 227px; }
 
 #content-wrapper #main-content #content-body .content-bubble .bubble-body {
     background: url('bubbles.png') repeat-y;
     background-position: -624px 0px;
-    width: 235px;}
+    width: 235px; }
 
 #content-wrapper #main-content #content-body .content-bubble .bubble-body p{
     padding: 0 20px 0 10px;
     margin: 0;
     font-weight: bold;
-    font-size: 0.9em;color: #494949;}
+    font-size: 0.9em;color: #494949; }
 
 #content-wrapper #main-content #content-body .content-bubble .bubble-bottom {
     background: url('bubbles.png') no-repeat;
     background-position: 0px -830px;
     height: 10px;
-    width: 227px;}
+    width: 227px; }
 
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content img {
     margin-top:5px;
-    float:right;}
+    float:right; }
 
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content {
     padding:5px;
     background:#fbfbfb;
     border:solid 1px #a7dcf0;
     overflow:hidden;
-    margin-bottom:3px;}
+    margin-bottom:3px; }
 
 #wrapper, #welcome, #footer {
     min-width: 960px;
-    min-height: 200px;}
+    min-height: 200px; }
 
 
 /*TODO: remove*/
@@ -892,12 +858,19 @@ h4 span.counter {
     width: 265px;
     height: 100px; }
 
-#content-wrapper #sidebar #ready-to-mashout #quote .top {
+#content-wrapper #sidebar #ready-to-mashout #quote .top,
+#content-wrapper #sidebar #ready-to-mashout #quote .bottom {
     background: url("bubbles.png");
-    background-repeat: no-repeat;background-position: 0px 0px;
-    height: 40px;
-    width: 310px;
-    float: left; }
+    background-repeat: no-repeat;
+    width: 310px; }
+
+#content-wrapper #sidebar #ready-to-mashout #quote .top {
+    background-position: 0 0;
+    height: 40px; }
+
+#content-wrapper #sidebar #ready-to-mashout #quote .bottom {
+    background-position: 0px -270px;
+    height: 70px; }
 
 #content-wrapper #sidebar #ready-to-mashout #quote .body {
     background: url("bubbles.png");
@@ -916,14 +889,6 @@ h4 span.counter {
 #content-wrapper #sidebar #ready-to-mashout #quote .body p {
     padding: 0;
     margin: 0; }
-
-#content-wrapper #sidebar #ready-to-mashout #quote .bottom {
-    background: url("bubbles.png");
-    background-repeat: no-repeat;
-    background-position: 0px -270px;
-    height: 70px;
-    width: 310px;
-    float: left; }
 
 #content-wrapper #sidebar #ready-to-mashout #quote .quoted-by {
     text-align: right;
