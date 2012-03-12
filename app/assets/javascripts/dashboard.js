@@ -7,9 +7,11 @@ $(document).ready(function () {
         hideDivs('pickouts');
         if ($('.pickouts').is(':hidden')) {
             $(this).parents().addClass('active');
-            $('.pickouts').slideDown('200');
+            $('.pickouts').slideDown('200').animate({ scrollTop: 0 }, 0);
+            return false;
         } else {
-            $('.pickouts').slideUp('slow');
+            $('.pickouts').slideUp('slow').animate({ scrollTop: 0 }, 0);
+            return false;
         }
     });
 
@@ -17,9 +19,11 @@ $(document).ready(function () {
         hideDivs('analytics');
         if ($('.analytics').is(':hidden')) {
             $(this).parents().addClass('active');
-            $('.analytics').slideDown('200');
+            $('.analytics').slideDown('200').animate({ scrollTop: 0 }, 0);
+            return false;
         } else {
-            $('.analytics').slideUp('slow');
+            $('.analytics').slideUp('slow').animate({ scrollTop: 0 }, 0);
+            return false;
         }
     });
 
@@ -27,9 +31,11 @@ $(document).ready(function () {
         hideDivs('networks');
         if ($('.networks').is(':hidden')) {
             $(this).parents().addClass('active');
-            $('.networks').slideDown('200');
+            $('.networks').slideDown('200').animate({ scrollTop: 0 }, 0);
+            return false;
         } else {
-            $('.networks').slideUp('slow');
+            $('.networks').slideUp('slow').animate({ scrollTop: 0 }, 0);
+            return false;
         }
     });
 

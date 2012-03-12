@@ -7,6 +7,7 @@
     text-align: center;
     padding: 30px; }
 
+/*-------------------------Tool buttons-----------------------*/
 #content-wrapper.span-all #dropdown-buttons {
     border-bottom: 1px solid #bdbdbd;
     border-top: 1px solid #bdbdbd; }
@@ -14,7 +15,7 @@
 #content-wrapper.span-all #dropdown-buttons .pickouts,
 #content-wrapper.span-all #dropdown-buttons .analytics,
 #content-wrapper.span-all #dropdown-buttons .networks {
-    padding: 0 25px;}
+    padding: 15px 25px; }
 
 #content-wrapper.span-all #dropdown-buttons h4 {
     margin: 0;}
@@ -90,6 +91,35 @@
 #content-wrapper.span-all #dropdown-buttons .button.active {
     background: #d05407; }
 
+#content-wrapper.span-all .button {
+    position: relative; }
+
+/*button ribbons*/
+#content-wrapper.span-all .button .in-development,
+#content-wrapper.span-all .button .soon {
+    background: url(ribbons.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -7px;
+    left: -7px; }
+
+#content-wrapper.span-all .button .in-development {
+    background-position: 0 0;
+    width: 80px;
+    height: 80px; }
+
+#content-wrapper.span-all .button .soon {
+    background-position: -77px 0;
+    width: 60px;
+    height: 72px; }
+
+
+/*----------------------More Info Columns--------------------------*/
+#content-wrapper.span-all #extra-info {
+    background: #ededed;
+    width: 100%;
+    padding-top: 30px; }
+
 #content-wrapper.span-all #besties,
 #content-wrapper.span-all #video-library,
 #content-wrapper.span-all #interactions {
@@ -161,7 +191,7 @@
 
 #content-wrapper.span-all #besties input.text,
 #content-wrapper.span-all #besties input[type="text"] {
-    width: 260px;
+    width: 262px;
     padding: 5px; }
 
 #content-wrapper.span-all #besties input.submit,
@@ -180,23 +210,54 @@
     float: left;
     min-width: 280px; }
 
-#content-wrapper.span-all #extra-info {
-    background: #ededed;
-    width: 100%;
-    padding-top: 30px; }
+/*Large Dashboard Network Toggle*/
+.networks .network-toggle,
+.networks .network-toggle input {
+    margin-top: 2px;
+    padding-right: 10px;
+    border: 0;
+    outline: 0; }
 
-#content-wrapper.span-all .button {
-    position: relative; }
+.networks .network-toggle span {
+    width: 800px;
+    padding: 5px; }
 
-#content-wrapper.span-all .button .in-development {
-    background: url(development-ribbon.png);
+.networks .network-toggle .item {
+    padding: 5px 0; }
+
+.networks .network-toggle #twitter.on,
+.networks .network-toggle #twitter,
+.networks .network-toggle #facebook.on,
+.networks .network-toggle #facebook,
+.networks .network-toggle #youtube.on,
+.networks .network-toggle #youtube {
+    display: block;
+    width: 77px;
+    height: 77px;
+    background: url("social-icons.png");
     background-repeat: no-repeat;
-    position: absolute;
-    top: -7px;
-    left: -7px;
-    width: 80px;
-    height: 80px; }
+    border: 0;
+    cursor: pointer; }
 
+.networks .network-toggle #twitter.on {
+    background-position: -3px -247px; }
+
+.networks .network-toggle #twitter {
+    background-position: -80px -247px; }
+
+.networks .network-toggle #facebook.on {
+    background-position: -3px -167px; }
+
+.networks .network-toggle #facebook {
+    background-position: -80px -167px; }
+
+.networks .network-toggle #youtube.on {
+    background-position: -3px -325px; }
+
+.networks .network-toggle #youtube {
+    background-position: -81px -325px; }
+
+/*Misc*/
 #video-player {
     margin: 15px; }
 

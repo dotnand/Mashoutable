@@ -65,31 +65,31 @@
             / footer first blog item
             .blog-item
               .left.blog-date
-                %h2 04
-                %h4 MAR
+                %h2 05
+                %h4 SEP
               .left.blog-desc.span-6
-                %h3 Some news headlines
-                %h5 Posted in news
+                %h3
+                  =truncate("Mashoutable™ Social Media!", :length => 25)
+                %h5 Posted in Uncategorized
                 %p
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's standard
+                  =truncate("Welcome to Mashoutable™!  We enhance and simplify the Social Media User’s ability to discover, engage, and interact across the Social Web.", :length => 130)
                   %br/
                   %br/
-                  %a{:href => "#"} Read More
+                  %a{:href => blog_path} Read More
             / footer second blog item
             .blog-item
               .left.blog-date
-                %h2 04
+                %h2 12
                 %h4 MAR
               .left.blog-desc.span-6
-                %h3 Some news headlines
-                %h5 Posted in news
+                %h3
+                  =truncate("Mashoutable™ News", :length => 25)
+                %h5 Posted in News
                 %p
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's standard
+                  =truncate("Here you will be able to find vital and/or breaking news regarding Mashoutable™ products/services, partnerships, awesome users, and Mashoutable™ usage achievements!", :length => 130)
                   %br/
                   %br/
-                  %a{:href => "#"} Read More
+                  %a{:href => "http://mashoutable.wordpress.com/mashoutable-news/", :target => "_blank"} Read More
           / footer twitter section
           #twitter.right.last
             %h3.title Twitter:
