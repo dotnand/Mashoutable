@@ -4,4 +4,6 @@
 # User-Agent: *
 # Disallow: /
 
+#specify sitemap location
 Sitemap: http://www.mashoutable.com/sitemap.xml
+
