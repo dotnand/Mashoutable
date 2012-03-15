@@ -31,6 +31,7 @@
             &#35;Top Trend
           SHOUTOUT&#8482;
     .button.left
+      .in-development
       %h4.left.pickout.inset-type
         %a{:href => "#{dashboard_pickout_path}"}
           %span.red
@@ -48,26 +49,49 @@
         %a{:href => "#"} &#35;COMING SOON
   #dropdown-buttons.left.clear
     .button.left
+      .soon
       %h4.left.inset-type
         %a{:href => "#", :id => "pickouts"} MY PICKOUTS
     .button.left
+      .soon
       %h4.left.inset-type
         %a{:href => "#", :id => "analytics"} OUT.AM ANALYTICS
     .button.left
       %h4.left.inset-type
         %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
     .pickouts.clear.hidden.left
-      %h4 test
+      %h4 My Pickouts
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
     .analytics.clear.hidden.left
-      %h4 test 2
+      %h4 OUT.AM Analytics
       %p
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
     .networks.clear.hidden.left
-      %h4 test 3
-      %p
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+      %h4 Connected Networks
+      .network-toggle.left
+        .left.clear.item
+          %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+          :javascript
+            $(function() { enableNetworkButton('#toggle-twitter', false); });
+            $(function() { bindNetworkToggleButton('#toggle-twitter', '#networks-network-twitter'); });
+          %span.left
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
+        .left.clear.item
+          %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
+          :javascript
+            $(function() { enableNetworkButton('#toggle-facebook', false); });
+            $(function() { bindNetworkToggleButton('#toggle-facebook', '#networks-network-facebook'); });
+          %span.left
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
+        .left.clear.item
+          %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
+          :javascript
+            $(function() { enableNetworkButton('#toggle-youtube', false); });
+            $(function() { bindNetworkToggleButton('#toggle-youtube', '#networks-network-youtube'); });
+          %span.left
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
+      %input.span-3.left{:value => 'Save', :type => 'submit'}
   #extra-info.left
     = render 'besties'
     = render 'dashboard_videos'
@@ -76,3 +100,4 @@
     bindSettingsPanelButton('pickouts');
     bindSettingsPanelButton('analytics');
     bindSettingsPanelButton('networks');
+

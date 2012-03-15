@@ -8,14 +8,14 @@ function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
 
         outTarget.val(out.val());
         $(formId).submit();
-        
+
         return false;
     })
 }
 
 function enableNetworkButton(buttonId, enabled) {
     var button = $(buttonId);
-    
+
     if(enabled) {
         button.addClass('on');
     } else {
@@ -27,25 +27,25 @@ function bindNetworkToggleButton(buttonId, targetId) {
     $(buttonId).click(function() {
         var button  = $(this);
         var isOn    = button.hasClass('on');
-        
+
         enableNetworkButton(buttonId, !isOn);
         $(targetId).val(!isOn);
-        
+
         return false;
     });
 }
 
-function bindSettingsPanelButton(settingsName) {      
+function bindSettingsPanelButton(settingsName) {
       $('#' + settingsName).click(function () {
           var settingsClassName = '.' + settingsName;
-      
+
           hideDashboardSettings(settingsName);
-              
+
           if ($(settingsClassName).is(':hidden')) {
               $(this).parents().addClass('active');
-              $(settingsClassName).slideDown('200');
+              $(settingsClassName).slideDown('200').animate({ scrollTop: 0 }, 0);
           } else {
-              $(settingsClassName).slideUp('slow');
+              $(settingsClassName).slideUp('slow').animate({ scrollTop: 0 }, 0);
           }
 
           return false;

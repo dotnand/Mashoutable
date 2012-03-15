@@ -4,7 +4,7 @@
       %h2.inset-type Contact Us
 
 - content_for :content_body do
-  .span-15.box
+  .span-13.box.left
     = form_for @message, :url => contact_us_message_path do |form|
       = form.label :name
       = form.text_field :name, :class => 'span-10'
@@ -17,4 +17,14 @@
 
       %div{:class => 'span-12 align-right'}
         %input.button{:type => 'submit', :value => 'Send'}
+
+  .span-9.box.right
+    %p
+      %strong Questions or Comments?
+      %br/
+      %strong Email:
+      info@mashoutable.com
+      %br/
+      %br/
+      Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
 
