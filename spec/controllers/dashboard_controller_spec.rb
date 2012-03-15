@@ -443,8 +443,9 @@ describe DashboardController do
     get :shoutout
     assigns[:current_tool].should eq(dashboard_shoutout_path)
     
-    get :pickout
-    assigns[:current_tool].should eq(dashboard_pickout_path)
+    # TODO: the following tool is temporarily unavailable
+    # get :pickout
+    # assigns[:current_tool].should eq(dashboard_pickout_path)
   end
   
   context 'available networks' do

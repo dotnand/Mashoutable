@@ -18,7 +18,8 @@ class DashboardController < ApplicationController
       when dashboard_mashout_path then redirect_to dashboard_mashout_path
       when dashboard_blastout_path then redirect_to dashboard_blastout_path
       when dashboard_shoutout_path then redirect_to dashboard_shoutout_path
-      when dashboard_pickout_path then redirect_to dashboard_pickout_path
+      # TODO: temporarily disabled
+      # when dashboard_pickout_path then redirect_to dashboard_pickout_path
       when dashboard_signout_path then redirect_to dashboard_signout_path
       else redirect_to dashboard_path
     end
