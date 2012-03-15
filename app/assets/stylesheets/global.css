@@ -368,12 +368,12 @@ h4 span.counter {
 #sign-in-twitter {
     background-position: 0 0;
     top: 27px;
-    right: 190px; }
+    left: 240px; }
 
 #sign-in-facebook {
     background-position: -300px 0;
     top: 27px;
-    left: 250px; }
+    left: 510px; }
 
 #sign-in-youtube {
     display: block;
