@@ -139,9 +139,33 @@ describe DashboardController do
     let(:emitter) { mock('emitter') }
     let(:tweet)   { 'trend1 #trend2' }
     
+    def setup_emitter_errors(msg)
+      errors        = mock('errors')
+      full_messages = mock('full_messages')
+
+      full_messages.should_receive(:to_sentence).and_return(msg)
+      errors.should_receive(:any?).and_return(true)
+      errors.should_receive(:full_messages).and_return(full_messages)
+      emitter.should_receive(:errors).exactly(2).times.and_return(errors)
+    end
+    
     def setup_emitter(params, tweet)
-      TweetEmitter.should_receive(:new).with(current_user).and_return(emitter)
-      emitter.should_receive(:emit).with(params).and_return(tweet)
+      out = mock('out')
+
+      out.should_receive(:user=)
+      Out.should_receive(:new).and_return(out)
+      TweetEmitter.should_receive(:new).with(current_user, out).and_return(emitter)
+      emitter.should_receive(:validate!).and_return(tweet.length > 0)
+      
+      if tweet.length < 1
+        setup_emitter_errors('OUT can not be empty')
+      elsif not params.has_key?('mashout-network-twitter') and not params.has_key?('mashout-network-facebook')
+        setup_emitter_errors('Network must be choosen')
+      else
+        emitter.should_receive(:queued_emit?).and_return(false)
+        emitter.should_receive(:errors).and_return([])
+        emitter.should_receive(:emit).with(out).and_return(tweet)
+      end
     end
     
     def build_params(action)
@@ -182,16 +206,13 @@ describe DashboardController do
     
     context 'POST' do    
       def create_out_should_be_successful(redirected_to, tweet)
-        flash[:success].should eq('Created your MASHOUT!')
+        flash[:success].should eq('Created your OUT!')
         assigns[:out].should eq(tweet)
-      end  
-    
-      before do
-        setup_emitter(params, tweet)
       end
     
       it 'should create a shoutout' do
         build_params('create_shoutout')
+        setup_emitter(params, tweet)
         
         post :create_shoutout, params
         
@@ -201,6 +222,7 @@ describe DashboardController do
       
       it 'should create a mashout' do
         build_params('create_mashout')
+        setup_emitter(params, tweet)
         
         post :create_mashout, params
         
@@ -210,6 +232,7 @@ describe DashboardController do
       
       it 'should create a blastout' do
         build_params('create_blastout')
+        setup_emitter(params, tweet)
         
         post :create_blastout, params
         
@@ -220,7 +243,11 @@ describe DashboardController do
     
     [[:create_shoutout, 'create shoutout'], [:create_mashout, 'create mashout'], [:create_blastout, 'create blastout']].each do |action, desc|
       it "should not redirect on create #{desc} failure" do
-        TweetEmitter.should_receive(:new).with(current_user) { raise Exception.new('test failure') }
+        out = mock('out')
+
+        out.should_receive(:user=)
+        Out.should_receive(:new).and_return(out)
+        TweetEmitter.should_receive(:new).with(current_user, out) { raise Exception.new('test failure') }
         post action, params.merge!({'mashout-network-twitter'  => 'true'})
         flash[:error].should eq('Unable to your send your OUT.  test failure')
       end
@@ -235,13 +262,17 @@ describe DashboardController do
 
       post :create_mashout, params
 
-      flash[:notice].should eq('Oops, your tweet is empty!')
+      flash[:error].should eq('OUT can not be empty')
       assigns[:out].should eq('')
     end
     
     it 'should error if there no networks have been selected' do
-      post :create_blastout
-      flash[:error].should eq('You did not select a network')
+      params['out'] = 'hello!!!'
+      setup_emitter(params, params['out'])
+
+      post :create_blastout, params
+
+      flash[:error].should eq('Network must be choosen')
     end
   end
  
@@ -414,5 +445,43 @@ describe DashboardController do
     
     get :pickout
     assigns[:current_tool].should eq(dashboard_pickout_path)
+  end
+  
+  context 'available networks' do
+    let(:current_user) { FactoryGirl.create(:user) }
+    
+    before do
+      subject.stub(:current_user) { current_user }
+    end
+  
+    it 'should determine twitter authorization' do
+      current_user.stub(:twitter).and_return(true) 
+      current_user.stub(:facebook).and_return(nil) 
+      current_user.stub(:youtube).and_return(nil) 
+
+      get :index
+
+      assigns[:networks].should eq({'twitter' => true, 'facebook' => false, 'youtube' => false})
+    end
+    
+    it 'should determine facebook authorization' do
+      current_user.stub(:twitter).and_return(nil)
+      current_user.stub(:facebook).and_return(true) 
+      current_user.stub(:youtube).and_return(nil) 
+
+      get :index
+
+      assigns[:networks].should eq({'twitter' => false, 'facebook' => true, 'youtube' => false})
+    end
+    
+    it 'should determine facebook authorization' do
+      current_user.stub(:twitter).and_return(nil) 
+      current_user.stub(:facebook).and_return(nil) 
+      current_user.stub(:youtube).and_return(true) 
+
+      get :index
+
+      assigns[:networks].should eq({'twitter' => false, 'facebook' => false, 'youtube' => true})
+    end
   end
 end

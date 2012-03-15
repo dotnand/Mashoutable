@@ -50,21 +50,22 @@
                       $(function() { enableNetworkButton('#toggle-facebook', true); });
                       $(function() { bindNetworkToggleButton('#toggle-facebook', '#mashout-network-facebook'); });    
                       
-                  - if @networks[:youtube].blank? and params[:action] == 'blastout'
-                    %a{:id => 'youtube-auth-button', :href => '#youtube-auth'}
+                  - if params[:action] == 'blastout'
+                    - if @networks[:youtube].blank?
+                      %a{:id => 'youtube-auth-button', :href => '#youtube-auth'}
+                        %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
+                      %div{:style => 'display:none;'}
+                        #youtube-auth
+                          Oops, just this once you'll need to sign in with
+                          %a{:href => youtube_auth_path}
+                            %span.prepend-top#sign-in-youtube
+                      :javascript
+                        $(function() { $('#youtube-auth-button').fancybox(); });
+                    - else 
                       %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
-                    %div{:style => 'display:none;'}
-                      #youtube-auth
-                        Oops, just this once you'll need to sign in with
-                        %a{:href => youtube_auth_path}
-                          %span.prepend-top#sign-in-youtube
-                    :javascript
-                      $(function() { $('#youtube-auth-button').fancybox(); });
-                  - else 
-                    %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
-                    :javascript
-                      $(function() { enableNetworkButton('#toggle-youtube', true); });
-                      $(function() { bindNetworkToggleButton('#toggle-youtube', '#mashout-network-youtube'); });
+                      :javascript
+                        $(function() { enableNetworkButton('#toggle-youtube', true); });
+                        $(function() { bindNetworkToggleButton('#toggle-youtube', '#mashout-network-youtube'); });
                       
                 .right
                   %input.button{:id => 'send-out', :type => "submit", :value => "Send", :onclick => 'return false;'}

@@ -3,7 +3,7 @@ OmniAuth.config.full_host = 'http://localhost:3000' if not Rails.env.production?
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :twitter, ENV['TWITTER_CONSUMER_KEY'], ENV['TWITTER_CONSUMER_SECRET']
   provider :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], :scope => 'email, read_stream, publish_stream'
-  provider :google, ENV['YOUTUBE_CONSUMER_KEY'], ENV['YOUTUBE_CONSUMER_KEY'], :scope => 'http://gdata.youtube.com' 
+  provider :google, ENV['YOUTUBE_CONSUMER_KEY'], ENV['YOUTUBE_CONSUMER_SECRET'], :scope => 'http://gdata.youtube.com' 
 end
 
 Twitter.configure do |config|

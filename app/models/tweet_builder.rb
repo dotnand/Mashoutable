@@ -10,16 +10,16 @@ class TweetBuilder
     @bitly  = bitly
   end
 
-  def build(params)
-    @tweet = ''
-    
-    self.media(params['mashout-media'])
-    self.hashtag(params['mashout-hashtag'])
-    self.trend(params['mashout-trend'])
-    self.comment(params['mashout-comment'])
-    self.target(params['mashout-target'])
-    self.targets(params['mashout-targets'])
-    self.video(params['mashout-video'])
+  def build(out = @out)
+    @tweet  = ''
+
+    media(out.media)
+    hashtag(out.hashtags.map(&:tag))
+    trend(out.trends.map(&:trend))
+    comment(out.comment)
+    target(out.target)
+    targets(out.targets.map(&:target))
+    video(out.video.guid) if out.video.present?
 
     @tweet.strip
   end

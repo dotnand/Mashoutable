@@ -6,6 +6,8 @@ describe Reply do
   end
 
   it { should belong_to :user }
+  it { should belong_to :out }
+  it { should validate_presence_of :out }
   it { should validate_presence_of :status_id }
   it { should validate_uniqueness_of(:status_id).scoped_to(:user_id) }
 end
