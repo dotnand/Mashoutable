@@ -7,7 +7,7 @@ class VideoTransfer
     path  = "#{Rails.root}/tmp/#{@out.video.id}.#{ENV['NIMBB_VIDEO_FORMAT']}"
     
     download_nimbb_video(path, uri)
-    transfer_nimbb_video_to_youtube(out)
+    transfer_nimbb_video_to_youtube(@out, path)
   end
   
   def self.construct_nimbb_download_uri(out)
