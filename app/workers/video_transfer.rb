@@ -19,7 +19,7 @@ class VideoTransfer
   end
   
   def self.download_nimbb_video(path, uri)
-    File.open(path, 'wb') do |file|
+    File.new(path, 'wb') do |file|
       file << Kernel.open(uri).read
     end
   end
