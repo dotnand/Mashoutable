@@ -235,17 +235,17 @@ describe TweetBuilder do
       end
       
       it 'should build a complex tweet' do
-        params                    = {}
-        params['mashout-media']   = 'media'
-        params['mashout-hashtag'] = ['hashtag 1', 'hashtag 2']
-        params['mashout-trend']   = ['trend 1', 'trend 2']
-        params['mashout-comment'] = 'comment'
-        params['mashout-target']  = 'TWEOPLE'
-        params['mashout-targets'] = ['target 1', 'target 2']
+        params                              = {}
+        params['mashout-media']             = 'media'
+        params['mashout-hashtag']           = ['hashtag 1', 'hashtag 2']
+        params['mashout-trend']             = ['trend 1', 'trend 2']
+        params['mashout-comment']           = 'comment'
+        params['mashout-target-selection']  = 'TWEOPLE'
+        params['mashout-targets']           = ['target 1', 'target 2']
         
         user.should_receive(:tweople).and_return(users)
         
-        builder.build(params).should eq('media hashtag 1 hashtag 2 trend 1 trend 2 comment @john_doe1 @john_doe2 @jane_doe1 target 1 target 2')
+        builder.build(Out.new(params)).should eq('media hashtag 1 hashtag 2 trend 1 trend 2 comment @john_doe1 @john_doe2 @jane_doe1 target 1 target 2')
       end
       
       it 'should not build' do

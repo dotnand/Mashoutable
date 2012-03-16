@@ -368,12 +368,19 @@ h4 span.counter {
 #sign-in-twitter {
     background-position: 0 0;
     top: 27px;
-    right: 190px; }
+    left: 240px; }
 
 #sign-in-facebook {
     background-position: -300px 0;
     top: 27px;
-    left: 250px; }
+    left: 510px; }
+
+#sign-in-youtube {
+    display: block;
+    background-image: url("youtube-logo.jpg");
+    width:231px;
+    height:164px;}
+    
 
 /*Blog*/
 .blog h3 {
@@ -382,6 +389,7 @@ h4 span.counter {
 
 .blog .entry {
     border-bottom: 1px solid #dddddd;}
+
 
 /*Home page welcome*/
 #welcome {
@@ -911,7 +919,6 @@ h4 span.counter {
     height: 33px;
     margin-top: -10px;
     width: 295px; }
-
 
 
 /*Videos partial*/

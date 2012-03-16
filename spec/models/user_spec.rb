@@ -19,6 +19,7 @@ describe User do
   it { should have_many(:besties) }
   it { should have_many(:videos) }
   it { should have_many(:interactions) }
+  it { should have_many(:outs) }
   
   it 'should create a user given a hash' do
     param = {'info' => {'name' => 'jane_doe'}}
@@ -44,12 +45,29 @@ describe User do
     end
     
     it 'should have facebook access if a facebook user' do
-      token     = 'abc123'
+      token = 'abc123'
       
       FbGraph::User.should_receive(:me).with(token).and_return(facebook)
       auth.should_receive(:token).and_return(token)
       
       user.facebook.should eq(facebook)
+    end
+    
+    it 'should have youtube access if a youtube user' do
+      youtube = mock('youtube')
+    
+      ENV['YOUTUBE_CONSUMER_KEY']     = '123'
+      ENV['YOUTUBE_CONSUMER_SECRET']  = '456'
+      ENV['YOUTUBE_DEV_KEY']          = 'xyz'
+      
+      auth.should_receive(:token).and_return('888')
+      auth.should_receive(:secret).and_return('999')
+      youtube.should_receive(:authorize_from_access).with('888', '999')
+      YouTubeIt::OAuthClient.should_receive(:new)
+                            .with(:consumer_key => ENV['YOUTUBE_CONSUMER_KEY'], :consumer_secret => ENV['YOUTUBE_CONSUMER_SECRET'], :dev_key => ENV['YOUTUBE_DEV_KEY'])
+                            .and_return(youtube)
+      
+      user.youtube.should eq(youtube)
     end
   end
   
