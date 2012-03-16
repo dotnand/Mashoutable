@@ -19,3 +19,4 @@
 /config/bitly.yml
 /config/youtube.yml
 /config/redis.yml
+/config/resque.yml

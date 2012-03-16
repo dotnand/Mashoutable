@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
 
-  USERS = { 'mashoutable' => 'phlmashout11' }
+  USERS = { ENV['BASIC_AUTH_USERNAME'] => ENV['BASIC_AUTH_PASSWORD'] } if ENV['PROTECT_WITH_HTTP_BASIC_AUTH'].present?
 
   before_filter :env_authenticate
   layout 'inner'
