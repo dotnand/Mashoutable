@@ -44,7 +44,7 @@ Mashoutable::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(application-print.css application-ie.css ie.css ie7.css mashout.js select.js dashboard.js dashboard.css)
-    config.assets.precompile += %w(jquery.fancybox-1.3.4.css jquery.fancybox-1.3.4.pack.js)
+  config.assets.precompile += %w(jquery.fancybox-1.3.4.css jquery.fancybox-1.3.4.pack.js)
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
