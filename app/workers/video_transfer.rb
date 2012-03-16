@@ -4,7 +4,7 @@ class VideoTransfer
   def self.perform(out_id)
     @out   = Out.find(out_id)
     uri   = construct_nimbb_download_uri(@out)
-    path  = "#{Rails.root}/tmp/#{@out.video.id}.#{ENV['NIMBB_VIDEO_FORMAT']}"
+    path  = "/tmp/#{@out.video.id}.#{ENV['NIMBB_VIDEO_FORMAT']}"
     
     download_nimbb_video(path, uri)
     transfer_nimbb_video_to_youtube(@out, path)
@@ -19,7 +19,7 @@ class VideoTransfer
   end
   
   def self.download_nimbb_video(path, uri)
-    File.new(path, 'wb') do |file|
+    File.open(path, 'wb') do |file|
       file << Kernel.open(uri).read
     end
   end
