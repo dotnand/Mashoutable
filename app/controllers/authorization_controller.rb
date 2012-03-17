@@ -13,6 +13,6 @@ class AuthorizationController < ApplicationController
     logger.error "DEBUG FAILURE #{request.env}"
     logger.error "DEBUG FAILURE #{params}" 
     
-    render :json => request.env.to_son
+    render :json => request.env.to_json
   end
 end
