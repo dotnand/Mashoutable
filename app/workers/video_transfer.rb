@@ -37,7 +37,7 @@ class VideoTransfer
     response = nil
     File.open(path) do |file| 
       response              = out.user.youtube.video_upload(file, :title => out.video.name)
-      out.video.youtube_id = response.unique_id
+      out.video.youtube_id  = response.unique_id
       out.video.save!
     end
     response
