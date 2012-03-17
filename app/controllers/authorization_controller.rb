@@ -8,4 +8,11 @@ class AuthorizationController < ApplicationController
     self.current_user = @auth.user
     redirect_to dashboard_path
   end
+  
+  def failure
+    logger.error "DEBUG FAILURE #{request.env}"
+    logger.error "DEBUG FAILURE #{params}" 
+    
+    render :json => request.env.to_son
+  end
 end

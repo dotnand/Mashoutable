@@ -1,6 +1,7 @@
 Mashoutable::Application.routes.draw do
   # 3rd party authentication providers (twitter, facebook, etc...)
-  match '/auth/:provider/callback' => 'authorization#create'
+  match '/auth/:provider/callback'  => 'authorization#create'
+  match '/auth/failure'             => 'authorization#failure'
 
   # mashouts
   match 'mashouts/preview'    => 'dashboard#preview_mashout', :via => :get,     :as => :mashout_preview
