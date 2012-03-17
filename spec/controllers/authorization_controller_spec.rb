@@ -48,4 +48,9 @@ describe AuthorizationController do
       should_not_create_an_authorization
     end
   end
+  
+  it 'should show a failure page on authorization failure' do
+    get :failure, {:message => 'uhoh'}
+    assigns[:message].should eq('uhoh')
+  end
 end
