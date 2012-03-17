@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   USERS = { ENV['BASIC_AUTH_USERNAME'] => ENV['BASIC_AUTH_PASSWORD'] } if ENV['PROTECT_WITH_HTTP_BASIC_AUTH'].present?
 
-  before_filter :env_authenticate
+  #before_filter :env_authenticate
   layout 'inner'
   protect_from_forgery
 
