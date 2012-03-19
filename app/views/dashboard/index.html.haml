@@ -1,16 +1,5 @@
 - content_for :content_body do
   / content section
-  #hours-saved.clear
-    %h3
-      Mashoutable has saved you
-      %span.counter
-        9
-      hours and
-      %span.counter
-        4
-      %span.counter
-        0
-      minutes
   #tool-buttons.left.clear
     .button.left
       %h4.mashout.inset-type
@@ -71,27 +60,23 @@
       %h4 Connected Networks
       .network-toggle.left
         .left.clear.item
-          %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
+          %input.left.clear{:id => 'toggle-twitter', :value => '', :type => 'submit'}
           :javascript
             $(function() { enableNetworkButton('#toggle-twitter', false); });
             $(function() { bindNetworkToggleButton('#toggle-twitter', '#networks-network-twitter'); });
-          %span.left
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
-        .left.clear.item
-          %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
+          %input.left.clear{:id => 'toggle-facebook', :value => '', :type => 'submit'}
           :javascript
             $(function() { enableNetworkButton('#toggle-facebook', false); });
             $(function() { bindNetworkToggleButton('#toggle-facebook', '#networks-network-facebook'); });
-          %span.left
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
-        .left.clear.item
-          %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
+          %input.left.clear{:id => 'toggle-youtube', :value => '', :type => 'submit'}
           :javascript
             $(function() { enableNetworkButton('#toggle-youtube', false); });
             $(function() { bindNetworkToggleButton('#toggle-youtube', '#networks-network-youtube'); });
-          %span.left
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
-      %input.span-3.left{:value => 'Save', :type => 'submit'}
+        .description.left
+          %span.network-arrow.left
+          %p.right
+            Click the favicons to connect/disconnect your Social Networks
+      %input.span-3.left.clear{:value => 'Save', :type => 'submit'}
   #extra-info.left
     = render 'besties'
     = render 'dashboard_videos'

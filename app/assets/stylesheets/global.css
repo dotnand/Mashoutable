@@ -239,7 +239,8 @@ h4 span.counter {
     font-style: italic; }
 
 #header #navigation-social {
-    margin-top: 40px; }
+    margin-top: 40px;
+    position: relative; }
 
 #header #navigation-social h4{
     font-weight: normal;
@@ -271,7 +272,11 @@ h4 span.counter {
     border: none; }
 
 #header #navigation-social #h-navigation ul{
-    margin-right: -8px; }
+    margin-right: -8px;
+    position: absolute;
+    top: 60px;
+    right: -8px;
+    min-width: 445px; }
 
 #header #navigation-social #h-navigation li{
     display: block;
@@ -366,7 +371,7 @@ h4 span.counter {
 }
 
 #sign-in-twitter {
-    background-position: 0 0;  
+    background-position: 0 0;
 }
 
 #sign-in-facebook {
@@ -388,7 +393,7 @@ h4 span.counter {
     background-image: url("youtube-logo.jpg");
     width:231px;
     height:164px;}
-    
+
 
 /*Blog*/
 .blog h3 {
@@ -522,6 +527,8 @@ h4 span.counter {
 #footer #blog-twitter #twitter .tweet ul.tweet-list li a {
     color: none; }
 
+#footer #blog-twitter #twitter .tweet loading {
+    margin-left: 20px;}
 
 /*Footer black bar*/
 #footer #back-to-top {
@@ -743,7 +750,7 @@ h4 span.counter {
     border-bottom: 1px dashed #7faac5;
     background: url('title-bg.jpg') repeat;
     min-height: 50px;
-    padding: 10px 20px; }
+    padding: 10px 15px; }
 
 #content-wrapper #main-content #content-body #content-inner #title h2,
 #content-wrapper.span-all #content-body #content-inner #title h2 {
@@ -930,21 +937,21 @@ h4 span.counter {
 
 
 /*Videos partial*/
-#content-wrapper #video-library {
+#content-wrapper.span-all #video-library {
     min-height: 410px;
     padding: 0;}
 
 #content-wrapper #video-library object {
     padding-right: 10px;}
 
-#content-wrapper #video-library #videos {
+#content-wrapper.span-all #video-library #videos {
     min-height: 350px;
     margin: 0;
     padding: 0;}
 
 #content-wrapper #video-library #videos ul {
     padding-left:0;
-    margin: 0 0.5em 1.5em 0}
+    margin: 0 0.5em 1.5em 0; }
 
 #content-wrapper #video-library #videos label {
     font-weight: normal;}
@@ -978,6 +985,9 @@ label {
     float: left;
     min-width: 85px;
     line-height:2em; }
+
+label.mail {
+    height: 40px;}
 
 #out-preview {
     height: 100px;}
