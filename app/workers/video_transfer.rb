@@ -4,7 +4,7 @@ class VideoTransfer
   def self.perform(out_id)
     @out   = Out.find(out_id)
     uri   = construct_nimbb_download_uri(@out)
-    path  = "#{Rails.root}/tmp/#{@out.video.id}.#{ENV['NIMBB_VIDEO_FORMAT']}"
+    path  = "/tmp/#{@out.video.id}.#{ENV['NIMBB_VIDEO_FORMAT']}"
     
     download_nimbb_video(path, uri)
     transfer_nimbb_video_to_youtube(@out, path)
@@ -37,7 +37,7 @@ class VideoTransfer
     response = nil
     File.open(path) do |file| 
       response              = out.user.youtube.video_upload(file, :title => out.video.name)
-      out.video.youtube_id = response.unique_id
+      out.video.youtube_id  = response.unique_id
       out.video.save!
     end
     response
@@ -59,11 +59,16 @@ class VideoTransfer
     end
   end
   
+  def self.replace_bitly_link(out, bitly)
+    bitly.shorten
+    out.content.split(' ').map { |item| item.gsub(/http:\/\/out.am\/.+/, bitly.shortened_url) }.join(' ')
+  end
+  
   protected
     def self.send_out_to_facebook(out, response)
       if out.facebook?
         bitly       = Bitly::Client.new('http://www.youtube.com/v/' << response.unique_id)
-        out.content = TweetBuilder.new(out.user, bitly).build(out)
+        out.content = replace_bitly_link(out, bitly)
         params      = {:link     => bitly.shortened_url, 
                        :source   => bitly.shortened_url, 
                        :picture  => response.thumbnails.last.url}
@@ -74,9 +79,9 @@ class VideoTransfer
     
     def self.send_out_to_twitter(out, response)
       if out.twitter?
-        bitly         = Bitly::Client.new(response.player_url)
-        out.content  = TweetBuilder.new(out.user, bitly).build(out)
-                         
+        bitly       = Bitly::Client.new(response.player_url)
+        out.content = replace_bitly_link(out, bitly)
+                                 
         TweetEmitter.new(out.user, out).twitter_post
       end
     end

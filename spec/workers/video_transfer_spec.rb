@@ -38,6 +38,16 @@ describe VideoTransfer do
     VideoTransfer.download_nimbb_video(path, uri)
   end
   
+  it 'should replace a bitly link in the out content' do
+    bitly = mock('bitly')    
+    
+    bitly.should_receive(:shorten)
+    bitly.should_receive(:shortened_url).exactly(3).times.and_return('http://out.am/xyz')
+    out.should_receive(:content).and_return('the merry http://out.am/abc')
+    
+    VideoTransfer.replace_bitly_link(out, bitly).should eq('the merry http://out.am/xyz')
+  end
+  
   context 'get youtube video info' do
     before do
       setup_out
