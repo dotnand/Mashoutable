@@ -13,6 +13,12 @@ function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
     })
 }
 
+function bindYoutubeHelpText(buttonId, targetId) {
+    $(buttonId).click(function() {
+        $(targetId).toggle();
+    });
+}
+
 function enableNetworkButton(buttonId, enabled) {
     var button = $(buttonId);
 

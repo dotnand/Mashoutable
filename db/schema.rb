@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content"
-    t.boolean  "pending"
+    t.boolean  "pending",      :default => false
   end
 
   create_table "replies", :force => true do |t|
