@@ -32,7 +32,6 @@
             #logo.left
               %a{:href => "/"}
                 %img{:alt => "Mashoutable", :src => "#{asset_path('logo.png')}"}
-              %h1.hide Mashoutable
             / navigation and time savings
             #navigation-social.right.last
               = render 'shared/login'
@@ -61,30 +60,30 @@
         .container
           / footer blog section
           #blog.left
-            %h3.title From the Blog:
+            %span.title.left From the Blog:
             / footer first blog item
-            .blog-item
+            .entry.clear
               .left.blog-date
-                %h2 05
-                %h4 SEP
+                %span.day 05
+                %span.month SEP
               .left.blog-desc.span-6
-                %h3
+                %span.title
                   =truncate("Mashoutable™ Social Media!", :length => 25)
-                %h5 Posted in Uncategorized
+                %span.category Posted in Uncategorized
                 %p
                   =truncate("Welcome to Mashoutable™!  We enhance and simplify the Social Media User’s ability to discover, engage, and interact across the Social Web.", :length => 130)
                   %br/
                   %br/
                   %a{:href => blog_path} Read More
             / footer second blog item
-            .blog-item
+            .entry
               .left.blog-date
-                %h2 12
-                %h4 MAR
+                %span.day 12
+                %span.month MAR
               .left.blog-desc.span-6
-                %h3
+                %span.title
                   =truncate("Mashoutable™ News", :length => 25)
-                %h5 Posted in News
+                %span.category Posted in News
                 %p
                   =truncate("Here you will be able to find vital and/or breaking news regarding Mashoutable™ products/services, partnerships, awesome users, and Mashoutable™ usage achievements!", :length => 130)
                   %br/
@@ -92,7 +91,7 @@
                   %a{:href => "http://mashoutable.wordpress.com/mashoutable-news/", :target => "_blank"} Read More
           / footer twitter section
           #twitter.right.last
-            %h3.title Twitter:
+            %span.title.left Twitter:
             .left
               .tweet
               #twitter-bird.right

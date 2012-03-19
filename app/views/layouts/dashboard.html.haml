@@ -9,7 +9,7 @@
 - if controller.controller_name == 'dashboard' and controller.action_name != 'video_playback'
   - content_for :title do
     .left
-      %h2.inset-type What do you want to do today?
+      %h1.inset-type What do you want to do today?
       %p#title-subtitle Use the drop down menu on the right to select your tool!
     %img.left{:alt => "Pick your tool", :src => "#{asset_path('arrow.png')}"}
     = form_tag(dashboard_tool_path, :method => :get, :id => 'tool-form') do

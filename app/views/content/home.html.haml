@@ -2,11 +2,10 @@
   / tagline
   #tagline.clear
     .left
-      %h1.inset-type
-        Free Tools to
-        %span.large Amplify
+      %span.inset-type
+        Free Tools to Amplify
         %br/
-        %span.prepend-1 Your Social Media Development
+        .prepend-1 Your Social Media Development
     / tagline toolbox
     #toolbox-icon.right.last
       %img{:alt => "Toolbox", :src => "#{asset_path('tools.png')}"}
@@ -25,24 +24,24 @@
             %span#sign-in-twitter.left
         / Call to action step 1
         .clear.box.left.span-6.first
-          %h1.left 1.
-          %h3.list-item
+          %span.number.left 1.
+          %span.list-item
             %span
               Start
               %span.orange Here
           %p Sign in with Twitter or Facebook
         / Call to action step 2
         .box.left.span-7
-          %h1.left 2.
-          %h3.list-item
+          %span.number.left 2.
+          %span.list-item
             %span
               Choose the
               %span.orange Tool
           %p Search, target, optimize, construct and save time with one or multiple tools via MASHOUTABLE™
         / Call to action step 3
         .box.left.last.span-6
-          %h1.left 3.
-          %h3.list-item
+          %span.number.left 3.
+          %span.list-item
             %span.orange MASHOUT!
           %p Use as many tools as you like over and over again!
   / tools wrapper
@@ -50,13 +49,13 @@
     / tools container
     .container
       / tools start content
-      %h2.title The Tools:
+      %span.title The Tools:
       / mashout tool
       #mashout-tool.box
         / mashout tool container
         .tool-inner
           / mashout start content
-          %h4
+          %span
             %a{:href => mashout_url}
               %span.tool-orange
                 &#35;Targeted
@@ -67,7 +66,7 @@
         / blastout tool container
         .tool-inner
           / blastout start content
-          %h4
+          %span
             %a{:href => blastout_url}
               %span.blue
                 &#35;Video
@@ -78,7 +77,7 @@
         / shoutout tool container
         .tool-inner
           / shoutout start content
-          %h4
+          %span
             %a{:href => shoutout_url}
               %span.green
                 &#35;Top Trend
@@ -89,7 +88,7 @@
         / pickout tool container
         .tool-inner
           / pickout start content
-          %h4
+          %span
             %a{:href => pickout_url}
               %span.red
                 &#35;Credible Winner
@@ -100,7 +99,7 @@
         / coming soon tool container
         .tool-inner
           / coming soon start content
-          %h2 #COMING SOON
+          %span #COMING SOON
         %p.clear Get ready for what's coming! Live in the "wow" with Mashoutable™!
   - content_for :optional_body do
     #welcome.clear
@@ -108,7 +107,9 @@
       / footer welcome container
       .container
         / footer welcome start content
-        %h2.inset-type Welcome to Mashoutable™
+        %span.inset-type Welcome to Mashoutable™
+        %h1
+          Free Social Media Tools for Social Media Amplification
         %p
-          %h1 Free Social Media Tools for Social Media Amplification
           = render 'mashout_desc'
+
