@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301215432) do
+ActiveRecord::Schema.define(:version => 20120314202425) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -33,11 +33,11 @@ ActiveRecord::Schema.define(:version => 20120301215432) do
   add_index "besties", ["screen_name"], :name => "index_besties_on_screen_name"
 
   create_table "interactions", :force => true do |t|
-    t.text     "content"
     t.string   "target"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "out_id"
   end
 
   create_table "mentions", :force => true do |t|
@@ -45,6 +45,51 @@ ActiveRecord::Schema.define(:version => 20120301215432) do
     t.string   "who"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "out_id"
+  end
+
+  create_table "out_hashtags", :force => true do |t|
+    t.string   "tag"
+    t.integer  "out_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "out_replies", :force => true do |t|
+    t.string   "reply"
+    t.integer  "out_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "out_targets", :force => true do |t|
+    t.string   "target"
+    t.integer  "out_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "out_trends", :force => true do |t|
+    t.string   "trend"
+    t.integer  "out_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "outs", :force => true do |t|
+    t.string   "media"
+    t.string   "trend_source"
+    t.string   "comment"
+    t.string   "target"
+    t.boolean  "twitter"
+    t.boolean  "facebook"
+    t.boolean  "youtube"
+    t.integer  "user_id"
+    t.integer  "video_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "content"
+    t.boolean  "pending"
   end
 
   create_table "replies", :force => true do |t|
@@ -52,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20120301215432) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "out_id"
   end
 
   add_index "replies", ["status_id"], :name => "index_replies_on_status_id"
@@ -68,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20120301215432) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "youtube_id"
   end
 
 end

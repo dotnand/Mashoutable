@@ -1,50 +1,94 @@
 class TweetEmitter
-  def initialize(user)
-    @user = user
+  extend ActiveModel::Naming
+  attr_reader :errors, :out
+  
+  def initialize(user, out = nil)
+    @user   = user
+    @out    = out
+    @errors = ActiveModel::Errors.new(self)
   end
 
-  def emit(params)
-    content = params['out']
-    replies = params['mashout-replies']
+  def emit(out = @out)
+    return if out.content.blank?
     
-    return if content.blank?
+    @out = out
+    if @out.youtube? and @out.video.present?    
+      Resque.enqueue(VideoTransfer, @out.id) if (@queued_emit = @out.save!)
+      return
+    end
+    
+    send_content
+  end
+  
+  def queued_emit?
+    @queued_emit ||= false
+  end
+  
+  def validate!
+    errors[:OUT] = 'can not be empty' if @out.content.empty?
+    errors[:Network] = 'must be choosen' if not (@out.twitter? or @out.facebook?)
+  end
+  
+  def send_content(params = {})
+    capture_metrics
 
-    send(content, replies, params['mashout-network-twitter'], params['mashout-network-facebook'])
-    capture_mentions(content)
-    capture_replies(replies)
-    capture_interactions(content)
-    
-    content
-  end
-  
-  def send(content, replies, twitter_network, facebook_network)
-    if twitter_network == 'true'
-      if replies.present?
-        replies.each { |reply_to| @user.twitter.update(content, :in_reply_to_status_id => reply_to) }
-      else 
-        @user.twitter.update(content)
-      end
+    if @user.save
+      twitter_post if @out.twitter?
+      facebook_post(params) if @out.facebook?
+    else
+      raise StandardError.new('Unable to save content')
     end
     
-    if facebook_network == 'true'
-      @user.facebook.feed!(:message => content)
+    @out.content
+  end
+
+  def twitter_post
+    return unless @out.twitter?
+  
+    if @out.replies.present?
+      @out.replies.map(&:reply).each { |reply_to| @user.twitter.update(@out.content, :in_reply_to_status_id => reply_to) }
+    else 
+      @user.twitter.update(@out.content)
     end
   end
   
-  def capture_mentions(content)
-    parse_mentions(content).each { |who| @user.mentions.find_or_create_by_who(who) }
+  def facebook_post(params = {}) 
+    # :content => content, :link => link, :source => source, :picture => picture
+    @user.facebook.feed!({:message => @out.content}.merge!(params)) if @out.facebook?
   end
   
-  def capture_replies(replies)
-    replies.each { |reply| @user.replies.find_or_create_by_status_id(reply) } if replies.present?
+  def capture_mentions
+    parse_mentions(@out.content).each { |who| @user.mentions.find_or_create_by_who(who, :out => @out) }
   end
   
-  def capture_interactions(content)
-    parse_mentions(content).each { |reply| @user.interactions.create(:content => content, :target => reply) }
+  def capture_replies
+    @out.replies.map(&:reply).each { |reply| @user.replies.find_or_create_by_status_id(reply, :out => @out) } if @out.replies.present?
+  end
+  
+  def capture_interactions
+    parse_mentions(@out.content).each { |reply| @user.interactions.create(:target => reply, :out => @out) }
+  end
+  
+  def read_attribute_for_validation(attr)
+    send(attr)
+  end
+
+  def TweetEmitter.human_attribute_name(attr, options = {})
+    attr
+  end
+
+  def TweetEmitter.lookup_ancestors
+    [self]
   end
   
   protected
     def parse_mentions(content)
       content.split(' ').select{ |snippet| snippet =~ /@\w+/i }
+    end
+    
+    def capture_metrics
+      capture_replies
+      capture_mentions
+      capture_interactions
     end
 end

@@ -19,11 +19,13 @@ FactoryGirl.define do
   
   factory :mention do
     user
+    out
     sequence(:who) {|n| "@mentioned_person_#{n}"}
   end
 
   factory :reply do
     user
+    out
     sequence(:status_id) {|n| "#{n}"}
   end
   
@@ -40,8 +42,22 @@ FactoryGirl.define do
   
   factory :interaction do
     user
+    out
     sequence(:content)  {|n| "content #{n}"}
     sequence(:target)   {|n| "user_#{n}"}
+  end
+  
+  factory :out do
+    user
+    video 
+    twitter   { true }
+    facebook  { true }
+    youtube   { true }
+    pending   { true }
+    sequence(:media)        {|n| "media_#{n}"}
+    sequence(:trend_source) {|n| "trend_#{n}"}
+    sequence(:comment)      {|n| "comment_#{n}"}
+    sequence(:content)      {|n| "content_#{n}"}
   end
 end
 

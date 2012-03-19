@@ -17,3 +17,6 @@
 /config/facebook.yml
 /config/heroku_env.rb
 /config/bitly.yml
+/config/youtube.yml
+/config/redis.yml
+/config/resque.yml

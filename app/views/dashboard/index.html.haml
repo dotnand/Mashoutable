@@ -48,14 +48,14 @@
     .button.left
       .in-development
       %h4.left.pickout.inset-type
-        %a{:href => "#{dashboard_pickout_path}"}
+        %a{:href => "#", :onclick => 'return false'}
           %span.red
             &#35;Credible Winner
           PICKOUT&#8482;
     .button.left
       .in-development
       %h4.left.lookout.inset-type
-        %a{:href => "#"}
+        %a{:href => "#", :onclick => 'return false'}
           %span.orange
             &#35;Lookout
           LOOKOUT&#8482;
@@ -66,22 +66,22 @@
     .button.left
       .soon
       %h4.left.inset-type
-        %a{:href => "#", :id => "pickouts"} MY PICKOUTS
+        %a{:href => "#", :id => "pickouts", :onclick => 'return false'} MY PICKOUTS
     .button.left
       .soon
       %h4.left.inset-type
-        %a{:href => "#", :id => "analytics"} OUT.AM ANALYTICS
+        %a{:href => "#", :id => "analytics", :onclick => 'return false'} OUT.AM ANALYTICS
     .button.left
       %h4.left.inset-type
         %a{:href => "#", :id => "networks"} CONNECTED NETWORKS
     .pickouts.clear.hidden.left
       %h4 My Pickouts
       %p
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+        Comming Soon!
     .analytics.clear.hidden.left
       %h4 OUT.AM Analytics
       %p
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Vivamus ligula nisi, pretium ultricies lacinia nec, vestibulum eu elit. Sed nec massa eget mi posuere pharetra. Integer ac mauris ut lectus viverra adipiscing. Sed eleifend vehicula leo, aliquam lobortis odio interdum vehicula. Duis mi elit, lacinia eget ornare et, pellentesque sit amet justo.
+        Comming Soon!
     .networks.clear.hidden.left
       %h4 Connected Networks
       .network-toggle.left
@@ -112,7 +112,5 @@
     = render 'dashboard_videos'
     = render 'interactions'
   :javascript
-    bindSettingsPanelButton('pickouts');
-    bindSettingsPanelButton('analytics');
     bindSettingsPanelButton('networks');
 

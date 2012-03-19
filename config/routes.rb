@@ -1,6 +1,7 @@
 Mashoutable::Application.routes.draw do
   # 3rd party authentication providers (twitter, facebook, etc...)
-  match '/auth/:provider/callback' => 'authorization#create'
+  match '/auth/:provider/callback'  => 'authorization#create'
+  match '/auth/failure'             => 'authorization#failure'
 
   # mashouts
   match 'mashouts/preview'    => 'dashboard#preview_mashout', :via => :get,     :as => :mashout_preview
@@ -40,8 +41,8 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/mashout'       => 'dashboard#mashout'
   match 'dashboard/blastout'      => 'dashboard#blastout'
   match 'dashboard/shoutout'      => 'dashboard#shoutout'
-  # the following tool is temporarily unavailable 
-  match 'dashboard/pickout'       => 'dashboard#pickout'
+  # TODO: the following tool is temporarily unavailable 
+  # match 'dashboard/pickout'       => 'dashboard#pickout'
   match 'dashboard/interactions'  => 'dashboard#interactions'
   match 'dashboard/signout'       => 'dashboard#signout'
   match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source

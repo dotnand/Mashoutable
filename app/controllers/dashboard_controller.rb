@@ -18,7 +18,8 @@ class DashboardController < ApplicationController
       when dashboard_mashout_path then redirect_to dashboard_mashout_path
       when dashboard_blastout_path then redirect_to dashboard_blastout_path
       when dashboard_shoutout_path then redirect_to dashboard_shoutout_path
-      when dashboard_pickout_path then redirect_to dashboard_pickout_path
+      # TODO: temporarily disabled
+      # when dashboard_pickout_path then redirect_to dashboard_pickout_path
       when dashboard_signout_path then redirect_to dashboard_signout_path
       else redirect_to dashboard_path
     end
@@ -61,8 +62,12 @@ class DashboardController < ApplicationController
   end
 
   def preview_mashout
-    bitly = Bitly::Client.new(video_playback_url(params['mashout-video']))
-    render :text => TweetBuilder.new(self.current_user, bitly).build(params)
+    video_guid  = params['mashout-video']
+    bitly       = Bitly::Client.new(video_playback_url(video_guid))
+    out         = Out.new(params)
+    out.video   = Video.find_by_guid(video_guid)
+    
+    render :text => TweetBuilder.new(self.current_user, bitly).build(out)
   end
 
   def blastout
@@ -104,6 +109,7 @@ class DashboardController < ApplicationController
   end
 
   def create_bestie
+    # TODO: bestie edit before save
     bestie_screen_name = params['bestie']
     bestie_screen_name.insert(0, '@') if bestie_screen_name[0] != '@'
 
@@ -125,6 +131,7 @@ class DashboardController < ApplicationController
     guid  = params['guid']
     video = Video.new(:guid => guid, :name => name, :user => current_user)
 
+    # TODO: refactor into video model
     if guid.blank?
       message = 'Video was not supplied'
     elsif name.blank?
@@ -146,6 +153,7 @@ class DashboardController < ApplicationController
     name    = params['name']
     message = nil
 
+    # TODO: refactor into video model
     if name.blank?
       message = 'Name is blank'
     elsif (video = current_user.videos.find_by_guid(guid)).present?
@@ -169,8 +177,7 @@ class DashboardController < ApplicationController
   end
 
   def video_playback
-    guid = params['guid']
-    if guid.present?
+    if (guid = params['guid']).present?
       @video = Video.find_by_guid(guid)
       render 'video_playback'
     else
@@ -206,28 +213,34 @@ class DashboardController < ApplicationController
     end
 
     def available_networks
-      @networks = {:twitter => current_user.twitter.present?, 
-                   :facebook => current_user.facebook.present?}
+      @networks = {:twitter   => current_user.twitter.present?, 
+                   :facebook  => current_user.facebook.present?,
+                   :youtube   => current_user.youtube.present?}
     end
 
     def create_out(params)
      begin
-        # TODO: extract into out model
-        if params['mashout-network-twitter'] != 'true' and params['mashout-network-facebook'] != 'true'
-          flash[:error] = 'You did not select a network'
-          return flash[:success].present?
-        end
-     
-        @out    = params['out']
-        @tweet  = TweetEmitter.new(self.current_user).emit(params)
+        @out          = params['out']
+        new_out       = Out.new(params)
+        new_out.user  = self.current_user
+        new_out.video = Video.find_by_guid(params['mashout-video']) if params['mashout-video'].present?
+        emitter       = TweetEmitter.new(self.current_user, new_out)
         
-        if @tweet.blank? 
-          flash[:notice] = 'Oops, your tweet is empty!'
-        else
-          flash[:success] = 'Created your MASHOUT!'
+        emitter.validate!
+        if emitter.errors.any?
+          flash[:error] = emitter.errors.full_messages.to_sentence
+          return false
         end
-      rescue Exception => e
-        flash[:error] = 'Unable to your send your OUT.  ' << e.message
+
+        @out = emitter.emit(new_out)
+  
+        if emitter.queued_emit?
+          flash[:success] = 'Please wait while we process your OUT'
+        else
+          flash[:success] = 'Created your OUT!'
+        end
+      rescue Exception => ex
+        flash[:error] = 'Unable to your send your OUT.  ' << ex.message
       end
       
       flash[:success].present?

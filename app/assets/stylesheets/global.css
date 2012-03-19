@@ -363,17 +363,32 @@ h4 span.counter {
     background-repeat: no-repeat;
     width:231px;
     height:40px;
-    position: absolute; }
+}
 
 #sign-in-twitter {
-    background-position: 0 0;
-    top: 27px;
-    right: 190px; }
+    background-position: 0 0;  
+}
 
 #sign-in-facebook {
     background-position: -300px 0;
+ }
+
+#home-sign-in #sign-in-twitter {
     top: 27px;
-    left: 250px; }
+    left: 250px;
+    position: absolute; }
+
+#home-sign-in #sign-in-facebook {
+    top: 27px;
+    right: 190px;
+    position: absolute; }
+
+#sign-in-youtube {
+    display: block;
+    background-image: url("youtube-logo.jpg");
+    width:231px;
+    height:164px;}
+    
 
 /*Blog*/
 .blog h3 {
@@ -382,6 +397,7 @@ h4 span.counter {
 
 .blog .entry {
     border-bottom: 1px solid #dddddd;}
+
 
 /*Home page welcome*/
 #welcome {
@@ -911,7 +927,6 @@ h4 span.counter {
     height: 33px;
     margin-top: -10px;
     width: 295px; }
-
 
 
 /*Videos partial*/

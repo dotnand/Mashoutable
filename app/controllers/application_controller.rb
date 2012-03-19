@@ -1,9 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
 
-  USERS = { 'mashoutable' => 'phlmashout11' }
-
-  before_filter :env_authenticate
   layout 'inner'
   protect_from_forgery
 
@@ -37,10 +34,6 @@ class ApplicationController < ActionController::Base
 
     def per_page(default = 10)
       params[:per_page] || default
-    end
-
-    def env_authenticate
-      authenticate_or_request_with_http_digest { |username| USERS[username] } if ENV['PROTECT_WITH_HTTP_BASIC_AUTH'].present?
     end
 end
 

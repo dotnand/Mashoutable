@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :besties, :class_name => 'Bestie'
   has_many :videos
   has_many :interactions
+  has_many :outs
   
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])
@@ -26,6 +27,20 @@ class User < ActiveRecord::Base
     end
     
     @facebook_client
+  end
+  
+  def youtube
+    unless @youtube_client
+      provider = self.authorizations.find_by_provider('google')
+      if provider.present?
+        @youtube_client ||= YouTubeIt::OAuthClient.new(:consumer_key    => ENV['YOUTUBE_CONSUMER_KEY'], 
+                                                       :consumer_secret => ENV['YOUTUBE_CONSUMER_SECRET'], 
+                                                       :dev_key         => ENV['YOUTUBE_DEV_KEY'])
+        @youtube_client.authorize_from_access(provider.token, provider.secret) if @youtube_client.present?
+      end
+    end
+    
+    @youtube_client
   end
   
   def tweople

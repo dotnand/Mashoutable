@@ -8,4 +8,8 @@ class AuthorizationController < ApplicationController
     self.current_user = @auth.user
     redirect_to dashboard_path
   end
+  
+  def failure
+    @message = params['message']
+  end
 end

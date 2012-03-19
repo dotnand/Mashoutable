@@ -10,8 +10,12 @@ describe ApplicationHelper do
     helper.twitter_auth_path.should eq('/auth/twitter')   
   end
   
-  it 'should hav a facebook auth path' do
+  it 'should have a facebook auth path' do
     helper.facebook_auth_path.should eq('/auth/facebook')
+  end
+
+  it 'should have a youtube auth path' do
+    helper.youtube_auth_path.should eq('/auth/google')
   end
   
   it 'should group an array of hashes given a key' do
@@ -32,16 +36,33 @@ describe ApplicationHelper do
     helper.group_hash_by(nil, nil).should be_nil
   end
   
-  it 'should detect if visiting the dashboard index page' do
-    pending
+  [['authorization', ['failure']], ['dashboard', ['index', 'video_playback']], ['content', ['about_us', 'blog', 'contact_us', 'mashout', 'blastout', 'pickout', 'shoutout']]].each do |controller_name, action_names|
+    action_names.each do |action_name| 
+      it "should detect large content for controller #{controller_name}" do
+        controller = double(:controller_name => controller_name, :action_name => action_name)
+        
+        if controller_name == 'authorization'
+          helper.should_receive(:controller).exactly(2).times.and_return(controller)
+        elsif controller_name == 'dashboard'
+          helper.should_receive(:controller).exactly(3).times.and_return(controller)
+        else
+          helper.should_receive(:controller).exactly(4).times.and_return(controller)
+        end
+        
+        helper.large_content?.should be
+      end
+    end
   end
   
-  it 'should render a conditional div' do
-    pending
+  it 'should render a conditional haml tag' do
+    helper.should_receive(:haml_tag).with(anything, anything)
+    helper.conditional_div(true, {})
   end
   
-  it 'should detect large content' do
-    pending
+  it 'should render a conditional haml concatenation' do
+    helper.should_receive(:haml_concat).with(anything)
+    helper.should_receive(:capture_haml)
+    helper.conditional_div(false, {}) {}
   end
   
   it 'should sanitize twitter screen name' do
