@@ -36,15 +36,17 @@ describe ApplicationHelper do
     helper.group_hash_by(nil, nil).should be_nil
   end
   
-  [['dashboard', ['index', 'video_playback']], ['content', ['about_us', 'blog', 'contact_us', 'mashout', 'blastout', 'pickout', 'shoutout']]].each do |controller_name, action_names|
+  [['authorization', ['failure']], ['dashboard', ['index', 'video_playback']], ['content', ['about_us', 'blog', 'contact_us', 'mashout', 'blastout', 'pickout', 'shoutout']]].each do |controller_name, action_names|
     action_names.each do |action_name| 
       it "should detect large content for controller #{controller_name}" do
         controller = double(:controller_name => controller_name, :action_name => action_name)
         
-        if controller_name == 'dashboard'
+        if controller_name == 'authorization'
           helper.should_receive(:controller).exactly(2).times.and_return(controller)
-        else
+        elsif controller_name == 'dashboard'
           helper.should_receive(:controller).exactly(3).times.and_return(controller)
+        else
+          helper.should_receive(:controller).exactly(4).times.and_return(controller)
         end
         
         helper.large_content?.should be

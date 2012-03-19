@@ -24,7 +24,9 @@ module ApplicationHelper
   end
 
   def large_content?
-    if controller.controller_name == 'dashboard' and ['video_playback', 'index'].include?(controller.action_name)
+    if controller.controller_name == 'authorization' and controller.action_name == 'failure'
+      return true
+    elsif controller.controller_name == 'dashboard' and ['video_playback', 'index'].include?(controller.action_name)
       return true
     elsif controller.controller_name == 'content' and ['about_us', 'blog', 'contact_us', 'mashout', 'blastout', 'pickout', 'shoutout'].include?(controller.action_name)
       return true
