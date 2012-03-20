@@ -26,8 +26,12 @@
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
                   %input.button{:id => 'send-out', :type => "submit", :value => "Send", :onclick => 'return false;'}
                   %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
-
-                %span.clear.left Connect youtube to play video in your content.
+                
+                - if params[:action] == 'blastout'  
+                  %em.clear.left{:id => 'youtube-help'} *Click youtube to play video in your content
+                  - if @networks[:youtube].present?
+                    :javascript
+                      $(function() { $('#youtube-help').toggle(); });
         .bottom
   :javascript
     $(function() { bindMashoutPreviewClick("#{mashout_preview_path}"); });
