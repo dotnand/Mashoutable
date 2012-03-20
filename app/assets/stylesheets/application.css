@@ -1,5 +1,7 @@
 /*
  *= require blueprint/screen
- *= require blueprint/plugins/fancy-type/screen 
+ *= require blueprint/plugins/fancy-type/screen
  *= require global
+ *= require jquery-ui
 */
+

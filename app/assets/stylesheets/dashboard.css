@@ -3,9 +3,11 @@
  */
 
  /*Dashboard*/
+/*hours-saved
 #content-wrapper.span-all #hours-saved {
     text-align: center;
     padding: 30px; }
+*/
 
 /*-------------------------Tool buttons-----------------------*/
 #content-wrapper.span-all #dropdown-buttons {
@@ -133,7 +135,7 @@
     border: 0;}
 
 #content-wrapper.span-all #besties #list-people,
-#content-wrapper #video-library #videos,
+#content-wrapper.span-all #video-library #videos,
 #content-wrapper.span-all #interactions #list-interactions {
     min-height: 466px; }
 
@@ -159,11 +161,11 @@
     padding-right: 10px;
     float: left; }
 
-#content-wrapper #video-library #videos {
+#content-wrapper.span-all #video-library #videos {
     min-height: 377px;
     padding-bottom: 20px; }
 
-#content-wrapper #video-library #videos ul {
+#content-wrapper.span-all #video-library #videos ul {
     padding-left:0;
     min-height: 406px; }
 
@@ -215,9 +217,25 @@
     border: 0;
     outline: 0; }
 
-.networks .network-toggle span {
-    width: 800px;
-    padding: 5px; }
+.networks .network-toggle .description {
+    width: 785px;
+    height: auto;
+    margin-left: 30px; }
+
+.networks .network-toggle p {
+    width: 500px;
+    padding: 5px;
+    margin-top: 90px;
+    font-size: 2em;
+    line-height: 1em; }
+
+.network-arrow {
+    background: url('network-arrow.png');
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 115px;
+    margin-top: 65px;
+    margin-left: 25px; }
 
 .networks .network-toggle .item {
     padding: 5px 0; }

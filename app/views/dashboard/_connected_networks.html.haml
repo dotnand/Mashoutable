@@ -1,18 +1,12 @@
 .network-toggle.left
   .left.clear.item
     = render 'twitter_network_button', :oops => false
-    %span.left
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
   .left.clear.item
     = render 'facebook_network_button', :oops => false
-    %span.left
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
   .left.clear.item
     = render 'youtube_network_button', :oops => false
-    %span.left
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget enim eget ligula fringilla ultrices. Sed laoreet, est in pulvinar tincidunt, purus tellus vestibulum leo, eu consequat felis lacus id mi.
   = render 'hidden_network_fields'
-  %input.span-3.left{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}
+  %input.button.left{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}/
   - if defined? @message and @message.present?
     %span.clear.left{:id => 'edit-network-preferences-message'}= @message
   :javascript

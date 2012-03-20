@@ -1,16 +1,5 @@
 - content_for :content_body do
   / content section
-  #hours-saved.clear
-    %h3
-      Mashoutable has saved you
-      %span.counter
-        9
-      hours and
-      %span.counter
-        4
-      %span.counter
-        0
-      minutes
   #tool-buttons.left.clear
     .button.left
       %h4.mashout.inset-type
@@ -70,6 +59,10 @@
     .networks.clear.hidden.left
       %h4 Connected Networks
       = render 'connected_networks'
+      .description.left
+        %span.network-arrow.left
+        %p.right
+          Click the favicons to connect/disconnect your Social Networks
   #extra-info.left
     = render 'besties'
     = render 'dashboard_videos'
