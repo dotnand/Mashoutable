@@ -132,13 +132,13 @@ function handleTrendAutoCompleteSelection(path) {
 
 function bindMashoutPreviewClick(path) {
     $('#preview-out').click(function() {
-        params = 'mashout-target=' + $('#mashout-target-selection').val() + '&' +
-                 'mashout-media=' + $('#mashout-media').val() + '&' +
-                 'mashout-comment=' + $('#mashout-comment').val() + '&' +
-                 'trend-location=' + $('#mashout-location-selection').val() + '&' +
-                 'trend-source=' + $('#mashout-trend-selection').val() + '&' +
-                 'trend-region=' + $('#mashout-region-selection').val() + '&' +
-                 'mashout-video=' + $('.mashout-video:checked').val();
+        var params = 'mashout-target=' + $('#mashout-target-selection').val() + '&' +
+                     'mashout-media=' + $('#mashout-media').val() + '&' +
+                     'mashout-comment=' + $('#mashout-comment').val() + '&' +
+                     'trend-location=' + $('#mashout-location-selection').val() + '&' +
+                     'trend-source=' + $('#mashout-trend-selection').val() + '&' +
+                     'trend-region=' + $('#mashout-region-selection').val() + '&' +
+                     'mashout-video=' + $('.mashout-video:checked').val();
 
         $("#mashout-hashtag-checkboxes :checked").each(function() {
             params += '&mashout-hashtag[]=' + $(this).val();
@@ -150,7 +150,7 @@ function bindMashoutPreviewClick(path) {
 
         $("input.target-checkbox").each(function() {
             if($(this).attr('checked') != undefined) {
-              params += '&mashout-targets[]=' + $(this).val();
+                params += '&mashout-targets[]=' + $(this).val();
             }
         });
 

@@ -191,6 +191,18 @@ class DashboardController < ApplicationController
     render :partial => 'interactions'
   end
   
+  def remove_networks
+    if current_user.remove_networks(params)
+      @message = 'Updated your connected networks!'
+    else
+      @message = current_user.errors.full_messages.to_sentence
+    end
+    
+    available_networks
+    
+    render :partial => 'connected_networks'
+  end
+  
   protected
     def current_tool
       case params[:action].to_sym

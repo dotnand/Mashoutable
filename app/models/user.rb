@@ -20,10 +20,43 @@ class User < ActiveRecord::Base
     @twitter_client
   end
   
+  def remove_twitter
+    remove_network('twitter')
+    @twitter_client = nil
+  end
+  
+  def remove_facebook
+    remove_network('facebook')
+    @facebook_client = nil
+  end
+  
+  def remove_youtube
+    remove_network('google')
+    @youtube_client = nil
+  end
+  
+  def remove_networks(params)
+    has_twitter               = self.twitter.present?
+    has_facebook              = self.facebook.present?
+    wants_to_remove_twitter   = params['mashout-network-twitter'] == 'false'
+    wants_to_remove_facebook  = params['mashout-network-facebook'] == 'false'
+  
+    if (has_twitter and not has_facebook and wants_to_remove_twitter) or (has_facebook and not has_twitter and wants_to_remove_facebook)
+      errors[:base] = 'Must have at least Twitter or Facebook connected to use Mashoutable'
+      return false
+    end
+    
+    remove_twitter  if wants_to_remove_twitter
+    remove_facebook if wants_to_remove_facebook
+    remove_youtube  if params['mashout-network-youtube'] == 'false'
+    
+    true
+  end
+  
   def facebook
     unless @facebook_client
       provider          = self.authorizations.find_by_provider('facebook')
-      @facebook_client ||= FbGraph::User.me(provider.token) rescue nil if provider.present? 
+      @facebook_client  ||= FbGraph::User.me(provider.token) rescue nil if provider.present? 
     end
     
     @facebook_client
@@ -44,6 +77,11 @@ class User < ActiveRecord::Base
   end
   
   def tweople
+    # 1. get twitter public timeline
+    # 2. filter out the most recent 100 tweets
+    # 3. filter out for web only
+    # 4. filter out not on friends list and followers list
+    # 5. filter out from local mentioned
     follower_ids    = twitter_ids(:follower_ids)
     friend_ids      = twitter_ids(:friend_ids)
     home_timeline   = twitter.home_timeline(:count => 1000).shuffle
@@ -66,17 +104,26 @@ class User < ActiveRecord::Base
   end
   
   def following_me
+    # 1. get followers
+    # 2. get friends
+    # 3. remove friends from followers
     follower_ids = twitter_ids(:follower_ids).shuffle
     return [] if follower_ids.count < 1
     twitter.users(follower_ids[0..[follower_ids.count, 15].min])
   end
   
   def followed_by_i_follow
+    # 1. get followers
+    # 2. get friends
+    # 3. find from both where they are followers and friends (present on both lists)
     twitter_ids = twitter_ids(:follower_ids).shuffle & twitter_ids(:friend_ids).shuffle
     twitter.users(twitter_ids[0..100])
   end
   
   def i_follow
+    # 1. get friends
+    # 2. get followers
+    # 3. remove followers from friends
     friend_ids = twitter_ids(:friend_ids).shuffle
     return [] if friend_ids.count < 1
     twitter.users(friend_ids[0..[friend_ids.count, 15].min])
@@ -135,4 +182,10 @@ class User < ActiveRecord::Base
     
     ids
   end
+  
+  protected
+    def remove_network(network_name)
+      provider = self.authorizations.find_by_provider(network_name)
+      provider.delete if provider.present?
+    end
 end

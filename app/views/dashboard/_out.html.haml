@@ -18,55 +18,10 @@
                 %textarea#out-preview{:maxlength => '140', :name => 'out'}
                   = @out
                 .left.network-toggle
-                  - if @networks[:twitter].blank?
-                    %a{:id => 'twitter-auth-button', :href => '#twitter-auth'}
-                      %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
-                    %div{:style => 'display:none;'}
-                      #twitter-auth
-                        Oops, just this once you'll need to
-                        %a{:href => twitter_auth_path}
-                          %span.prepend-top#sign-in-twitter
-                    :javascript
-                      $(function() { $('#twitter-auth-button').fancybox(); });
-                  - else
-                    %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
-                    :javascript
-                      $(function() { enableNetworkButton('#toggle-twitter', true); });
-                      $(function() { bindNetworkToggleButton('#toggle-twitter', '#mashout-network-twitter'); });
-                  
-                  - if @networks[:facebook].blank?
-                    %a{:id => 'facebook-auth-button', :href => '#facebook-auth'}
-                      %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
-                    %div{:style => 'display:none;'}
-                      #facebook-auth
-                        Oops, just this once you'll need to
-                        %a{:href => facebook_auth_path}
-                          %span.prepend-top#sign-in-facebook
-                    :javascript
-                      $(function() { $('#facebook-auth-button').fancybox(); });
-                  - else 
-                    %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
-                    :javascript
-                      $(function() { enableNetworkButton('#toggle-facebook', true); });
-                      $(function() { bindNetworkToggleButton('#toggle-facebook', '#mashout-network-facebook'); });    
-                      
-                  - if params[:action] == 'blastout'
-                    - if @networks[:youtube].blank?
-                      %a{:id => 'youtube-auth-button', :href => '#youtube-auth'}
-                        %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
-                      %div{:style => 'display:none;'}
-                        #youtube-auth
-                          Oops, just this once you'll need to sign in with
-                          %a{:href => youtube_auth_path}
-                            %span.prepend-top#sign-in-youtube
-                      :javascript
-                        $(function() { $('#youtube-auth-button').fancybox(); });
-                    - else 
-                      %input.left{:id => 'toggle-youtube', :value => '', :type => 'submit'}
-                      :javascript
-                        $(function() { enableNetworkButton('#toggle-youtube', true); });
-                        $(function() { bindNetworkToggleButton('#toggle-youtube', '#mashout-network-youtube'); });
-                      
+                  = render 'twitter_network_button'
+                  = render 'facebook_network_button'
+                  - if params[:action] == 'blastout'      
+                    = render 'youtube_network_button'
                 .right
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
                   %input.button{:id => 'send-out', :type => "submit", :value => "Send", :onclick => 'return false;'}

@@ -59,5 +59,12 @@ FactoryGirl.define do
     sequence(:comment)      {|n| "comment_#{n}"}
     sequence(:content)      {|n| "content_#{n}"}
   end
+  
+  factory :preference do
+    user
+    twitter   { false }
+    facebook  { false }
+    youtube   { false }
+  end
 end
 

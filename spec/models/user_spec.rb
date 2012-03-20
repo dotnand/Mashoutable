@@ -27,6 +27,50 @@ describe User do
     User.create_from_hash!(param)
   end
   
+  [[:twitter, 'twitter'], [:facebook, 'facebook'], [:youtube, 'google']].each do |network, network_name|
+    it "should remove #{network_name} authorization" do
+      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:authorization, :provider => network_name, :user => user)
+      
+      user.send(network).should be
+      user.send('remove_' << network.to_s)
+      user.send(network).should be_nil
+    end
+  end
+  
+  context 'networks' do
+    let(:user) { FactoryGirl.create(:user) }
+  
+    it 'should remove networks' do
+      params = {'mashout-network-twitter'   => 'false',
+                'mashout-network-facebook'  => 'false',
+                'mashout-network-youtube'   => 'false'}
+
+      FactoryGirl.create(:authorization, :provider => 'twitter', :user => user)
+      FactoryGirl.create(:authorization, :provider => 'facebook', :user => user)
+      FactoryGirl.create(:authorization, :provider => 'google', :user => user)
+      
+      [:twitter, :facebook, :youtube].each do |network|
+        user.send(network).should be
+      end
+      
+      user.remove_networks(params)
+      
+      [:twitter, :facebook, :youtube].each do |network|
+        user.send(network).should_not be
+      end
+    end
+
+    [:twitter, :facebook].each do |network|
+      network_name = network.to_s
+      it "should not remove #{network_name} network if only one network remains" do
+        params = {"mashout-network-#{network_name}" => 'false'}
+        FactoryGirl.create(:authorization, :provider => network_name, :user => user)
+        user.remove_networks(params).should be_false
+      end
+    end
+  end
+  
   context 'authorization' do
     let(:twitter)   { mock('twitter') }
     let(:facebook)  { mock('facebook') }

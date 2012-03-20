@@ -1,6 +1,22 @@
 //= require jquery-ui-1.8.16.custom.min
 //= require select
 
+function bindEditNetworkPreferencesClick(buttonId, path) {
+    $(buttonId).click(function() { 
+        var params = 'mashout-network-twitter=' + $('#mashout-network-twitter').val() + '&' +
+                     'mashout-network-facebook=' + $('#mashout-network-facebook').val() + '&' +
+                     'mashout-network-youtube=' + $('#mashout-network-youtube').val();
+                     
+        $.ajax({url: path,
+                type: 'DELETE',
+                data: encodeURI(params),
+                success: function(data) { $('.network-toggle').replaceWith(data); },
+                async: false});
+
+        return false;
+    });
+}
+
 function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
     $(buttonId).click(function() {
         var out       = $(outId);
@@ -10,7 +26,7 @@ function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
         $(formId).submit();
 
         return false;
-    })
+    });
 }
 
 function enableNetworkButton(buttonId, enabled) {

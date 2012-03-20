@@ -326,8 +326,6 @@ describe DashboardController do
     response.should redirect_to(root_path)
     get :shoutout
     response.should redirect_to(root_path)
-    get :pickout
-    response.should redirect_to(root_path)
     get :signout
     response.should redirect_to(root_path)
   end
@@ -369,10 +367,30 @@ describe DashboardController do
     get :shoutout
     response.should be_success
   end
-  
-  it 'GET pickout should be successful' do
-    get :pickout
-    response.should be_success
+    
+  context 'networks' do
+    let(:params) {{'mashout-network-twitter'  => 'false',
+                   'mashout-network-facebook' => 'false',
+                   'mashout-network-youtube'  => 'false',
+                   'controller'               => 'dashboard',
+                   'action'                   => 'remove_networks'}}
+    
+    it 'should remove networks' do
+      current_user.should_receive(:remove_networks).with(params).and_return(true)
+      delete :remove_networks, params
+
+      assigns[:message].should eq('Updated your connected networks!')
+      assigns[:networks].should be
+    end
+    
+    it 'should provide error message when failure to remove networks' do
+      current_user.should_receive(:remove_networks).with(params).and_return(false)
+      current_user.should_receive(:errors).and_return(double(:full_messages => ['Must have at least Twitter or Facebook enabled to use Mashoutable']))
+      delete :remove_networks, params
+
+      assigns[:message].should eq('Must have at least Twitter or Facebook enabled to use Mashoutable')
+      assigns[:networks].should be
+    end
   end
     
   it 'POST should create video should be successful' do

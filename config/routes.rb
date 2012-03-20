@@ -3,6 +3,9 @@ Mashoutable::Application.routes.draw do
   match '/auth/:provider/callback'  => 'authorization#create'
   match '/auth/failure'             => 'authorization#failure'
 
+  # social network 
+  match 'network'             => 'dashboard#remove_networks', :via => :delete,  :as => :remove_networks
+
   # mashouts
   match 'mashouts/preview'    => 'dashboard#preview_mashout', :via => :get,     :as => :mashout_preview
   match 'mashouts/create'     => 'dashboard#create_mashout',  :via => :post,    :as => :mashout_create
