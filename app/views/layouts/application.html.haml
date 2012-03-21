@@ -94,7 +94,8 @@
             %span.title.left Twitter:
             .left
               .tweet
-              #twitter-bird.right
+              .twitter-bird.right
+                %span.icon
       / footer back to top icon
       #back-to-top.clear
         .container
@@ -120,9 +121,9 @@
                 %a{:href => contact_us_path} Contact Us
           / footer bottom bar copyright notice and social media icons
           #copyright.right.last
-            %a{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
-              %span.icons-facebook.left
-            %a{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
-              %span.icons-twitter.left
+            %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
+              %span.icon.left
+            %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
+              %span.icon.left
             %span.left Copyright 2011 Mashoutable.com
 

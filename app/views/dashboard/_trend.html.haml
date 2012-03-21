@@ -43,7 +43,7 @@
         .bubble-bottom
       #mashout-twitter-container.span-9.left.ui-combobox
         #mashout-trend-checkboxes
-          - @trends.each do |trend| 
+          - @trends.each do |trend|
             %input{:name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
             %label= trend[:name]
             %br/
@@ -55,9 +55,10 @@
       .bubble-bottom
     #mashout-google-container.span-9.left.ui-combobox
       #mashout-trend-checkboxes
-        - @trends.each do |trend| 
+        - @trends.each do |trend|
           %input{:name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
           %label= trend[:name]
           %br/
   :javascript
     bindTrendAutoCompleteSelectAndHandle('#mashout-trend-container', '#mashout-trend-selection', "#{trend_source_path}");
+

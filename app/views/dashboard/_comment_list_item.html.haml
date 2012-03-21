@@ -1,12 +1,13 @@
 .span-15.box
-  %h1.left.clear= "#{item_number}."
-  %h3.list-item
-    %span
-      Add a
-      = succeed "?" do
-        %span.orange Comment
-      (or 
-      = "#{item_number + 1})"
+  .left.list
+    %span.number.left.clear= "#{item_number}."
+    %span.list-item
+      %span
+        Add a
+        = succeed "?" do
+          %span.orange Comment
+        (or
+        = "#{item_number + 1})"
   .content-bubble.span-6.left.clear
     .bubble-top
     .bubble-body
@@ -25,3 +26,4 @@
       %option{:value => "#{URI.encode('Hit that #Follow Button! I promise it\'s worth it!')}"} Hit that #Follow Button! I promise it&#39;s worth it!
       %option{:value => "#{URI.encode('My #SocialMedia #Bestie! #LoveYa!')}"} My #SocialMedia #Bestie! #LoveYa!
   %hr.space/
+

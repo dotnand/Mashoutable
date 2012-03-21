@@ -3,7 +3,7 @@
   / floating sidebar
   #ready-to-mashout
     .content
-      %h3.left.orange.inset-type
+      %span.title.left.orange.inset-type
         Ready to MASHOUT?
       #quote
         .top
@@ -20,14 +20,14 @@
                 .left.network-toggle
                   = render 'twitter_network_button'
                   = render 'facebook_network_button'
-                  - if params[:action] == 'blastout'      
+                  - if params[:action] == 'blastout'
                     = render 'youtube_network_button'
                 .right
                   %input.button{:id => 'preview-out', :type => "submit", :value => "Preview"}
                   %input.button{:id => 'send-out', :type => "submit", :value => "Send", :onclick => 'return false;'}
                   %input.button{:id => 'preview-clear-out', :type => "submit", :value => "Cancel"}
 
-                %span.clear.left Connect youtube to play video in your content.
+                %span.clear.span-6.left Connect youtube to play video in your content.
         .bottom
   :javascript
     $(function() { bindMashoutPreviewClick("#{mashout_preview_path}"); });

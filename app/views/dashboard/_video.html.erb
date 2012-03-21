@@ -4,7 +4,7 @@
   </div>
 <% end %>
 <%= render 'nimbb_video', :video => video %>
-<h4><%= video.name %></h4>
+<span class="video-title"><%= video.name %></span>
 <br />
 <a id='<%= "delete-video-#{video.guid}" %>' rel='nofollow' href='#'>Delete</a>
 |

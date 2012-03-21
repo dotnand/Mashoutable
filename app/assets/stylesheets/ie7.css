@@ -1,10 +1,10 @@
 .button,
 input[type="submit"],
 input.button {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 0;
-    padding-right: 0; }
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important; }
 
 .ui-button-icon-only .ui-button-text {
     padding-top: 0;
@@ -23,5 +23,26 @@ h3.list-item {
     width: 267px;}
 
 #content-wrapper.span-all #dropdown-buttons {
-    margin-top: 10px; }
+    margin-top: 10px;
+    padding-bottom: 15px; }
+
+#content-wrapper.span-all #dropdown-buttons .button,
+#content-wrapper.span-all #tools .button {
+    padding-left: 5px !important;
+    padding-right: 5px !important; }
+
+#content-wrapper.span-all #tools .button span {
+    line-height: 2em;}
+
+
+#footer #blog-twitter #twitter {
+    margin-bottom: 40px; }
+
+.number {
+    line-height: 0.8em; }
+
+#header #navigation-social #h-navigation ul{
+    min-width: 460px;
+    right: -23px;
+    margin-left: -10px; }
 

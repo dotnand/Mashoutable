@@ -10,42 +10,47 @@
 */
 
 /*-------------------------Tool buttons-----------------------*/
+#content-wrapper.span-all #tools {
+    margin-top: 0;
+    margin-left: 0; }
+
 #content-wrapper.span-all #dropdown-buttons {
     border-bottom: 1px solid #bdbdbd;
-    border-top: 1px solid #bdbdbd; }
+    border-top: 1px solid #bdbdbd;
+    background: #dddddd;
+    width: 100%; }
 
 #content-wrapper.span-all #dropdown-buttons .pickouts,
 #content-wrapper.span-all #dropdown-buttons .analytics,
 #content-wrapper.span-all #dropdown-buttons .networks {
-    padding: 15px 25px; }
-
-#content-wrapper.span-all #dropdown-buttons h4 {
-    margin: 0;}
-
-#content-wrapper.span-all #dropdown-buttons {
-    background: #dddddd;
-    width: 100%;
+    padding: 15px 25px;
+    width: 905px;
     min-height: 100px; }
 
-#content-wrapper.span-all #tool-buttons h4 a,
-#content-wrapper.span-all #dropdown-buttons h4 a {
-    display: block;
+#content-wrapper.span-all #tools .button span a,
+#content-wrapper.span-all #dropdown-buttons .button span a {
     background: url('button-bg.jpg');
     padding: 10px 25px 25px 25px;
-    font-size: 1.4em;
-    text-align: center;
-    color: #ffffff;
     text-decoration: none;
-    font-style: normal;
+    font-style: italic;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -khtml-border-radius: 3px;
     border-radius: 3px;
-    cursor: pointer;
+    width: 217px;
+    font-size: 2.1em;
     line-height: 1em;
-    width: 217px; }
+    min-height: 63px; }
 
-#content-wrapper.span-all #tool-buttons .button,
+#content-wrapper.span-all #dropdown-buttons .button span a {
+    padding: 20px 0;
+    min-height: 23px;
+    width: 266px;
+    height: 15px;
+    font-size: 1.3em;
+    font-style: normal; }
+
+#content-wrapper.span-all #tools .button,
 #content-wrapper.span-all #dropdown-buttons .button {
     background: #84a7bf;
     -moz-border-radius: 3px;
@@ -58,36 +63,25 @@
     padding: 5px;
     outline: 0; }
 
-#content-wrapper.span-all #tool-buttons .button {
+#content-wrapper.span-all #tools .button {
     min-height: 98px;}
 
-#content-wrapper.span-all #tool-buttons h4 a span {
+#content-wrapper.span-all #tools .button span a span {
     font-size: 0.5em; }
 
 #content-wrapper.span-all .inset-type {
     text-shadow: #000000 0px -1px 0; }
 
-#content-wrapper.span-all #tool-buttons h4 {
+#content-wrapper.span-all #tools .button span {
     line-height: 1em;
     margin-bottom: 0; }
 
-#content-wrapper.span-all #tool-buttons h4 a {
-    font-style: italic;
-    font-size: 2.1em;
-    line-height: 0.8em;
-    min-height: 63px; }
-
-#content-wrapper.span-all #tool-buttons h4.coming-soon a {
+#content-wrapper.span-all #tools .button .coming-soon a {
     color: #B6EBD9;
     padding: 25px 40px 10px 40px;
     width: 187px; }
 
-#content-wrapper.span-all #dropdown-buttons h4 a {
-    padding: 20px 10px;
-    width: 247px;
-    height: 15px; }
-
-#content-wrapper.span-all #tool-buttons .button:hover,
+#content-wrapper.span-all #tools .button:hover,
 #content-wrapper.span-all #dropdown-buttons .button:hover,
 #content-wrapper.span-all #dropdown-buttons .button:hover,
 #content-wrapper.span-all #dropdown-buttons .button.active {
@@ -130,6 +124,19 @@
     padding: 0 20px;
     border-left: 1px solid #bdbdbd; }
 
+#content-wrapper.span-all #besties .title,
+#content-wrapper.span-all #video-library .title,
+#content-wrapper.span-all #interactions .title {
+    font-size: 1.2em;
+    line-height: 1.25em;
+    margin-bottom: 1.25em;
+    color: #000000;
+    font-family: Trebuchet MS;
+    font-style: italic;
+    font-weight: bold;
+    float: left;
+    width: 100%; }
+
 #content-wrapper #video-library,
 #content-wrapper.span-all #video-library {
     border: 0;}
@@ -137,7 +144,7 @@
 #content-wrapper.span-all #besties #list-people,
 #content-wrapper.span-all #video-library #videos,
 #content-wrapper.span-all #interactions #list-interactions {
-    min-height: 466px; }
+    min-height: 497px; }
 
 #content-wrapper.span-all #besties {
     border-left: 0;
@@ -172,10 +179,14 @@
 #content-wrapper #video-library #videos label {
     font-weight: normal; }
 
-#content-wrapper #video-library #videos h4 {
+#content-wrapper #video-library #videos .video-title {
     margin-bottom: 0;
     color: #d05407;
-    float: left; }
+    float: left;
+    font-weight: bold;
+    font-family: Trebuchet MS;
+    font-style: italic;
+    font-size: 1.2em; }
 
 #content-wrapper.span-all #besties ul {
     margin-top: 10px;
@@ -210,19 +221,23 @@
     min-width: 280px; }
 
 /*Large Dashboard Network Toggle*/
-.networks .network-toggle,
-.networks .network-toggle input {
+.networks {
+    position: relative; }
+
+.networks .network-toggle {
     margin-top: 2px;
     padding-right: 10px;
     border: 0;
     outline: 0; }
 
-.networks .network-toggle .description {
+.networks .description {
     width: 785px;
     height: auto;
-    margin-left: 30px; }
+    position: absolute;
+    left: 135px;
+    top: 35px; }
 
-.networks .network-toggle p {
+.networks .description p {
     width: 500px;
     padding: 5px;
     margin-top: 90px;
@@ -275,6 +290,10 @@
 /*Misc*/
 #video-player {
     margin: 15px; }
+
+/*dashboard subpage lists*/
+.list {
+    width: 100%; }
 
 .hidden { display: none; }
 

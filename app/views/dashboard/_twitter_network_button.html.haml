@@ -3,9 +3,9 @@
     %input.left{:id => 'toggle-twitter', :value => '', :type => 'submit'}
   %div{:style => 'display:none;'}
     #twitter-auth
-      - if defined? oops and oops == false 
+      - if defined? oops and oops == false
         Just this once you'll need to
-      - else 
+      - else
         Oops, just this once you'll need to
       %a{:href => twitter_auth_path}
         %span.prepend-top#sign-in-twitter
@@ -16,3 +16,4 @@
   :javascript
     $(function() { enableNetworkButton('#toggle-twitter', true); });
     $(function() { bindNetworkToggleButton('#toggle-twitter', '#mashout-network-twitter'); });
+

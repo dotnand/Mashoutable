@@ -64,17 +64,19 @@ textarea {
     font-size: 1.5em;
     line-height: 1em;
     color: #363636;
-    margin-top: 8px;
+    margin-top: -5px;
     background: url('bubbles.png') no-repeat;
     background-position: 0 -860px;
-    height:35px;
-    margin-left: 25px;
-    width: 206px; }
+    height: 24px;
+    margin-left: -4px;
+    width: 206px;
+    float: left;
+    padding-left: 6px; }
 
 .number {
     display: block;
     font-size: 3em;
-    height: 85px;
+    height: 35px;
     font-family: Trebuchet MS;
     font-style: italic;
     font-weight: bold; }
@@ -113,28 +115,42 @@ input[type="submit"]:hover,
     display: block; }
 
 /*social media icons*/
-.icons-twitter,
-.icons-facebook {
+.twitter .icon,
+.facebook .icon,
+.twitter-bird .icon {
     display: block;
     width: 25px;
     background-image: url("social-icons.png");
     background-repeat: no-repeat; }
 
-.icons-twitter {
+.twitter-bird .icon {
+    width: 27px;
+    height: 33px;
+    background-position: 0 -48px; }
+
+#footer #blog-twitter #twitter .twitter-bird .icon {
+    margin-top: -10px;
+    position: absolute;
+    bottom: -20px;
+    right: 0px; }
+
+.twitter .icon {
     background-position: 0px -24px;
     margin-top: -2px;
     height: 23px; }
 
-.icons-facebook {
+.facebook .icon {
     height: 25px;
     background-position: 0 1px;
     margin-top: -3px; }
 
-.network-toggle,
-.network-toggle input {
+.network-toggle {
     margin-top: 2px;
     outline: 0;
     border: 0; }
+
+.network-toggle input {
+    width: 72px; }
 
 .network-toggle input:last-child{
     margin-right: 0px; }
@@ -355,10 +371,14 @@ h4 span.counter {
     line-height: 1em;
     margin-bottom: 0.5em;  }
 
+#top #call-to-action #cta-steps .number {
+    height: 85px; }
+
 #top #call-to-action #cta-steps .list-item {
     background: none;
     margin-left: 0;
-    line-height: 2em; }
+    line-height: 2em;
+    float: none; }
 
 #top #call-to-action #home-sign-in {
     margin: 0 auto;
@@ -373,7 +393,7 @@ h4 span.counter {
 #top #call-to-action #sign-in-arrow {
     position: absolute;
     top: 80px;
-    left: 225px; }
+    left: 235px; }
 
 #sign-in-twitter,
 #sign-in-facebook {
@@ -381,16 +401,13 @@ h4 span.counter {
     background-image: url("buttons.png");
     background-repeat: no-repeat;
     width:231px;
-    height:40px;
-}
+    height:40px; }
 
 #sign-in-twitter {
-    background-position: 0 0;
-}
+    background-position: 0 0; }
 
 #sign-in-facebook {
-    background-position: -300px 0;
- }
+    background-position: -300px 0; }
 
 #home-sign-in #sign-in-twitter {
     top: 27px;
@@ -464,17 +481,21 @@ h4 span.counter {
     font-weight: bold;
     font-size: 1.5em;
     line-height: 1em;
-    text-shadow:2px 2px 2px #1f1f1f; }
+    text-shadow:2px 2px 2px #1f1f1f;
+    width: 100%; }
 
 
 /*Footer blog*/
+#footer #blog-twitter #blog{
+    width: 640px; }
+
 #footer #blog-twitter #blog .entry {
     float: left;
     padding: 0 20px 0 0;
     width: 300px; }
 
 #footer #blog-twitter #blog .entry:last-child {
-    padding: 0;}
+    padding: 0; }
 
 #footer #blog-twitter #blog .entry .blog-date .day,
 #footer #blog-twitter #blog .entry .blog-date .month,
@@ -500,7 +521,8 @@ h4 span.counter {
     float: left; }
 
 #footer #blog-twitter #blog .blog-desc {
-    padding: 0 0 0 10px; }
+    padding: 0 0 0 10px;
+    float: left; }
 
 #footer #blog-twitter #blog .blog-desc .title {
     color: #ffffff;
@@ -526,16 +548,9 @@ h4 span.counter {
 
 /*Footer Twitter*/
 #footer #blog-twitter #twitter {
-    width: 281px;}
-
-#footer #blog-twitter #twitter #twitter-bird {
-    display: block;
-    width: 27px;
-    height: 33px;
-    background-image: url("social-icons.png");
-    background-repeat: no-repeat;
-    background-position: 0 -48px;
-    margin-top: -10px;}
+    width: 281px;
+    margin-bottom: 20px;
+    position: relative; }
 
 #footer #blog-twitter #twitter .tweet {
     display: block;
@@ -543,7 +558,7 @@ h4 span.counter {
     background-repeat: no-repeat;
     background-position: 0px -348px;
     width: 281px;
-    height: 108px;}
+    height: 108px; }
 
 #footer #blog-twitter #twitter .tweet ul.tweet-list .tweet-time {
     margin-top: -10px;
@@ -581,8 +596,8 @@ h4 span.counter {
 #footer #blog-twitter #twitter .tweet ul.tweet-list li a {
     color: none; }
 
-#footer #blog-twitter #twitter .tweet loading {
-    margin-left: 20px;}
+#footer #blog-twitter #twitter .tweet .loading {
+    margin: 0 25px;}
 
 /*Footer black bar*/
 #footer #back-to-top {
@@ -610,7 +625,7 @@ h4 span.counter {
     color: #ffffff;}
 
 #footer #navigation-copyright #f-navigation ul {
-    padding-left: 0;}
+    padding-left: 0; }
 
 #footer #navigation-copyright #f-navigation li {
     list-style: none;
@@ -685,14 +700,20 @@ h4 span.counter {
     float: left;
     width: 100%; }
 
-#top #tools span {
-    font-size: 1.3em;
+#tools span,
+#tools .button span,
+#dropdown-buttons span,
+#tools .coming-soon span {
+    font-size: 1.35em;
     line-height: 1.1em;
-    font-family: Trebuchet MS; }
+    font-family: Trebuchet MS;}
 
-#top #tools span a {
+#dropdown-buttons .button  span a,
+#tools span a,
+#tools .button span a {
     font-family: Trebuchet MS;
     display: block;
+    font-style: italic;
     width: 188px;
     height: 73px;
     padding: 70px 0;
@@ -701,12 +722,14 @@ h4 span.counter {
     line-height: 1em;
     font-weight: bold;
     text-decoration: none;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    text-align: center;
+    cursor: pointer; }
 
-#top #tools span .tool-orange,
-#top #tools span .green,
-#top #tools span .blue,
-#top #tools span .red {
+#tools span .tool-orange,
+#tools span .green,
+#tools span .blue,
+#tools span .red {
     font-size: 0.7em;
     line-height: 1em; }
 
@@ -714,7 +737,7 @@ h4 span.counter {
 #top #tools #blastout-tool .tool-inner,
 #top #tools #shoutout-tool .tool-inner,
 #top #tools #pickout-tool .tool-inner,
-#top #tools #coming-soon-tool .tool-inner {
+#top #tools .coming-soon .tool-inner {
     display: block;
     background-image: url("bubbles.png");
     background-repeat: no-repeat;
@@ -722,10 +745,10 @@ h4 span.counter {
     width: 188px;
     height: 215px;
     padding: 0;
-    margin-top: 0px;
-    font-style: italic;}
+    margin-top: 0px;}
 
-#top #tools #coming-soon-tool span {
+#tools .coming-soon span,
+#tools .button .coming-soon span {
     color: #b6ebd9;
     display: block;
     width: 188px;
@@ -734,7 +757,7 @@ h4 span.counter {
     font-size: 2.4em;
     line-height: 1em;
     font-weight: bold;
-    font-family: Trebuchet MS; }
+    font-style: italic; }
 
 
 /*------------------Sub Pages------------------*/
@@ -788,7 +811,8 @@ h4 span.counter {
 #content-wrapper #main-content #content-body #content-inner .box {
     border-bottom: 1px solid #d3d3d3;
     border-top: 1px solid #ffffff;
-    float: left;}
+    float: left;
+    padding-top: 20px; }
 
 #content-wrapper #main-content #content-body #content-inner .box:first-child {
     border-top: 0;}
@@ -938,8 +962,13 @@ h4 span.counter {
     width: 310px;
     position: relative; }
 
-#content-wrapper #sidebar h3 {
-    margin-bottom: 10px;}
+#content-wrapper #sidebar .title {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    line-height: 1em;
+    font-family: Trebuchet MS;
+    font-weight: bold;
+    font-style: italic; }
 
 #content-wrapper #sidebar #ready-to-mashout {
     position: absolute;
@@ -1028,8 +1057,8 @@ h4 span.counter {
 #content-wrapper #video-library #videos label {
     font-weight: normal;}
 
-#content-wrapper #video-library #videos h4 {
-    color: #d05407;}
+#content-wrapper #video-library #videos .video-title {
+    color: #d05407; }
 
 
 #content-wrapper #video-library #videos ul li {
