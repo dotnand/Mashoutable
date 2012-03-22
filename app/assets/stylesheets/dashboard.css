@@ -151,7 +151,8 @@
     border-right: 1px solid #bdbdbd; }
 
 #content-wrapper.span-all table {
-    margin-bottom: 0.6em; }
+    margin-bottom: 0.6em;
+    float: left; }
 
 #content-wrapper.span-all table td {
     width: 80%;
