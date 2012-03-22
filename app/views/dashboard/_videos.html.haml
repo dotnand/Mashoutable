@@ -4,6 +4,7 @@
       - @videos.each do |video|
         %li
           = render 'video', :video => video
+    %input{:id => 'hidden-video', :type => 'hidden', :value => ''}
     = will_paginate @videos
     :javascript
       $(function() { ajaxifyPagination("#videos", "#{dashboard_videos_path}"); });

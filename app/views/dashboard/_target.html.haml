@@ -10,6 +10,8 @@
     %option{:value => "TODAYS_RTS"} Today's #RT's (Your Tweets retweeted)
     %option{:value => "BESTIES"} Your Twitter Besties
     %option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
+  :javascript
+    $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-container', '#mashout-target-selection', '#hidden-targets', '#out-preview'); });
   - if defined? @targets
     #target-tweet-list
     - if not @targets.nil? and @targets.count > 0
@@ -44,9 +46,12 @@
             - sanitized_screen_name = sanitize_twitter_screen_name(profile[:screen_name])
             .target-content
               .append-bottom
-                %input{:name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
+                - profile_id = "mashout-profile-#{sanitized_screen_name}"
+                %input{:id => profile_id, :name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
                 %label= profile[:screen_name]
                 %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}/
+                :javascript
+                  $(function() { bindDynamicPreviewCheckboxClick('##{profile_id}', '#hidden-targets', '#out-preview'); });
               .span-6.prepend-1
                 %p
                   %em= profile[:description]
@@ -55,6 +60,7 @@
 
       - else
         %p No tweets were found
+  %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}
   :javascript
     bindTargetAutoCompleteSelectAndHandle('#mashout-target-container', '#mashout-target-selection', "#{target_source_path}")
 
