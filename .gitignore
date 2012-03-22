@@ -20,3 +20,4 @@
 /config/youtube.yml
 /config/redis.yml
 /config/resque.yml
+/config/email.yml

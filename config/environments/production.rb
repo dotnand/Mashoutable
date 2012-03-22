@@ -43,7 +43,7 @@ Mashoutable::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w(application-print.css application-ie.css ie.css ie7.css mashout.js select.js dashboard.js dashboard.css)
+  config.assets.precompile += %w(application-print.css application-ie.css ie.css ie7.css mashout.js select.js dashboard.js dashboard.css jquery-ui.css)
   config.assets.precompile += %w(jquery.fancybox-1.3.4.css jquery.fancybox-1.3.4.pack.js)
 
   # Disable delivery errors, bad email addresses will be ignored
@@ -58,4 +58,13 @@ Mashoutable::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => ENV['EMAIL_ADDRESS'],
+    :port                 => ENV['EMAIL_PORT'],
+    :user_name            => ENV['EMAIL_USER_NAME'],
+    :password             => ENV['EMAIL_PASSWORD'],
+    :authentication       => :login,
+    :enable_starttls_auto => true }
 end
