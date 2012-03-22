@@ -20,7 +20,7 @@
       auto_join_text_ing: "i am",               // [string]   auto tense for present tense: "i was" surfing
       auto_join_text_reply: "i replied to",     // [string]   auto tense for replies: "i replied to" @someone "with"
       auto_join_text_url: "i was looking at",   // [string]   auto tense for urls: "i was looking at" http:...
-      loading_text: "<p>loading tweets...</p>",                       // [string]   optional loading text, displayed while tweets load
+      loading_text: "loading tweets...",                       // [string]   optional loading text, displayed while tweets load
       refresh_interval: null ,                  // [integer]  optional number of seconds after which to reload tweets
       twitter_url: "twitter.com",               // [string]   custom twitter url, if any (apigee, etc.)
       twitter_api_url: "api.twitter.com",       // [string]   custom twitter api url, if any (apigee, etc.)

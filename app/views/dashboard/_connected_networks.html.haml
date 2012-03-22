@@ -1,4 +1,4 @@
-.network-toggle.left
+.network-toggle.left.clear
   .left.clear.item
     = render 'twitter_network_button', :oops => false
   .left.clear.item
@@ -6,8 +6,9 @@
   .left.clear.item
     = render 'youtube_network_button', :oops => false
   = render 'hidden_network_fields'
-  %input.button.left{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}/
+  %input.left.clear{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}/
   - if defined? @message and @message.present?
-    %span.clear.left{:id => 'edit-network-preferences-message'}= @message
+    %span.clear.right{:id => 'edit-network-preferences-message'}= @message
   :javascript
     $(function() { bindEditNetworkPreferencesClick('#edit-network-preferences', "#{remove_networks_path}"); });
+

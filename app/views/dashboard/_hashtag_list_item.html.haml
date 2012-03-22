@@ -1,13 +1,14 @@
 .span-15.box
-  %h1.left.clear= "#{item_number}."
-  %h3.list-item
-    %span
-      Add a
-      = succeed "?" do
-        %span.orange Hashtag
-      (or
-      = "#{item_number + 1})"
-  %br/
+  .left.list
+    %span.number.left.clear= "#{item_number}."
+    %span.list-item
+      %span
+        Add a
+        = succeed "?" do
+          %span.orange Hashtag
+        (or
+        = "#{item_number + 1})"
+    %br/
   .content-bubble.left.clear.span-6
     .bubble-top
     .bubble-body
