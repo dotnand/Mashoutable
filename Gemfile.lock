@@ -129,7 +129,6 @@ GEM
     multi_json (1.0.4)
     multi_xml (0.4.1)
     multipart-post (1.1.4)
-    mysql2 (0.3.11)
     nokogiri (1.5.0)
     oauth (0.4.5)
     oauth2 (0.5.2)
@@ -307,7 +306,6 @@ DEPENDENCIES
   httparty (~> 0.8.1)
   jquery-rails
   launchy (~> 2.0.5)
-  mysql2
   nokogiri (~> 1.5.0)
   omniauth (~> 1.0.2)
   omniauth-facebook (~> 1.2.0)

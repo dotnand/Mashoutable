@@ -62,5 +62,5 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'mysql2'  
+  gem 'pg'
 end
