@@ -1,8 +1,7 @@
-.button,
 input[type="submit"],
 input.button {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
     padding-left: 0 !important;
     padding-right: 0 !important; }
 
@@ -32,7 +31,7 @@ h3.list-item {
     padding-right: 5px !important; }
 
 #content-wrapper.span-all #tools .button span {
-    line-height: 2em;}
+    line-height: 2em; }
 
 
 #footer #blog-twitter #twitter {
@@ -45,4 +44,15 @@ h3.list-item {
     min-width: 460px;
     right: -23px;
     margin-left: -10px; }
+
+#content-wrapper.span-all #video-library #videos ul {
+    min-height: 443px; }
+
+#content-wrapper.span-all #extra-info {
+    background: none; }
+
+#content-wrapper.span-all #besties,
+#content-wrapper.span-all #video-library,
+#content-wrapper.span-all #interactions {
+    min-height: 625px; }
 
