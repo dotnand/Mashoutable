@@ -1006,6 +1006,11 @@ h4 span.counter {
     height: 33px;
     margin-top: -10px;
     width: 295px; }
+    
+#content-wrapper #sidebar #ready-to-mashout .negative-char-count {
+    font-weight:bold;
+    color:#f00;
+}
 
 
 /*Videos partial*/

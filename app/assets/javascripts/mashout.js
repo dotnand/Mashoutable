@@ -35,34 +35,145 @@ $(function() {
     }
 });
 
+function generateOutFragment(value, targetId, add) {
+    var target  = $(targetId);
+    var current = target.val();
+  
+    if(add) {
+        if(current.length == 0) {
+            target.val(value);
+        } else {
+            target.val(current + ' ' + value);
+        }
+    } else { 
+        var regex = new RegExp('\\s*' + value, 'gi');
+        
+        if(current.search(regex) == 0) {
+            target.val(current.replace(new RegExp(value + '\\s*', 'gi'), ''));
+        } else {
+            target.val(current.replace(regex, ''));
+        }
+    }
+}
+
+function generateDynamicOutPreview(outPreviewId) {
+    var media     = $('#hidden-media').val();
+    var targets   = $('#hidden-targets').val();
+    var hashtags  = $('#hidden-hashtags').val();
+    var trends    = $('#hidden-trends').val();
+    var comment   = $('#hidden-comment').val();
+    var video     = $('#hidden-video').val();
+    var content   = ''
+    
+    var needsPadding  = function() { return ; }
+    var addContent    = function(fragment) {
+        if(content.length > 0) {
+            content += ' ';
+        }
+      
+        content += fragment;
+        if(content.length > 140) {
+            $('#mashout-chars-left').addClass('negative-char-count');
+        } else {
+            $('#mashout-chars-left').removeClass('negative-char-count');
+        }
+    }
+    
+    if(media.length > 0) {
+        content += media;
+    }
+    
+    $.each([targets, hashtags, trends, comment, video], function() {
+        if(this.length > 0) {
+            addContent(this);
+        }
+    });
+    
+    $(outPreviewId).val(content);
+    calculateCharsLeft();
+}
+
+function handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId) {
+    var value     = unescape($(checkboxId).val());
+    var isChecked = $(checkboxId + ':checked').length;
+
+    generateOutFragment(value, hiddenCheckboxId, isChecked == 1);
+    generateDynamicOutPreview(outPreviewId);
+}
+
+function bindDynamicPreviewTargetChange(checkboxId, hiddenCheckboxId, outPreviewId, checkboxClass) {
+    $(checkboxId).change(function() {
+        var value       = $(this).val();
+        var hiddenValue = $(hiddenCheckboxId).val();
+        var anyChecked  = $('.' + checkboxClass + ':checked').length
+
+        if(hiddenValue.search(value) < 0) {
+            handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId); 
+        } else if(anyChecked == 0) {
+            generateOutFragment(value, hiddenCheckboxId, false);
+            generateDynamicOutPreview(outPreviewId);
+        }
+    });
+}
+
+function bindDynamicPreviewAutoCompleteSelectAndHandleTarget(wrapperId, selectId, hiddenFieldId, outPreviewId) {
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { 
+        var current = $(hiddenFieldId).val();
+        var isNone  = newValue == 'NONE';
+        
+        generateOutFragment(current, hiddenFieldId, false);
+        generateDynamicOutPreview(outPreviewId);
+    });
+}
+
+function bindDynamicPreviewAutoCompleteSelectAndHandle(wrapperId, selectId, hiddenFieldId, outPreviewId) {
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { 
+        var current = $(hiddenFieldId).val();
+        var isNone  = newValue == 'NONE';
+        
+        generateOutFragment(current, hiddenFieldId, false);
+        generateOutFragment(isNone ? oldValue : unescape(newValue), hiddenFieldId, !isNone);
+        generateDynamicOutPreview(outPreviewId);
+    });    
+}
+
+function bindDynamicPreviewCheckboxClick(checkboxId, hiddenCheckboxId, outPreviewId) {
+    $(checkboxId).click(function() {
+        handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId);
+    });
+}
+
 function calculateCharsLeft() {
     $("#mashout-chars-left").text(140 - $('#out-preview').val().length);
 }
 
 function decorateMashoutTrendAutoCompleteSelect() {
-  $('#mashout-trend-container .ui-autocomplete-input').css('width','300px');
-  $('#mashout-location-container .ui-autocomplete-input').css('width','300px');
-  $('#mashout-google-container .ui-autocomplete-input').css('width','300px');
-  $('#mashout-region-container .ui-autocomplete-input').css('width','300px');
+    $('#mashout-trend-container .ui-autocomplete-input').css('width','300px');
+    $('#mashout-location-container .ui-autocomplete-input').css('width','300px');
+    $('#mashout-google-container .ui-autocomplete-input').css('width','300px');
+    $('#mashout-region-container .ui-autocomplete-input').css('width','300px');
 }
 
 function bindAutoCompleteSelect(wrapperId, selectId, callback) {
     $(wrapperId).bind('autocompleteselect', function (event, ui) {
-        $(selectId).val(ui.item.option.value);
+        var oldValue = $(selectId).val();
+        var newValue = ui.item.option.value;
+        
+        $(selectId).val(newValue);
         $(selectId).change();
 
         if(callback !== undefined) {
-          callback();
+          callback(oldValue, newValue);
         }
     });
 }
 
 function bindTrendAutoCompleteSelectAndHandle(wrapperId, selectId, path) {
-    bindAutoCompleteSelect(wrapperId, selectId, function() { handleTrendAutoCompleteSelection(path); });
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { handleTrendAutoCompleteSelection(path); });
 }
 
 function bindTargetAutoCompleteSelectAndHandle(wrapperId, selectId, path) {
-    bindAutoCompleteSelect(wrapperId, selectId, function() { handleTargetAutoCompleteSelection(path); });
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { handleTargetAutoCompleteSelection(path); });
 }
 
 function elementExists(id) {
@@ -84,28 +195,28 @@ function handleTargetAutoCompleteSelection(path) {
             async: false});
 
     createAutocompleteComboboxes(function() {
-      $('#mashout-target-container .ui-autocomplete-input').css('width','300px');
+        $('#mashout-target-container .ui-autocomplete-input').css('width','300px');
     });
 
     selectAutocomplete('#mashout-target-container', '#mashout-target-selection', trendSelection);
 }
 
 function handleTrendAutoCompleteSelection(path) {
-    params          = {};
-    trendExists     = $('#mashout-trend-container').length > 0;
-    locationExists  = $('#mashout-location-container').length > 0;
-    regionExists    = $('#mashout-region-container').length > 0;
+    var params          = {};
+    var trendExists     = $('#mashout-trend-container').length > 0;
+    var locationExists  = $('#mashout-location-container').length > 0;
+    var regionExists    = $('#mashout-region-container').length > 0;
 
     if(trendExists) {
-      params.trend_source = $('#mashout-trend-selection').val();
+        params.trend_source = $('#mashout-trend-selection').val();
     }
 
     if(locationExists) {
-      params.trend_location = $('#mashout-location-selection').val();
+        params.trend_location = $('#mashout-location-selection').val();
     }
 
     if(regionExists) {
-      params.trend_region = $('#mashout-region-selection').val();
+        params.trend_region = $('#mashout-region-selection').val();
     }
 
     $.ajax({url: path,
@@ -118,16 +229,25 @@ function handleTrendAutoCompleteSelection(path) {
     });
 
     if(trendExists) {
-      selectAutocomplete('#mashout-trend-container', '#mashout-trend-selection', params.trend_source);
+        selectAutocomplete('#mashout-trend-container', '#mashout-trend-selection', params.trend_source);
     }
 
     if(locationExists) {
-      selectAutocomplete('#mashout-location-container', '#mashout-location-selection', params.trend_location);
+        selectAutocomplete('#mashout-location-container', '#mashout-location-selection', params.trend_location);
     }
 
     if(regionExists) {
-      selectAutocomplete('#mashout-region-container', '#mashout-region-selection', params.trend_region);
+        selectAutocomplete('#mashout-region-container', '#mashout-region-selection', params.trend_region);
     }
+}
+
+function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
+  $(sourceId).click(function() { 
+      var content = $(outPreviewId).val();
+      var link    = content.match(/http:\/\/out.am\/\w+/, 'gi');
+
+      $(targetId).val(link === undefined ? '' : link);
+  });
 }
 
 function bindMashoutPreviewClick(path) {
@@ -176,7 +296,7 @@ function bindMashoutTargetToReply(targetId, replyId) {
 }
 
 function bindMashoutMasterTargetToChildTargets(masterTargetId) {
-    $("#" + masterTargetId).click(function() { $("." + masterTargetId).prop("checked", ($(this).prop("checked"))); });
+    $("#" + masterTargetId).click(function() { $("." + masterTargetId).prop("checked", ($(this).prop("checked"))); $("." + masterTargetId).change(); });
 }
 
 function bindMashoutShowMoreTweets() {

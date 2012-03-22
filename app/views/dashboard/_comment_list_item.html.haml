@@ -24,4 +24,7 @@
       %option{:value => "#{URI.encode('#ImYourBiggestFan!')}"} #ImYourBiggestFan!
       %option{:value => "#{URI.encode('Hit that #Follow Button! I promise it\'s worth it!')}"} Hit that #Follow Button! I promise it&#39;s worth it!
       %option{:value => "#{URI.encode('My #SocialMedia #Bestie! #LoveYa!')}"} My #SocialMedia #Bestie! #LoveYa!
+    %input{:id => 'hidden-comment', :type => 'hidden', :value => ''}
+    :javascript
+      $(function() { bindDynamicPreviewAutoCompleteSelectAndHandle('#mashout-comment-container', '#mashout-comment', '#hidden-comment', '#out-preview'); });
   %hr.space/

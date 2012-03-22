@@ -20,4 +20,7 @@
     %option{:value => "@GMA"} Good Morning America
     %option{:value => "@MTV"} MTV
     %option{:value => "@10onTop"} 10 on Top
+  %input{:id => 'hidden-media', :type => 'hidden', :value => ''}
+  :javascript
+    $(function() { bindDynamicPreviewAutoCompleteSelectAndHandle('#mashout-media-container', '#mashout-media', '#hidden-media', '#out-preview'); });
 %hr.space/
