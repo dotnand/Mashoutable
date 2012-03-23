@@ -38,6 +38,13 @@ describe User do
     end
   end
   
+  it 'should find bestie' do
+    user = FactoryGirl.create(:user)
+    FactoryGirl.create(:bestie, :screen_name => '@MASHOUTABLE', :user => user)
+    
+    subject.find_bestie('@mashoutable').should_not be_nil
+  end
+  
   context 'networks' do
     let(:user) { FactoryGirl.create(:user) }
   

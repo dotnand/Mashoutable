@@ -71,9 +71,15 @@ class DashboardController < ApplicationController
   end
 
   def blastout
-    if (guid = params['guid']).present?
-      video = Video.new(:guid => guid, :name => current_user.name << ' (' << guid << ')', :user => current_user)
-      flash[:errors] = 'Sorry, but we are unable to save your video' if not video.save
+    if (@guid = params['guid']).present?
+      video = Video.new(:guid => @guid, :name => current_user.name << ' (' << @guid << ')', :user => current_user)
+      if not video.save
+        flash[:errors] = 'Sorry, but we are unable to save your video'
+      else 
+        bitly = Bitly::Client.new(video_playback_url(@guid))
+        bitly.shorten
+        @video_url = bitly.shortened_url
+      end
     end
     
     @tool   = @current_tool
@@ -96,11 +102,11 @@ class DashboardController < ApplicationController
   end
 
   def delete_bestie
-    bestie = current_user.besties.find_by_screen_name(params['bestie'])
+    bestie = current_user.find_bestie(params['bestie'])
 
     if bestie.present?
       bestie.destroy
-      @message = 'Removed ' << bestie.screen_name << ' bestie'
+      @message = 'Removed ' << params['bestie'] << ' bestie'
     else
       @message = 'Bestie ' << params['bestie'] << ' not found'
     end
@@ -123,6 +129,7 @@ class DashboardController < ApplicationController
   end
 
   def videos
+    @tool = params['source']
     render_videos
   end
 
@@ -277,7 +284,7 @@ class DashboardController < ApplicationController
     end
     
     def get_interactions
-      current_user.grouped_augmented_interactions(:group => 'target').paginate(:page => page, :per_page => per_page(8))
+      current_user.grouped_augmented_interactions(:group => 'lower(target)').sort_by { |interaction| interaction[:count] }.reverse.paginate(:page => page, :per_page => per_page(8))
     end
 end
 

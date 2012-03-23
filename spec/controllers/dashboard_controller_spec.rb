@@ -44,6 +44,27 @@ describe DashboardController do
       assigns[:besties].should eq(twitter_besties_paginated)  
     end
     
+    it 'should DELETE bestie given it exists' do
+      bestie  = mock('bestie')
+      
+      bestie.should_receive(:destroy)
+      current_user.should_receive(:find_bestie).with('bestie2').and_return(bestie)
+      
+      delete :delete_bestie, {'bestie' => 'bestie2'}
+      
+      assigns[:message].should eq('Removed bestie2 bestie')
+      assigns[:besties].should eq(twitter_besties_paginated)
+    end
+    
+    it 'should not DELETE bestie if one does not exist' do
+      current_user.should_receive(:find_bestie).with('bestie2').and_return(nil)
+      
+      delete :delete_bestie, {'bestie' => 'bestie2'}
+      
+      assigns[:message].should eq('Bestie bestie2 not found')
+      assigns[:besties].should eq(twitter_besties_paginated)
+    end
+    
     context 'from twitter' do
       let(:besties) { mock('besties') }
       
@@ -51,28 +72,6 @@ describe DashboardController do
         current_user.should_receive(:besties).and_return(besties)
       end
       
-      it 'should DELETE bestie given it exists' do
-        bestie  = mock('bestie')
-        
-        bestie.should_receive(:destroy)
-        bestie.should_receive(:screen_name).and_return('bestie2')
-        besties.should_receive(:find_by_screen_name).with('bestie2').and_return(bestie)
-        
-        delete :delete_bestie, {'bestie' => 'bestie2'}
-        
-        assigns[:message].should eq('Removed bestie2 bestie')
-        assigns[:besties].should eq(twitter_besties_paginated)
-      end
-      
-      it 'should not DELETE bestie if one does not exist' do
-        besties.should_receive(:find_by_screen_name).with('bestie2').and_return(nil)
-        
-        delete :delete_bestie, {'bestie' => 'bestie2'}
-        
-        assigns[:message].should eq('Bestie bestie2 not found')
-        assigns[:besties].should eq(twitter_besties_paginated)
-      end
-
       it 'should POST a new bestie' do
         bestie = mock('bestie')
         
@@ -361,6 +360,39 @@ describe DashboardController do
 
     response.should be_success
     assigns[:videos].should eq(videos_paginated)
+    assigns[:guid].should_not be
+  end
+  
+  it 'GET blastout with video guid should create video' do
+    params  = {'guid' => 'abc123'}
+    bitly   = mock('bilty')
+    
+    setup_current_user_videos
+    current_user.should_receive(:name).and_return('john_doe')
+    bitly.should_receive(:shorten)
+    bitly.should_receive(:shortened_url).and_return('http://shortened_url.com')    
+    Bitly::Client.should_receive(:new).with(anything).and_return(bitly)
+    
+    get :blastout, params
+
+    response.should be_success
+    assigns[:videos].should eq(videos_paginated)
+    assigns[:video_url].should eq('http://shortened_url.com')
+  end
+  
+  it 'GET blashout with video guid should return a message if failed to save ' do
+    params  = {'guid' => 'abc123'}
+    video   = mock('video')
+    
+    setup_current_user_videos
+    current_user.should_receive(:name).and_return('john_doe')
+    Video.should_receive(:new).with(:guid => 'abc123', :name => 'john_doe (abc123)', :user => current_user).and_return(video)
+    video.should_receive(:save).and_return(false)
+    
+    get :blastout, params
+
+    response.should be_success
+    flash[:errors].should eq('Sorry, but we are unable to save your video')
   end
   
   it 'GET shoutout should be successful' do

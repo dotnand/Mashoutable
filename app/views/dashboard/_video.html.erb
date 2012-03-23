@@ -1,6 +1,6 @@
 <%- if defined? @tool and @tool == dashboard_blastout_path %>
   <div class='span-1 left'>
-    <input type="radio" name="mashout-video" value=<%= "#{video.guid}" %> class='mashout-video' />
+    <input id='video-<%= "#{video.guid}" %>' type="radio" name="mashout-video" value='<%= "#{video.guid}" %>' class='mashout-video' />
   </div>
 <% end %>
 <%= render 'nimbb_video', :video => video %>

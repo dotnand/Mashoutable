@@ -130,12 +130,13 @@ function bindAddBestieButton(buttonId, editorId, path) {
     });
 }
 
-function ajaxifyPagination(targetId, path) {
+function ajaxifyPagination(targetId, path, src) {
     $(targetId + " .pagination a").click(function() {
         var queryString = $(this).attr('href').split('?');
 
         $.ajax({type: "GET",
                 url: path + (queryString[1] == undefined ? '' : '?' + queryString[1]),
+                data: {'source': typeof(src) === undefined ? '' : src},
                 success: function(data) { $(targetId).replaceWith(data); }
         });
 

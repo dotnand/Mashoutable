@@ -50,6 +50,8 @@
             %p.error= flash[:error]
           - if flash[:success]
             %p.success= flash[:success]
+          %noscript
+            %p.error You need javascript for this site to function properly
           = yield :body
     = yield :optional_body
     / footer wrapper

@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
     create(:name => hash['info']['name'])
   end
   
+  def find_bestie(bestie)
+    besties.where('lower(screen_name) = ?', bestie.downcase).first
+  end
+  
   def twitter
     unless @twitter_client
       provider        = self.authorizations.find_by_provider('twitter')
@@ -165,7 +169,7 @@ class User < ActiveRecord::Base
     return twitter_users.map do |twitter_user| 
       {:screen_name       => '@' << twitter_user.screen_name, 
        :profile_image_url => twitter_user.profile_image_url, 
-       :count             => local_interactions['@' << twitter_user.screen_name]}
+       :count             => local_interactions['@' << twitter_user.screen_name.downcase]}
     end if twitter_users.present?
     []
   end

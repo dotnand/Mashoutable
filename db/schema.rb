@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314202425) do
+ActiveRecord::Schema.define(:version => 20120323040527) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.string   "secret"
   end
 
+  add_index "authorizations", ["provider"], :name => "authorizations_provider_idx"
+  add_index "authorizations", ["uid"], :name => "authorizations_uid_idx", :unique => true
+  add_index "authorizations", ["user_id"], :name => "authorizations_user_id_idx"
+
   create_table "besties", :force => true do |t|
     t.string   "screen_name"
     t.integer  "user_id"
@@ -30,7 +34,8 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.datetime "updated_at"
   end
 
-  add_index "besties", ["screen_name"], :name => "index_besties_on_screen_name"
+  add_index "besties", ["screen_name"], :name => "besties_screen_name_idx", :unique => true
+  add_index "besties", ["user_id"], :name => "besties_user_id_idx"
 
   create_table "interactions", :force => true do |t|
     t.string   "target"
@@ -40,6 +45,9 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.integer  "out_id"
   end
 
+  add_index "interactions", ["out_id"], :name => "interactions_out_id_idx"
+  add_index "interactions", ["user_id"], :name => "interactions_user_id_idx"
+
   create_table "mentions", :force => true do |t|
     t.integer  "user_id"
     t.string   "who"
@@ -48,12 +56,18 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.integer  "out_id"
   end
 
+  add_index "mentions", ["out_id"], :name => "mentions_out_id_idx"
+  add_index "mentions", ["user_id"], :name => "mentions_user_id_index"
+  add_index "mentions", ["who"], :name => "mentions_who_idx", :unique => true
+
   create_table "out_hashtags", :force => true do |t|
     t.string   "tag"
     t.integer  "out_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "out_hashtags", ["out_id"], :name => "out_hashtags_out_id_idx"
 
   create_table "out_replies", :force => true do |t|
     t.string   "reply"
@@ -62,6 +76,8 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.datetime "updated_at"
   end
 
+  add_index "out_replies", ["out_id"], :name => "out_replies_out_id_idx"
+
   create_table "out_targets", :force => true do |t|
     t.string   "target"
     t.integer  "out_id"
@@ -69,12 +85,16 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.datetime "updated_at"
   end
 
+  add_index "out_targets", ["out_id"], :name => "out_targets_out_id_idx"
+
   create_table "out_trends", :force => true do |t|
     t.string   "trend"
     t.integer  "out_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "out_trends", ["out_id"], :name => "out_trends_out_id_idx"
 
   create_table "outs", :force => true do |t|
     t.string   "media"
@@ -92,6 +112,9 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.boolean  "pending",      :default => false
   end
 
+  add_index "outs", ["user_id"], :name => "outs_user_id_idx"
+  add_index "outs", ["video_id"], :name => "outs_video_id_idx"
+
   create_table "replies", :force => true do |t|
     t.string   "status_id"
     t.integer  "user_id"
@@ -100,7 +123,9 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.integer  "out_id"
   end
 
-  add_index "replies", ["status_id"], :name => "index_replies_on_status_id"
+  add_index "replies", ["out_id"], :name => "replies_out_id_idx"
+  add_index "replies", ["status_id"], :name => "replies_status_id_idx", :unique => true
+  add_index "replies", ["user_id"], :name => "replies_user_id_index"
 
   create_table "users", :force => true do |t|
     t.string   "name"
@@ -116,5 +141,9 @@ ActiveRecord::Schema.define(:version => 20120314202425) do
     t.string   "name"
     t.string   "youtube_id"
   end
+
+  add_index "videos", ["guid"], :name => "videos_guid_idx", :unique => true
+  add_index "videos", ["name"], :name => "videos_name_idx", :unique => true
+  add_index "videos", ["user_id"], :name => "videos_user_id_idx"
 
 end

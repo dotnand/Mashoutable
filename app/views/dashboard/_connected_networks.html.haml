@@ -6,9 +6,10 @@
   .left.clear.item
     = render 'youtube_network_button', :oops => false
   = render 'hidden_network_fields'
-  %input.left.clear{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}/
+  .left.clear.span-2
+    %input.left.clear{:id => 'edit-network-preferences', :value => 'Save', :type => 'submit'}/
   - if defined? @message and @message.present?
-    %span.clear.right{:id => 'edit-network-preferences-message'}= @message
+    .left.span-6{:id => 'edit-network-preferences-message'}= @message
   :javascript
     $(function() { bindEditNetworkPreferencesClick('#edit-network-preferences', "#{remove_networks_path}"); });
 
