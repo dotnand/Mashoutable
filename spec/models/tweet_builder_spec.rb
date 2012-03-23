@@ -176,14 +176,6 @@ describe TweetBuilder do
       it 'should not have a target given unknown' do
         builder.target('unknown target').should eq([nil, nil])
       end
-    
-      it 'should build given tweople' do
-        user.should_receive(:tweople).and_return(users)
-        
-        builder.target('TWEOPLE')
-        
-        builder.tweet.should eq('@john_doe1 @john_doe2 @jane_doe1 ')
-      end
       
       it 'should build given followers' do
         user.should_receive(:following_me).and_return(users)
@@ -240,16 +232,18 @@ describe TweetBuilder do
         params['mashout-hashtag']           = ['hashtag 1', 'hashtag 2']
         params['mashout-trend']             = ['trend 1', 'trend 2']
         params['mashout-comment']           = 'comment'
-        params['mashout-target-selection']  = 'TWEOPLE'
+        params['mashout-target-selection']  = 'FOLLOWER'
         params['mashout-targets']           = ['target 1', 'target 2']
         
-        user.should_receive(:tweople).and_return(users)
+        user.should_receive(:following_me).and_return(users)
         
-        builder.build(Out.new(params)).should eq('media hashtag 1 hashtag 2 trend 1 trend 2 comment @john_doe1 @john_doe2 @jane_doe1 target 1 target 2')
+        builder.build(Out.new(params)).should eq('media @john_doe1 @john_doe2 @jane_doe1 target 1 target 2 hashtag 1 hashtag 2 trend 1 trend 2 comment')
       end
       
-      it 'should not build' do
-        builder.target('TWEOPLE', false).should eq([nil, nil])
+      it 'should not build' do      
+        user.should_receive(:following_me).and_return([user1, user2, user3])
+      
+        builder.target('FOLLOWER', false)
         builder.tweet.should be_empty
       end
     end

@@ -137,6 +137,17 @@ function bindDynamicPreviewAutoCompleteSelectAndHandle(wrapperId, selectId, hidd
     });    
 }
 
+function bindDynamicPreviewVideoRadioClick(radioId, sourceId, hiddenRadioId, outPreviewId) {
+    $(radioId).click(function() {
+        var newValue = unescape($(sourceId).val());
+        var oldValue = unescape($(hiddenRadioId).val());
+
+        generateOutFragment(oldValue, hiddenRadioId, false);
+        generateOutFragment(newValue, hiddenRadioId, true);
+        generateDynamicOutPreview(outPreviewId);
+    });
+}
+
 function bindDynamicPreviewCheckboxClick(checkboxId, hiddenCheckboxId, outPreviewId) {
     $(checkboxId).click(function() {
         handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId);
@@ -187,7 +198,7 @@ function selectAutocomplete(wrapperId, selectId, value) {
 }
 
 function handleTargetAutoCompleteSelection(path) {
-    trendSelection = $('#mashout-target-selection').val();
+    var trendSelection = $('#mashout-target-selection').val();
 
     $.ajax({url: path,
             data: {'mashout-target': trendSelection },
@@ -235,10 +246,6 @@ function handleTrendAutoCompleteSelection(path) {
     if(locationExists) {
         selectAutocomplete('#mashout-location-container', '#mashout-location-selection', params.trend_location);
     }
-
-    if(regionExists) {
-        selectAutocomplete('#mashout-region-container', '#mashout-region-selection', params.trend_region);
-    }
 }
 
 function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
@@ -248,39 +255,6 @@ function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
 
       $(targetId).val(link === undefined ? '' : link);
   });
-}
-
-function bindMashoutPreviewClick(path) {
-    $('#preview-out').click(function() {
-        var params = 'mashout-target=' + $('#mashout-target-selection').val() + '&' +
-                     'mashout-media=' + $('#mashout-media').val() + '&' +
-                     'mashout-comment=' + $('#mashout-comment').val() + '&' +
-                     'trend-location=' + $('#mashout-location-selection').val() + '&' +
-                     'trend-source=' + $('#mashout-trend-selection').val() + '&' +
-                     'trend-region=' + $('#mashout-region-selection').val() + '&' +
-                     'mashout-video=' + $('.mashout-video:checked').val();
-
-        $("#mashout-hashtag-checkboxes :checked").each(function() {
-            params += '&mashout-hashtag[]=' + $(this).val();
-        });
-
-        $("#mashout-trend-checkboxes :checked").each(function() {
-            params += '&mashout-trend[]=' + $(this).val();
-        });
-
-        $("input.target-checkbox").each(function() {
-            if($(this).attr('checked') != undefined) {
-                params += '&mashout-targets[]=' + $(this).val();
-            }
-        });
-
-        $.ajax({url: path,
-                data: encodeURI(params),
-                success: function(data) { $('#out-preview').val(data); calculateCharsLeft(); },
-                async: false});
-
-        return false;
-    });
 }
 
 function bindMashoutClearPreviewClick() {

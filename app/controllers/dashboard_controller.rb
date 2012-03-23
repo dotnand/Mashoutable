@@ -37,6 +37,9 @@ class DashboardController < ApplicationController
     @trend_source   = params[:trend_source]
     @trend_region   = params[:trend_location]
     @trend_woeid    = params[:trend_region]
+    
+    @trend_region = nil if @trend_region == 'NONE'
+    @trend_woeid = nil if @trend_region == nil or @trend_woeid == 'NONE'
 
     @locations, @regions, @trends = Trend.trends(current_user, @trend_source, @trend_region, @trend_woeid)
 
@@ -61,25 +64,15 @@ class DashboardController < ApplicationController
     redirect_to dashboard_blastout_path
   end
 
-  def preview_mashout
-    video_guid  = params['mashout-video']
-    bitly       = Bitly::Client.new(video_playback_url(video_guid))
-    out         = Out.new(params)
-    out.video   = Video.find_by_guid(video_guid)
-    
-    render :text => TweetBuilder.new(self.current_user, bitly).build(out)
-  end
-
   def blastout
     if (@guid = params['guid']).present?
-      video = Video.new(:guid => @guid, :name => current_user.name << ' (' << @guid << ')', :user => current_user)
-      if not video.save
-        flash[:errors] = 'Sorry, but we are unable to save your video'
-      else 
-        bitly = Bitly::Client.new(video_playback_url(@guid))
-        bitly.shorten
-        @video_url = bitly.shortened_url
-      end
+      bitly = Bitly::Client.new(video_playback_url(@guid))
+
+      bitly.shorten and (@video_url = bitly.shortened_url)
+      
+      video_name      = current_user.name << ' (' << @guid << ')'
+      video           = Video.new(:guid => @guid, :name => video_name, :user => current_user, :bitly_uri => @video_url)
+      flash[:errors]  = 'Sorry, but we are unable to save your video' if not video.save
     end
     
     @tool   = @current_tool

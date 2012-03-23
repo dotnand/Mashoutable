@@ -176,33 +176,6 @@ describe DashboardController do
                      'action'                   => action})
     end
     
-    it 'should GET preview mashout' do
-      build_params('preview_mashout')
-      
-      get :preview_mashout, params
-
-      response.should be_success
-      response.body.should eq('trend1 #trend2')
-    end  
-    
-    it 'should GET preview mashout with video' do
-      video_guid  = '123abc'
-      bitly       = mock('bitly')
-      
-      FactoryGirl.create(:video, :guid => video_guid, :user => current_user)
-      
-      bitly.should_receive(:shorten) { true }
-      bitly.should_receive(:shortened_url).and_return('http://out.am/9a8b7c')
-      Bitly::Client.should_receive(:new).with("http://127.0.0.1/videos/#{video_guid}").and_return(bitly)
-          
-      build_params('preview_mashout')
-      
-      get :preview_mashout, params.merge!({'mashout-video' => video_guid})
-
-      response.should be_success
-      response.body.should eq('trend1 #trend2 http://out.am/9a8b7c')
-    end
-    
     context 'POST' do    
       def create_out_should_be_successful(redirected_to, tweet)
         flash[:success].should eq('Created your OUT!')
@@ -369,7 +342,7 @@ describe DashboardController do
     
     setup_current_user_videos
     current_user.should_receive(:name).and_return('john_doe')
-    bitly.should_receive(:shorten)
+    bitly.should_receive(:shorten).and_return(true)
     bitly.should_receive(:shortened_url).and_return('http://shortened_url.com')    
     Bitly::Client.should_receive(:new).with(anything).and_return(bitly)
     
@@ -383,10 +356,14 @@ describe DashboardController do
   it 'GET blashout with video guid should return a message if failed to save ' do
     params  = {'guid' => 'abc123'}
     video   = mock('video')
-    
+    bitly   = mock('bitly')
+      
     setup_current_user_videos
+    bitly.should_receive(:shorten).and_return(true)
+    bitly.should_receive(:shortened_url).and_return('http://shortened_url.com')    
+    Bitly::Client.should_receive(:new).with(anything).and_return(bitly)
     current_user.should_receive(:name).and_return('john_doe')
-    Video.should_receive(:new).with(:guid => 'abc123', :name => 'john_doe (abc123)', :user => current_user).and_return(video)
+    Video.should_receive(:new).with(:guid => 'abc123', :name => 'john_doe (abc123)', :user => current_user, :bitly_uri => 'http://shortened_url.com').and_return(video)
     video.should_receive(:save).and_return(false)
     
     get :blastout, params

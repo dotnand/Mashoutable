@@ -131,36 +131,14 @@ describe User do
     let!(:user2) { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
     let!(:user3) { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
-    context 'tweople' do  
-      let!(:out_mention1)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe1') }
-      let!(:out_mention2)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe2') }
-      let!(:out_mention3)  { FactoryGirl.create(:mention, :user => subject, :who => 'john_doe3') }
-      let!(:status1)   { double(:user => user1, :created_at => 1.day.ago, :source => 'android') }
-      let!(:status2)   { double(:user => user2, :created_at => 2.days.ago, :source => 'web') }
-      let!(:status3)   { double(:user => user3, :created_at => 3.days.ago, :source => 'web') }
-      
-      before do
-        shuffled_statuses = mock('object')
-        shuffled_statuses.should_receive(:shuffle).and_return([status1, status2, status3])
-        twitter.should_receive(:home_timeline).with(:count => 1000).and_return(shuffled_statuses)
-      end
-      
-      it 'should have two given a mention with no followers or friends' do
-        mentions = double(:find => [])
-        subject.stub(:twitter_ids).and_return([])
-        subject.stub(:mentions).and_return(mentions)
-        
-        
-        subject.tweople.should eq([user2, user3])
-      end
-    end
-  
     it 'should have following me' do
-      follower_ids = [3, 100, 55]
+      follower_ids  = [3, 100, 55]
+      friend_ids    = [100, 8, 9]
       
       follower_ids.should_receive(:shuffle).and_return([55, 100, 3])
       subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      twitter.should_receive(:users).with([55, 100, 3]).and_return([user1, user2, user3])
+      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
+      twitter.should_receive(:users).with([55, 3]).and_return([user1, user2, user3])
       
       subject.following_me.should eq([user1, user2, user3])
     end
@@ -177,11 +155,13 @@ describe User do
     end
     
     it 'should have I follow' do
-      friend_ids = [3, 100, 55]
+      friend_ids    = [3, 100, 55]
+      follower_ids  = [88, 55, 2]
       
       friend_ids.should_receive(:shuffle).and_return([55, 100, 3])
       subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
-      twitter.should_receive(:users).with([55, 100, 3]).and_return([user1, user2, user3])
+      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
+      twitter.should_receive(:users).with([100, 3]).and_return([user1, user2, user3])
       
       subject.i_follow.should eq([user1, user2, user3])
     end

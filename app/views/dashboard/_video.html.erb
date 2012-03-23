@@ -1,6 +1,7 @@
 <%- if defined? @tool and @tool == dashboard_blastout_path %>
   <div class='span-1 left'>
     <input id='video-<%= "#{video.guid}" %>' type="radio" name="mashout-video" value='<%= "#{video.guid}" %>' class='mashout-video' />
+    <input id='video-uri-<%= "#{video.guid}" %>' type="hidden" name="mashout-video-uri" value='<%= "#{video.bitly_uri}" %>' />
   </div>
 <% end %>
 <%= render 'nimbb_video', :video => video %>
@@ -29,6 +30,8 @@
               $('<%= "#edit-video-name-message-#{video.guid}" %>').html(xhr.responseText);
             }
         }
+
+        bindDynamicPreviewVideoRadioClick('#video-<%= "#{video.guid}" %>', '#video-uri-<%= "#{video.guid}" %>', '#hidden-video', '#out-preview');
 
         $('<%= "#delete-video-#{video.guid}" %>').click(function() {
             $.ajax({url:'<%= "#{delete_video_path(video.guid)}" %>',

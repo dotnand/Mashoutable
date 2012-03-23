@@ -1,7 +1,6 @@
 #mashout-target-container.span-9.left.ui-combobox
   %select{:id => 'mashout-target-selection', :name => 'mashout-target-selection', :style => "display: none;"}
-    %option{:value => "NONE"} Select One...
-    %option{:value => "TWEOPLE"} Tweople (Twitter Users who are likely online NOW
+    %option{:value => "NONE"} None
     %option{:value => "FOLLOWER"} Follower Tweeps (Twitter Users Following Me)
     %option{:value => "FOLLOWED_BY_I_FOLLOW"} Tweeps (I follow/Am followed by)
     %option{:value => "I_FOLLOW"} I Follow (Tweople who haven't reciprocated...YET)
@@ -58,7 +57,7 @@
                 %p
                   = profile[:location]
 
-      - else
+      - elsif defined? @target and @target != 'NONE'
         %p No tweets were found
   %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}
   :javascript

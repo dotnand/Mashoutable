@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323040527) do
+ActiveRecord::Schema.define(:version => 20120323181245) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20120323040527) do
     t.datetime "updated_at"
     t.string   "name"
     t.string   "youtube_id"
+    t.string   "bitly_uri"
   end
 
   add_index "videos", ["guid"], :name => "videos_guid_idx", :unique => true

@@ -12,7 +12,7 @@ FactoryGirl.define do
   factory :authorization do
     user
     provider 'provider'
-    uid 'uid'
+    sequence(:uid) {|n| "uid_#{n}" }
     token 'token'
     secret 'secret'
   end

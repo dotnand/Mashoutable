@@ -6,7 +6,7 @@
     .bubble-bottom
   #mashout-trend-container.span-9.left.ui-combobox
     %select{:id => 'mashout-trend-selection', :name => 'trend-source', :style => "display: none;"}
-      %option{:value => 'NONE'} Select one...
+      %option{:value => 'NONE'} None
       %option{:value => 'Twitter'} Twitter
       %option{:value => 'Google'} Google
   - if defined? @trend_source and @trend_source == 'Twitter'
@@ -17,11 +17,11 @@
       .bubble-bottom
     #mashout-location-container.span-9.left.ui-combobox
       %select{:id => 'mashout-location-selection', :name => 'trend-location', :style => "display: none;"}
-        %option{:value => 'NONE'} Select one...
+        %option{:value => 'NONE'} None
         - @locations.each do |location|
           %option{:value => location[:value]}= location[:name]
     :javascript
-      bindTrendAutoCompleteSelectAndHandle('#mashout-location-container', '#mashout-location-selection', "#{trend_source_path}");
+      $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-location-container', '#mashout-location-selection', "#{trend_source_path}"); });
     - if defined? @trend_region and @trend_region.present? and @regions.present? and @regions.count > 0
       .content-bubble.span-6.left.clear
         .bubble-top
@@ -30,11 +30,11 @@
         .bubble-bottom
       #mashout-region-container.span-9.left.ui-combobox
         %select{:id => 'mashout-region-selection', :name => 'trend-region', :style => 'display: none;'}
-          %option{:value => 'NONE'} Select one...
+          %option{:value => 'NONE'} None
           - @regions.each do |region|
             %option{:value => region[:value]}= region[:name]
       :javascript
-        bindTrendAutoCompleteSelectAndHandle('#mashout-region-container', '#mashout-region-selection', "#{trend_source_path}");
+        $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-region-container', '#mashout-region-selection', "#{trend_source_path}"); });
     - if defined? @trends and @trends.count > 0
       .content-bubble.span-6.left.clear
         .bubble-top
@@ -69,5 +69,5 @@
             $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
   %input{:id => 'hidden-trends', :type => 'hidden', :value => ''}
   :javascript
-    bindTrendAutoCompleteSelectAndHandle('#mashout-trend-container', '#mashout-trend-selection', "#{trend_source_path}");
+    $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-trend-container', '#mashout-trend-selection', "#{trend_source_path}"); });
 

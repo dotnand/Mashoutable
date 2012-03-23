@@ -14,11 +14,11 @@ class TweetBuilder
     @tweet  = ''
 
     media(out.media)
+    target(out.target)
+    targets(out.targets.map(&:target))
     hashtag(out.hashtags.map(&:tag))
     trend(out.trends.map(&:trend))
     comment(out.comment)
-    target(out.target)
-    targets(out.targets.map(&:target))
     video(out.video.guid) if out.video.present?
 
     @tweet.strip
@@ -31,10 +31,24 @@ class TweetBuilder
     profiles  = nil
     
     case value
-      when 'TWEOPLE'              then @user.tweople.each { |tweople| add_to_tweet(tweople.screen_name, '@') } if build
-      when 'FOLLOWER'             then @user.following_me.each { |follower| add_to_tweet(follower.screen_name, '@') }  if build
-      when 'FOLLOWED_BY_I_FOLLOW' then @user.followed_by_i_follow.each { |tweep| add_to_tweet(tweep.screen_name, '@') }  if build
-      when 'I_FOLLOW'             then @user.i_follow.each { |followee| add_to_tweet(followee.screen_name, '@') }  if build
+      when 'FOLLOWER'             
+        if build 
+          @user.following_me.each { |follower| add_to_tweet(follower.screen_name, '@') }
+        else
+          profiles = @user.following_me.map { |twitter_follower| map_user_to_profile(twitter_follower) }
+        end 
+      when 'FOLLOWED_BY_I_FOLLOW'
+        if build
+          @user.followed_by_i_follow.each { |tweep| add_to_tweet(tweep.screen_name, '@') }
+        else
+          profiles = @user.followed_by_i_follow.map { |twitter_follow_by_i_follow| map_user_to_profile(twitter_follow_by_i_follow) }
+        end
+      when 'I_FOLLOW'             
+        if build 
+          @user.i_follow.each { |followee| add_to_tweet(followee.screen_name, '@') }
+        else
+          profiles = @user.i_follow.map { |i_follow| map_user_to_profile(i_follow) }
+        end
       when 'TODAYS_MENTIONS'      then targets = @user.mentioned.map { |status| map_status_to_target(status) }
       when 'TODAYS_SHOUTOUTS'     then targets = @user.shoutouts.map { |status| map_status_to_target(status) }
       when 'TODAYS_RTS'           then targets = @user.retweets_of_me.map { |status| map_status_to_target(status) }

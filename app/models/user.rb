@@ -80,40 +80,17 @@ class User < ActiveRecord::Base
     @youtube_client
   end
   
-  def tweople
-    # 1. get twitter public timeline
-    # 2. filter out the most recent 100 tweets
-    # 3. filter out for web only
-    # 4. filter out not on friends list and followers list
-    # 5. filter out from local mentioned
-    follower_ids    = twitter_ids(:follower_ids)
-    friend_ids      = twitter_ids(:friend_ids)
-    home_timeline   = twitter.home_timeline(:count => 1000).shuffle
-    tweople         = []
-    local_mentions  = self.mentions.find(:all, :select => :who).map { |mention| mention.who }
-    
-    home_timeline.each do |status|
-      next if tweople.include?(status.user)
-      next if local_mentions.include?(status.user.screen_name)
-      next if friend_ids.include?(status.user.id)
-      next if follower_ids.include?(status.user.id)
-
-      web           = status.source.casecmp('web') == 0
-      within_a_week = (7.days.ago..Date.today).cover?(status.created_at.to_date)
-
-      tweople << status.user if web and within_a_week
-    end
-
-    tweople
-  end
-  
   def following_me
     # 1. get followers
     # 2. get friends
     # 3. remove friends from followers
-    follower_ids = twitter_ids(:follower_ids).shuffle
-    return [] if follower_ids.count < 1
-    twitter.users(follower_ids[0..[follower_ids.count, 15].min])
+    follower_ids      = twitter_ids(:follower_ids).shuffle
+    friend_ids        = twitter_ids(:friend_ids).shuffle  
+    following_me_ids  = follower_ids - friend_ids
+
+    return [] if following_me_ids.count < 1
+
+    twitter.users(following_me_ids[0..[following_me_ids.count, 15].min])
   end
   
   def followed_by_i_follow
@@ -128,9 +105,13 @@ class User < ActiveRecord::Base
     # 1. get friends
     # 2. get followers
     # 3. remove followers from friends
-    friend_ids = twitter_ids(:friend_ids).shuffle
+    friend_ids    = twitter_ids(:friend_ids).shuffle
+    follower_ids  = twitter_ids(:follower_ids).shuffle
+    i_follow_ids  = friend_ids - follower_ids
+    
     return [] if friend_ids.count < 1
-    twitter.users(friend_ids[0..[friend_ids.count, 15].min])
+    
+    twitter.users(i_follow_ids[0..[i_follow_ids.count, 15].min])
   end
   
   def mentioned(date = Date.today)
