@@ -38,11 +38,13 @@ describe User do
     end
   end
   
-  it 'should find bestie' do
-    user = FactoryGirl.create(:user)
-    FactoryGirl.create(:bestie, :screen_name => '@MASHOUTABLE', :user => user)
-    
-    subject.find_bestie('@mashoutable').should_not be_nil
+  [['@mashoutable', '@MASHOUTABLE'], ['@MASHOUTABLE', '@mashoutable']].each do |screen_name1, screen_name2|
+    it 'should find bestie' do
+      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:bestie, :screen_name => screen_name1, :user => user)
+      
+      user.find_bestie(screen_name2).should_not be_nil
+    end
   end
   
   context 'networks' do

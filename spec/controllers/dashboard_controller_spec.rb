@@ -339,7 +339,7 @@ describe DashboardController do
     response.should be_success
     assigns[:besties].should eq(twitter_besties_paginated)
     assigns[:videos].should eq(videos_paginated)
-    assigns[:interactions].should eq(grouped_augmented_interactions)
+    assigns[:interactions].should eq(grouped_augmented_interactions.sort_by {|interaction| interaction['count']})
     assigns[:networks].should_not be_nil
   end
   
