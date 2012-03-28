@@ -66,6 +66,6 @@ Mashoutable::Application.configure do
     :user_name            => ENV['EMAIL_USER_NAME'],
     :password             => ENV['EMAIL_PASSWORD'],
     :domain               => 'mashoutable.info',
-    :authentication       => :login
- }
+    :authentication       => :plain,
+    :enable_starttls_auto => true}
 end
