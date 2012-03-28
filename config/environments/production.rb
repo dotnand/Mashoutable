@@ -65,6 +65,5 @@ Mashoutable::Application.configure do
     :port                 => ENV['EMAIL_PORT'],
     :user_name            => ENV['EMAIL_USER_NAME'],
     :password             => ENV['EMAIL_PASSWORD'],
-    :authentication       => :plain,
-    :enable_starttls_auto => true }
+    :authentication       => :plain }
 end
