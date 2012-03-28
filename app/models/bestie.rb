@@ -1,7 +1,7 @@
 class Bestie < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :screen_name
-  validates_uniqueness_of :screen_name, :scope => :user_id
+  validates :screen_name, :presence => true, :uniqueness => {:scope => :user_id}
   validate :must_start_with_at_sign
 
   private
