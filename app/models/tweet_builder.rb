@@ -29,6 +29,7 @@ class TweetBuilder
 
     targets   = nil
     profiles  = nil
+    retweets  = nil
     
     case value
       when 'FOLLOWER'             
@@ -49,15 +50,16 @@ class TweetBuilder
         else
           profiles = @user.i_follow.map { |i_follow| map_user_to_profile(i_follow) }
         end
-      when 'TODAYS_MENTIONS'      then targets = @user.mentioned.map { |status| map_status_to_target(status) }
-      when 'TODAYS_SHOUTOUTS'     then targets = @user.shoutouts.map { |status| map_status_to_target(status) }
-      when 'TODAYS_RTS'           then targets = @user.retweets_of_me.map { |status| map_status_to_target(status) }
-      when 'CELEB_VERIFIED'       then profiles = @user.verified.map { |verified| add_to_tweet(verified.screen_name, '@') }
+      when 'TODAYS_MENTIONS'      then targets  = @user.mentioned.map { |status| map_status_to_target(status) }
+      when 'TODAYS_SHOUTOUTS'     then targets  = @user.shoutouts.map { |status| map_status_to_target(status) }
+      when 'TODAYS_RTS'           then retweets = @user.retweets_of_me.map { |status| map_retweet_to_profile(status) }
+      # future release
+      # when 'CELEB_VERIFIED'       then profiles = @user.verified.map { |verified| map_user_to_profile(verified) }
       when 'BESTIES'              then profiles = @user.twitter_besties.map { |twitter_bestie| map_user_to_profile(twitter_bestie) }
       else ''
     end
     
-    [targets, profiles]
+    [targets, profiles, retweets]
   end
   
   def video(value)
@@ -127,5 +129,12 @@ class TweetBuilder
        :screen_name       => '@' << user.screen_name, 
        :description       => user.description, 
        :location          => user.location} 
+    end
+    
+    def map_retweet_to_profile(retweet)
+      {:text      => retweet[:text],
+       :status_id => retweet[:status_id],
+       :users     => retweet[:users].map { |user| {:profile_image_url => user.profile_image_url,
+                                                   :screen_name       => '@' << user.screen_name} }}
     end
 end

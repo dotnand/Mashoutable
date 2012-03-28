@@ -174,13 +174,7 @@ describe User do
     end
     
     it 'should have celeb/verified followers' do
-      follower_ids = [3, 100, 55]
-      
-      follower_ids.should_receive(:shuffle).and_return([100, 55, 3])
-      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      twitter.should_receive(:users).with([100, 55, 3]).and_return([user1, user2, user3])
-      
-      subject.verified(:follower_ids).should eq([user1, user3])
+      pending 'future release'
     end
     
     it 'should have augmented interactions' do
@@ -221,13 +215,17 @@ describe User do
   end
   
   it 'should have todays retweets' do
-    retweet1 = double(:created_at => Date.today, :user => double(:screen_name => 'me'), :text => 'Hey dude!')
-    retweet2 = double(:created_at => Date.today, :user => double(:screen_name => 'me'), :text => '#S/O My peeps~')
-    retweet3 = double(:created_at => Date.today, :user => double(:screen_name => 'me'), :text => 'My everyones #SHOUTOUTS')
-    retweet4 = double(:created_at => 2.days.ago, :user => double(:screen_name => 'me'), :text => '#shoutout it')
+    retweeters1 = [twitter_profile1, twitter_profile2]
+    retweeters2 = [twitter_profile3]
+
+    retweet1 = double(:created_at => Date.today, :id => 1, :user => double(:screen_name => 'me'), :text => 'Hey dude!')
+    retweet2 = double(:created_at => Date.today, :id => 2, :user => double(:screen_name => 'me'), :text => '#S/O My peeps~')
     
-    subject.twitter.should_receive(:retweets_of_me).and_return([retweet1, retweet2, retweet3, retweet4])
+    subject.twitter.should_receive(:retweets_of_me).and_return([retweet1, retweet2])
+    subject.twitter.should_receive(:retweeters_of).with(1, :count => 10).and_return(retweeters1)
+    subject.twitter.should_receive(:retweeters_of).with(2, :count => 10).and_return(retweeters2)
     
-    subject.retweets_of_me.should eq([retweet1, retweet2, retweet3])
+    subject.retweets_of_me.should eq([{:text => 'Hey dude!', :status_id => 1, :users => [twitter_profile1, twitter_profile2]}, 
+                                      {:text => '#S/O My peeps~', :status_id => 2, :users => [twitter_profile3]}])
   end
 end

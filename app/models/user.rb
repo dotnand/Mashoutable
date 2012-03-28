@@ -128,13 +128,20 @@ class User < ActiveRecord::Base
   end
   
   def retweets_of_me(date = Date.today)
-    twitter.retweets_of_me(:count => 200).select { |status| status.created_at.to_date == date }
+    todays_retweets = twitter.retweets_of_me(:count => 200).select { |status| status.created_at.to_date == date }    
+    todays_retweets.map { |retweet| {:text => retweet.text, :status_id => retweet.id, :users => twitter.retweeters_of(retweet.id, :count => 10) } }
   end
   
   def verified(type = :follower_ids)
-    follower_ids = twitter_ids(type).shuffle
-    return [] if follower_ids.count < 1
-    twitter.users(follower_ids[0..99]).select { |user| user.verified }
+    twitter_user_ids = twitter_ids(type).shuffle + twitter_ids(:friend_ids).shuffle
+    return [] if twitter_user_ids.count < 1
+    verified_users = []
+    twitter_user_ids.in_groups_of(100) do |twitter_user_id_group| 
+      users = twitter.users(twitter_user_id_group).select { |user| user.verified }
+      verified_users += users if users.any?
+      Rails.logger.info verified_users.to_json + "\n\n"
+    end
+    verified_users
   end
   
   def twitter_besties

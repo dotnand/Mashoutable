@@ -8,7 +8,8 @@
     %option{:value => "TODAYS_SHOUTOUTS"} Today's #shoutouts
     %option{:value => "TODAYS_RTS"} Today's #RT's (Your Tweets retweeted)
     %option{:value => "BESTIES"} Your Twitter Besties
-    %option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
+    - # future release
+    - #%option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
   :javascript
     $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-container', '#mashout-target-selection', '#hidden-targets', '#out-preview'); });
   - if defined? @targets
@@ -22,9 +23,9 @@
             - if not first_target.nil?
               - sanitized_screen_name = sanitize_twitter_screen_name(first_target[:screen_name])
               .append-bottom
-                %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox'}/
+                %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox'}
                 %label= first_target[:screen_name]
-                %img{:src => first_target[:profile_image_url], :style => 'width:45px; height:45px;'}/
+                %img{:src => first_target[:profile_image_url], :style => 'width:45px; height:45px;'}
                 :javascript
                   $(function() { bindMashoutMasterTargetToChildTargets("mashout-target-#{sanitized_screen_name}"); });
               = render 'target_tweets', :target => first_target, :sanitized_screen_name => sanitized_screen_name
@@ -48,15 +49,35 @@
                 - profile_id = "mashout-profile-#{sanitized_screen_name}"
                 %input{:id => profile_id, :name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
                 %label= profile[:screen_name]
-                %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}/
+                %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}
                 :javascript
-                  $(function() { bindDynamicPreviewCheckboxClick('##{profile_id}', '#hidden-targets', '#out-preview'); });
+                  $(function() { bindDynamicPreviewCheckboxClick("##{profile_id}", '#hidden-targets', '#out-preview'); });
               .span-6.prepend-1
                 %p
                   %em= profile[:description]
                 %p
                   = profile[:location]
-
+      - elsif not @retweets.nil? and @retweets.count > 0
+        #mashout-target-checkboxes
+          %br/
+          - @retweets.each do |retweet|
+            .target-content
+              .append-bottom
+                - retweet_parent = "mashout-retweet-#{retweet[:status_id]}"
+                %input.span-1{:id => "#{retweet_parent}", :name => "#{retweet_parent}", :type => 'checkbox'}
+                :javascript
+                  $(function() { bindMashoutMasterTargetToChildTargets("#{retweet_parent}"); });
+                %em
+                  %label.span-7.append-bottom= retweet[:text]
+                .span-7.prepend-1
+                  - retweet[:users] .each do |user|
+                    - sanitized_screen_name = sanitize_twitter_screen_name(user[:screen_name])
+                    - retweeter_id = "mashout-retweet-#{retweet_parent}-#{sanitized_screen_name}"
+                    %input{:id => retweeter_id, :name => "mashout-targets[]", :type => 'checkbox', :value=> "#{user[:screen_name]}", :class => "#{retweet_parent} target-checkbox"}
+                    %label= user[:screen_name]
+                    %img.right{:src => user[:profile_image_url], :style => 'width:45px; height:45px;'}
+                    :javascript
+                      $(function() { bindDynamicPreviewTargetChange("##{retweeter_id}", '#hidden-targets', '#out-preview', "#{retweet_parent}"); });
       - elsif defined? @target and @target != 'NONE'
         %p No tweets were found
   %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}

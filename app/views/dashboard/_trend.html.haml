@@ -32,7 +32,7 @@
         %select{:id => 'mashout-region-selection', :name => 'trend-region', :style => 'display: none;'}
           %option{:value => 'NONE'} None
           - @regions.each do |region|
-            %option{:value => region[:value]}= region[:name]
+            %option{:value => region[:value], :selected => @trend_woeid.to_s == region[:value].to_s ? 'selected' : nil}= region[:name]
       :javascript
         $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-region-container', '#mashout-region-selection', "#{trend_source_path}"); });
     - if defined? @trends and @trends.count > 0

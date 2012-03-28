@@ -124,7 +124,7 @@ describe TweetBuilder do
     end
 
     context 'targets' do
-      it 'should have TODAYS MENTIONS' do
+      it 'should have TODAYS MENTIONS' do      
         user.should_receive(:mentioned).and_return([status1, status2, status3])
         
         mentioned, profiles = builder.target('TODAYS_MENTIONS')
@@ -158,23 +158,24 @@ describe TweetBuilder do
       end
       
       it 'should have TODAYS RETWEETS' do
-        user.should_receive(:retweets_of_me).and_return([status1, status2, status3])
+        retweet_group1 = {:text => 'Hey dude!', :status_id => 1, :users => [user1, user2]}
+        retweet_group2 = {:text => 'My peeps~', :status_id => 2, :users => [user3]}
         
-        retweets, profiles = builder.target('TODAYS_RTS')
+        user.should_receive(:retweets_of_me).and_return([retweet_group1, retweet_group2])
         
-        validate_first_three_tweets(retweets)
+        targets, profiles, retweets = builder.target('TODAYS_RTS')
+
+        retweets.should eq([{:text => 'Hey dude!', :status_id => 1, :users => [{:profile_image_url => 'http://twitter-image.twitter', :screen_name => '@john_doe1'},
+                                                                              {:profile_image_url => 'http://twitter-image.twitter', :screen_name => '@john_doe2'}]},
+                           {:text => 'My peeps~', :status_id => 2, :users => [{:profile_image_url => 'http://twitter-image.twitter', :screen_name => '@jane_doe1'}]}])
       end
       
       it 'should have CELEB/VERIFIED' do
-        user.should_receive(:verified).and_return(users)
-        
-        builder.target('CELEB_VERIFIED')
-        
-        builder.tweet.should eq('@john_doe1 @john_doe2 @jane_doe1 ')
+        pending 'future release'
       end
       
       it 'should not have a target given unknown' do
-        builder.target('unknown target').should eq([nil, nil])
+        builder.target('unknown target').should eq([nil, nil, nil])
       end
       
       it 'should build given followers' do

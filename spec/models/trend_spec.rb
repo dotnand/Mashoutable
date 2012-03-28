@@ -55,30 +55,38 @@ describe Trend do
     let(:twitter) { mock('object') }
     let(:user)    { mock('object') }
     
-    before do
+    def setup_twitter(times = 1)
       twitter.should_receive(:trend_locations).and_return([trend1, trend2, trend3, trend4, trend5, trend6])
-      user.should_receive(:twitter).and_return(twitter)
+      user.should_receive(:twitter).exactly(times).and_return(twitter)
     end
     
     it 'should retrieve global areas' do
+      setup_twitter   
       trends = Trend.twitter(user)
       trends.should eq([[trend4, trend2, trend1].map{ |trend| {:name => trend.country, :value => trend.country } }, [], []])     
     end
 
-    it 'should retrieve locations given a specific country' do
+    it 'should retrieve locations and location specific trebds given a specific country and no region' do      
+      twitter.should_receive(:local_trends).with(23424975).and_return([trend2, trend3])
+      setup_twitter(2)
+      
       trends = Trend.twitter(user, 'United Kingdom')
+      
       trends.should eq([[trend4, trend2, trend1].map{ |trend| {:name => trend.country, :value => trend.country } },
-                        [trend5, trend3].map{ |trend| {:name => trend.name, :value => trend.woeid } }, []])
+                        [trend5, trend3].map{ |trend| {:name => trend.name, :value => trend.woeid } },
+                        [trend2, trend3].map{ |trend| {:name => trend.name, :value => trend.name} }])
     end    
 
     context 'should retieve trends' do
-      before do
+      def setup_trends(local_trends_id)
+        setup_twitter
         user.should_receive(:twitter).and_return(twitter)
         local_trends = [double(:name => 'trend 1'), double(:name => 'trend 2'), double(:name => 'trend 3')]
-        twitter.should_receive(:local_trends).with(23424802).and_return(local_trends)
+        twitter.should_receive(:local_trends).with(local_trends_id).and_return(local_trends)
       end
     
       it 'if only one region exists' do
+        setup_trends(23424803)
         trends = Trend.twitter(user, 'Ireland')
         trends.should eq([[trend4, trend2, trend1].map{ |trend| {:name => trend.country, :value => trend.country } },
                           [trend6].map{ |trend| {:name => trend.name, :value => trend.woeid } }, 
@@ -86,6 +94,7 @@ describe Trend do
       end
       
       it 'given a specific woeid' do
+        setup_trends(23424802)
         trends = Trend.twitter(user, 'Ireland', 23424802)
         trends.should eq([[trend4, trend2, trend1].map{ |trend| {:name => trend.country, :value => trend.country } },
                           [trend6].map{ |trend| {:name => trend.name, :value => trend.woeid } }, 
