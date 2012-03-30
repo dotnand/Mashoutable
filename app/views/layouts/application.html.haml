@@ -3,7 +3,11 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
     %link{:href => "http://mashout.greanetree.com/favicon.png", :rel => "icon", :type => "image/png"}
-    %title Mashoutable
+    = yield :optional_meta
+    - if content_for?(:optional_meta_title)
+      = yield :optional_meta_title
+    - else
+      %title Mashoutable  
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'
     = yield :optional_css
