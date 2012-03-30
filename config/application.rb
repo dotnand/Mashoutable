@@ -64,6 +64,8 @@ module Mashoutable
       end
     end
     
+    config.autoload_paths += %W(#{ config.root }/lib/middleware)    
+    
     # TODO: fill out
     # Mailer config
     config.action_mailer.smtp_settings = {
