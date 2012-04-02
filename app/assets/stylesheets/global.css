@@ -712,6 +712,8 @@ h4 span.counter {
     margin-top: 40px;
     float: left; }
 
+#top #tagline .prepend-1 {
+    font-size: 1.7em; }
 
 /*Tools bubbles*/
 #top #tools {
