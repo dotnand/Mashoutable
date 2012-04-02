@@ -264,6 +264,31 @@ function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
 
 function bindMashoutClearPreviewClick() {
     $('#preview-clear-out').click(function() {
+        // clear the visible checkboxes
+        $('#mashout-form input[type=checkbox]').each(function() {
+            $(this).prop("checked", false);
+        });
+        
+        // clear the hidden checkbox fields
+        $('#mashout-form #hidden-hashtags').val('');
+        $('#mashout-form #hidden-trends').val('');
+    
+        // clear the drop-downs, except target orientated ones
+        selectAutocomplete('#mashout-comment-container', '#mashout-comment', 'NONE');
+        selectAutocomplete('#mashout-media-container', '#mashout-media', 'NONE');
+        
+        // clear the hidden drop-down fields
+        $('#mashout-form #hidden-comment').val('');
+        $('#mashout-form #hidden-media').val('');
+        $('#mashout-form #hidden-targets').val('');
+    
+        // clear the video radio buttons and radio hidden field
+        var videoRadioButton = $("#mashout-form input[name='mashout-video']");
+        if(videoRadioButton.length > 0) {
+            videoRadioButton.prop("checked", false);
+            $('#mashout-form #hidden-video').val('');
+        }
+    
         $('#out-preview').val('');
         calculateCharsLeft();
         return false;
