@@ -671,7 +671,7 @@ h4 span.counter {
 #footer #navigation-copyright ul {
     padding-left: 0; }
 
-#footer #navigation-copyright #policies ul {
+#footer #navigation-copyright #policies {
     margin-top: 10px;
 }
 
@@ -683,7 +683,7 @@ h4 span.counter {
 
 #footer #navigation-copyright li:first-child{
     border: none;
-    padding-left: 0;}
+    padding-left: 0; }
 
 
 /*--------------------Home page------------------*/
