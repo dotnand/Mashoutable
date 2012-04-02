@@ -3,7 +3,7 @@ Mashoutable::Application.routes.draw do
   match '/auth/:provider/callback'  => 'authorization#create'
   match '/auth/failure'             => 'authorization#failure'
 
-  # social network 
+  # social network
   match 'network'             => 'dashboard#remove_networks', :via => :delete,  :as => :remove_networks
 
   # mashouts
@@ -30,6 +30,8 @@ Mashoutable::Application.routes.draw do
   match 'contact-us'          => 'content#contact_us',  :as => :contact_us
   match 'about-us'            => 'content#about_us',    :as => :about_us
   match 'blog'                => 'content#blog'
+  match 'privacy'             => 'content#privacy_policy',    :as => :privacy_policy
+  match 'terms'               => 'content#terms_and_conditions',    :as => :terms_and_conditions
   match 'mashout'             => 'content#mashout',     :as => :mashout
   match 'blastout'            => 'content#blastout',    :as => :blastout
   match 'shoutout'            => 'content#shoutout',    :as => :shoutout
@@ -43,16 +45,16 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/mashout'       => 'dashboard#mashout'
   match 'dashboard/blastout'      => 'dashboard#blastout'
   match 'dashboard/shoutout'      => 'dashboard#shoutout'
-  # TODO: the following tool is temporarily unavailable 
+  # TODO: the following tool is temporarily unavailable
   # match 'dashboard/pickout'       => 'dashboard#pickout'
   match 'dashboard/interactions'  => 'dashboard#interactions'
   match 'dashboard/signout'       => 'dashboard#signout'
   match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source
   match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
-  
+
   # default
   match '/' => 'content#home', :as => :home
-  
+
   # root
   root :to  => 'content#home'
 end

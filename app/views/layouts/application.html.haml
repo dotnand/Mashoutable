@@ -7,7 +7,7 @@
     - if content_for?(:optional_meta_title)
       = yield :optional_meta_title
     - else
-      %title Mashoutable  
+      %title Mashoutable
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'
     = yield :optional_css
@@ -112,24 +112,44 @@
       #navigation-copyright.clear
         / footer bottom bar container
         .container
-          / footer bottom bar navigation
-          #f-navigation.left
-            %ul
-              %li
-                %a{:href => home_path} Home
-              %li
-                %a{:href => dashboard_path} Tools
-              %li
-                %a{:href => about_us_path} About Us
-              %li
-                %a{:href => blog_path} Blog
-              %li
-                %a{:href => contact_us_path} Contact Us
-          / footer bottom bar copyright notice and social media icons
-          #copyright.right.last
-            %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
-              %span.icon.left
-            %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
-              %span.icon.left
-            %span.left Copyright 2011 Mashoutable.com
+          / footer bottom bar navigation, privacy policy and terms
+          .left
+            #f-navigation.left
+              %ul
+                %li
+                  %a{:href => home_path} Home
+                %li
+                  %a{:href => dashboard_path} Tools
+                %li
+                  %a{:href => about_us_path} About Us
+                %li
+                  %a{:href => blog_path} Blog
+                %li
+                  %a{:href => contact_us_path} Contact Us
+            #policies.clear.left
+              %ul
+                %li
+                  %a{:href => privacy_policy_path} Privacy Policy
+                %li
+                  %a{:href => terms_and_conditions_path} Terms and Conditions
+          .right
+            / footer, bottom bar, copyright notice, and social media icons
+            #copyright.right.last
+              %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
+                %span.icon.left
+              %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
+                %span.icon.left
+              %span.left &copy; Copyright 2011-2012 Mashoutable.com
+            #browser-support.right.last.clear
+              %span.left
+                Browser Support:
+              %span.firefox
+                %span.icon.left
+              %span.chrome
+                %span.icon.left
+              %span.ie
+                %span.icon.left
+              %span.safari
+                %span.icon.left
     = render 'shared/google_analytics'
+

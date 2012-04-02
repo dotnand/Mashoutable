@@ -6,20 +6,26 @@ class ContentController < ApplicationController
       render :layout => 'application'
     end
   end
-  
+
   def about_us
   end
-  
+
   def blog
   end
-  
+
+  def terms_and_conditions
+  end
+
+  def privacy_policy
+  end
+
   def contact_us
     @message = Message.new
   end
-  
+
   def message
     @message = Message.new(params[:message])
-    
+
     if @message.valid?
       ContactMailer.new_message(@message).deliver
       flash.now[:notice] = "Message was successfully sent."
@@ -30,3 +36,4 @@ class ContentController < ApplicationController
     render :contact_us
   end
 end
+

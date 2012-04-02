@@ -6,7 +6,7 @@ module ApplicationHelper
   def facebook_auth_path
     '/auth/facebook'
   end
-  
+
   def youtube_auth_path
     '/auth/google'
   end
@@ -28,10 +28,10 @@ module ApplicationHelper
       return true
     elsif controller.controller_name == 'dashboard' and ['video_playback', 'index'].include?(controller.action_name)
       return true
-    elsif controller.controller_name == 'content' and ['about_us', 'blog', 'contact_us', 'mashout', 'blastout', 'pickout', 'shoutout'].include?(controller.action_name)
+    elsif controller.controller_name == 'content' and controller.action_name
       return true
     end
-    
+
     false
   end
 
