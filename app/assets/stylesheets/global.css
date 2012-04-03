@@ -194,7 +194,8 @@ input[type="submit"]:hover,
 .firefox .icon,
 .chrome .icon,
 .ie .icon,
-.safari .icon {
+.safari .icon,
+.rockmelt .icon {
     display: block;
     background: url("Browser-Icons.png");
     background-repeat: no-repeat;
@@ -212,6 +213,9 @@ input[type="submit"]:hover,
 
 .safari .icon {
     background-position: -72px -1px; }
+    
+.rockmelt .icon {
+    background-position: -143px -2px; }
 
 /*misc*/
 .align-right {
