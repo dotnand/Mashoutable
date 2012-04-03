@@ -8,6 +8,7 @@
       = yield :optional_meta_title
     - else
       %title Mashoutable
+    %meta{:content => "index,follow,noydir,noodp", :name => "robots"}/
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'
     = yield :optional_css
