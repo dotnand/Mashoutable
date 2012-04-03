@@ -18,9 +18,7 @@ describe TweetEmitter do
   end
 
   def should_receive_twitter_replies(who, status_ids)
-    status_ids.each do |status_id|
-      twitter.should_receive(:update).with(who, {:in_reply_to_status_id => status_id})
-    end
+    twitter.should_receive(:update).with(who, {:in_reply_to_status_id => status_ids.first})
   end
   
   def should_receive_create_interaction(out, targets)
@@ -35,10 +33,10 @@ describe TweetEmitter do
   
     should_receive_twitter_replies(out, replies)
 
-    user.should_receive(:twitter).exactly(replies.count).times.and_return(twitter)
-    user.should_receive(:replies).exactly(replies.count).times.and_return(replies)
+    user.should_receive(:twitter).and_return(twitter)
+    user.should_receive(:replies).and_return(replies)
     
-    replies.should_receive(:find_or_create_by_status_id).exactly(3).times
+    replies.should_receive(:find_or_create_by_status_id)
   end
   
   def setup_send_content_only(params)
@@ -65,8 +63,8 @@ describe TweetEmitter do
   it 'should post to twitter with replies' do
     subject = build_emitter(params.merge!({'out' => 'hello!', 'mashout-replies' => ['1', '2', '3']}))
   
-    user.should_receive(:twitter).exactly(3).times.and_return(twitter)
-    3.times {|n| twitter.should_receive(:update).with('hello!', :in_reply_to_status_id => (n + 1).to_s) }
+    user.should_receive(:twitter).and_return(twitter)
+    twitter.should_receive(:update).with('hello!', :in_reply_to_status_id => '1')
     
     subject.twitter_post
   end

@@ -46,7 +46,7 @@ class TweetEmitter
     return unless @out.twitter?
   
     if @out.replies.present?
-      @out.replies.map(&:reply).each { |reply_to| @user.twitter.update(@out.content, :in_reply_to_status_id => reply_to) }
+      @user.twitter.update(@out.content, :in_reply_to_status_id => @out.replies.first.reply)
     else 
       @user.twitter.update(@out.content)
     end
@@ -62,7 +62,7 @@ class TweetEmitter
   end
   
   def capture_replies
-    @out.replies.map(&:reply).each { |reply| @user.replies.find_or_create_by_status_id(reply, :out => @out) } if @out.replies.present?
+    @user.replies.find_or_create_by_status_id(@out.replies.first.reply, :out => @out) if @out.replies.present?
   end
   
   def capture_interactions
