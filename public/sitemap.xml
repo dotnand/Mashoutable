@@ -6,37 +6,32 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/About.aspx</loc>
+    <loc>http://www.mashoutable.com/about-us</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/Contact.aspx</loc>
+    <loc>http://www.mashoutable.com/contact-us</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/CrediblePODesc.aspx</loc>
+    <loc>http://www.mashoutable.com/pickout</loc>
     <changefreq>daily</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/Dashboard.aspx</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://www.mashoutable.com/TargMashoutDesc.aspx</loc>
+    <loc>http://www.mashoutable.com/mashout</loc>
     <changefreq>daily</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/TopTrendDesc.aspx</loc>
+    <loc>http://www.mashoutable.com/shoutout</loc>
     <changefreq>daily</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>http://www.mashoutable.com/VideoBODesc.aspx</loc>
+    <loc>http://www.mashoutable.com/blastout</loc>
     <changefreq>daily</changefreq>
     <priority>0.4</priority>
   </url>
