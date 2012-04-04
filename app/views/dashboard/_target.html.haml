@@ -31,12 +31,15 @@
               = render 'target_tweets', :target => first_target, :sanitized_screen_name => sanitized_screen_name
             - if statuses.count > 0
               .span-6.prepend-1
+                - target_tweets_toggle_id = "target-tweets-toggle-#{sanitized_screen_name}"
+                - target_tweets_slider_id = "target-tweets-slider-#{sanitized_screen_name}"
                 %p
                   %em
-                    %a{:href => '#', :id => 'target-tweets-toggle'}= pluralize(statuses.count, 'more tweet') << '...'
+                    %a{:href => '#', :id => target_tweets_toggle_id}= pluralize(statuses.count, 'more tweet') << '...'
+              
               :javascript
-                $(function() { bindMashoutShowMoreTweets(); });
-              #target-tweets-slider{:style => 'display:none;'}
+                $(function() { bindMashoutShowMoreTweets("##{target_tweets_toggle_id}", "##{target_tweets_slider_id}"); });
+              %div{:id => target_tweets_slider_id, :style => 'display:none;'}
                 - statuses.each do |target|
                   = render 'target_tweets', :target => target, :sanitized_screen_name => sanitized_screen_name
       - elsif not @profiles.nil? and @profiles.count > 0

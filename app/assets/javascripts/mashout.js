@@ -303,9 +303,9 @@ function bindMashoutMasterTargetToChildTargets(masterTargetId) {
     $("#" + masterTargetId).click(function() { $("." + masterTargetId).prop("checked", ($(this).prop("checked"))); $("." + masterTargetId).change(); });
 }
 
-function bindMashoutShowMoreTweets() {
-    $('#target-tweets-toggle').click(function() {
-        $("#target-tweets-slider").slideToggle();
+function bindMashoutShowMoreTweets(sourceId, targetId) {
+    $(sourceId).click(function() {
+        $(targetId).toggle();
         return false;
     });
 }
