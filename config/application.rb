@@ -65,21 +65,5 @@ module Mashoutable
     end
     
     config.autoload_paths += %W(#{ config.root }/lib/middleware)    
-    
-    # TODO: fill out
-    # Mailer config
-    config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :port                 => 587,
-      :domain               => "yourdomain.dev",
-      :user_name            => "from@yourdomain.dev",
-      :password             => "Super-Secure-Password",
-      :authentication       => :plain,
-      :enable_starttls_auto => true
-    }
-
-    config.action_mailer.default_url_options = {
-      :host => "yourdomain.dev"
-    }
   end
 end
