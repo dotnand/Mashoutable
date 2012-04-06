@@ -204,10 +204,18 @@ function selectAutocomplete(wrapperId, selectId, value) {
 }
 
 function handleTargetAutoCompleteSelection(path) {
-    var trendSelection = $('#mashout-target-selection').val();
+    var params          = {}
+    var trendSelection  = $('#mashout-target-selection').val();
+    var tweopleExists   = $('#mashout-target-tweople-source-selection').length > 0;
+
+    params['mashout-target'] = trendSelection;
+    
+    if(tweopleExists) {
+        params['mashout-tweople-source'] = $('#mashout-target-tweople-source-selection').val(); 
+    }
 
     $.ajax({url: path,
-            data: {'mashout-target': trendSelection },
+            data: params,
             success: function(data) { $('#mashout-target-container').replaceWith(data); },
             async: false});
 
@@ -216,6 +224,10 @@ function handleTargetAutoCompleteSelection(path) {
     });
 
     selectAutocomplete('#mashout-target-container', '#mashout-target-selection', trendSelection);
+    
+    if(tweopleExists) {
+        selectAutocomplete('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', params['mashout-tweople-source']);
+    }
 }
 
 function handleTrendAutoCompleteSelection(path) {

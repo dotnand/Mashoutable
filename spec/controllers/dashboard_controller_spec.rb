@@ -248,18 +248,40 @@ describe DashboardController do
     end
   end
  
-  it 'GET targets' do
-    mentions        = [{:screen_name => 'john_doe', 'text' => 'foo'}, {:screen_name => 'jane_doe', 'text' => 'bar'}]
-    tweet_builder   = mock('object')
-    params          = {'mashout-target' => 'MENTIONS'}
+  context 'GET targets' do
+    let(:tweet_builder) { mock('object') }
+  
+    def setup_tweet_builder(target, target_objects)
+      tweet_builder.should_receive(:target).with(target, false).and_return([target_objects, nil])
+      TweetBuilder.should_receive(:new).with(current_user).and_return(tweet_builder)
+    end
+  
+    it 'by MENTIONS should be successful' do
+      mentions        = [{:screen_name => 'john_doe', 'text' => 'foo'}, {:screen_name => 'jane_doe', 'text' => 'bar'}]
+      params          = {'mashout-target' => 'MENTIONS'}
+
+      setup_tweet_builder('MENTIONS', mentions)      
+      
+      get :targets, params
+      
+      response.should be_success
+      assigns[:targets].should eq({"john_doe"=>[{"screen_name"=>"john_doe", "text"=>"foo"}], "jane_doe"=>[{"screen_name"=>"jane_doe", "text"=>"bar"}]})
+    end
     
-    tweet_builder.should_receive(:target).with('MENTIONS', false).and_return([mentions, nil])
-    TweetBuilder.should_receive(:new).with(current_user).and_return(tweet_builder)
-    
-    get :targets, params
-    
-    response.should be_success
-    assigns[:targets].should eq({"john_doe"=>[{"screen_name"=>"john_doe", "text"=>"foo"}], "jane_doe"=>[{"screen_name"=>"jane_doe", "text"=>"bar"}]})
+    [['TWEOPLE', nil, 'TWEOPLE'], 
+     ['TWEOPLE', 'TWEOPLE_ALL_SOURCES', 'TWEOPLE_ALL_SOURCES'], 
+     ['TWEOPLE', 'TWEOPLE_WEB_ONLY', 'TWEOPLE_WEB_ONLY']].each do |target, tweople_source, call_param|
+      it "by #{tweople_source.to_s} should be successful" do
+        null_obj  = mock('null object').as_null_object
+        params    = {'mashout-target' => target, 'mashout-tweople-source' => tweople_source}
+        
+        setup_tweet_builder(call_param, null_obj)
+        
+        get :targets, params
+        
+        response.should be_success
+      end
+    end
   end
 
   context 'GET trends' do

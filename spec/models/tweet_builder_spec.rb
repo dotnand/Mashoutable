@@ -124,6 +124,16 @@ describe TweetBuilder do
     end
 
     context 'targets' do
+      it 'should have tweople' do
+        user.should_receive(:tweople).and_return([user1, user2, user3])
+        
+        mentioned, profiles, retweets = builder.target('TWEOPLE')
+        
+        profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location},
+                            {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location},
+                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location}])
+      end
+    
       it 'should have TODAYS MENTIONS' do      
         user.should_receive(:mentioned).and_return([status1, status2, status3])
         
@@ -224,7 +234,7 @@ describe TweetBuilder do
 
         profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location},
                             {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location},
-                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location},])
+                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location}])
       end
       
       it 'should build a complex tweet' do

@@ -80,6 +80,26 @@ class User < ActiveRecord::Base
     @youtube_client
   end
   
+  def tweople(web_only = true)
+    tweople             = []
+    follower_ids        = twitter_ids(:follower_ids)
+    friend_ids          = twitter_ids(:friend_ids)
+    public_screen_names = scrape_twitter_public_timeline(web_only)
+    public_users        = public_screen_names.count > 0 ? twitter.users(public_screen_names) : []
+    local_mentions      = self.mentions.find(:all, :select => :who).map { |mention| mention.who }
+
+    public_users.each do |public_user|
+      next if tweople.include?(public_user)
+      next if local_mentions.include?(public_user.screen_name)
+      next if friend_ids.include?(public_user.id)
+      next if follower_ids.include?(public_user.id)
+
+      tweople << public_user
+    end
+
+    tweople
+  end
+  
   def following_me
     # 1. get followers
     # 2. get friends
@@ -179,5 +199,21 @@ class User < ActiveRecord::Base
     def remove_network(network_name)
       provider = self.authorizations.find_by_provider(network_name)
       provider.delete if provider.present?
+    end
+    
+    def scrape_twitter_public_timeline(web_only = false)
+      screen_names  = []
+      doc           = Nokogiri::HTML(open('http://twitter.com/public_timeline'))
+      
+      doc.xpath('/html/body/div[3]/table/tbody/tr/td/div/div/ol/li/span[2]').each do |status|
+        status_content  = status.xpath('span[@class="status-content"]')
+        source          = status.xpath('span[@class="meta entry-meta"]/span')
+        screen_name     = status_content.xpath('strong/a[@class="tweet-url screen-name"]')
+        is_web_tweet    = source.text.casecmp('via web') == 0 
+
+        screen_names << screen_name.text if (not web_only) or (web_only and is_web_tweet)
+      end 
+      
+      screen_names
     end
 end

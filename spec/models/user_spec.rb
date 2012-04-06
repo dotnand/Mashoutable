@@ -131,6 +131,21 @@ describe User do
     let!(:user2) { double(:id => 2, :screen_name => 'jane_doe1', :verified => false) }
     let!(:user3) { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
+    it 'should have tweople' do
+      follower_ids      = [1]
+      friend_ids        = [5]
+      twitter_users     = ['twitter_1', 'twitter_2', 'twitter_3', 'twitter_4', 'twitter_5']
+      twitter_profiles  = [twitter_profile1, twitter_profile2, twitter_profile3, twitter_profile4, twitter_profile5]
+      
+      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
+      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
+      subject.should_receive(:scrape_twitter_public_timeline).and_return(twitter_users)
+      subject.mentions.should_receive(:find).with(:all, :select => :who).and_return([double(:who => '@twitter_2')])
+      subject.twitter.should_receive(:users).with(twitter_users).and_return(twitter_profiles)
+      
+      subject.tweople.should eq([twitter_profile3, twitter_profile4])
+    end
+    
     it 'should have following me' do
       follower_ids  = [3, 100, 55]
       friend_ids    = [100, 8, 9]

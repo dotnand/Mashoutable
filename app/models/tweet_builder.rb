@@ -50,6 +50,8 @@ class TweetBuilder
         else
           profiles = @user.i_follow.map { |i_follow| map_user_to_profile(i_follow) }
         end
+      when 'TWEOPLE', 'TWEOPLE_WEB_ONLY', 'TWEOPLE_ALL_SOURCES'
+        profiles = @user.tweople(value == 'TWEOPLE_WEB_ONLY' || value == 'TWEOPLE').map { |tweep| map_user_to_profile(tweep) }
       when 'TODAYS_MENTIONS'      then targets  = @user.mentioned.map { |status| map_status_to_target(status) }
       when 'TODAYS_SHOUTOUTS'     then targets  = @user.shoutouts.map { |status| map_status_to_target(status) }
       when 'TODAYS_RTS'           then retweets = @user.retweets_of_me.map { |status| map_retweet_to_profile(status) }
@@ -58,7 +60,7 @@ class TweetBuilder
       when 'BESTIES'              then profiles = @user.twitter_besties.map { |twitter_bestie| map_user_to_profile(twitter_bestie) }
       else ''
     end
-    
+
     [targets, profiles, retweets]
   end
   

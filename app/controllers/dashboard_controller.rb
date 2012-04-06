@@ -27,7 +27,8 @@ class DashboardController < ApplicationController
 
   def targets
     @target                         = params['mashout-target']
-    @targets, @profiles, @retweets  = TweetBuilder.new(current_user).target(@target, false)
+    @tweople_target                 = params['mashout-tweople-source']
+    @targets, @profiles, @retweets  = TweetBuilder.new(current_user).target(@target == 'NONE' ? @target  : (@tweople_target || @target), false)
     @targets                        = group_hash_by(@targets, :screen_name)
 
     render :partial => 'target'
@@ -39,7 +40,7 @@ class DashboardController < ApplicationController
     @trend_woeid    = params[:trend_region]
     
     @trend_region = nil if @trend_region == 'NONE'
-    @trend_woeid = nil if @trend_region == nil or @trend_woeid == 'NONE'
+    @trend_woeid  = nil if @trend_region == nil or @trend_woeid == 'NONE'
 
     @locations, @regions, @trends = Trend.trends(current_user, @trend_source, @trend_region, @trend_woeid)
 
