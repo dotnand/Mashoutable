@@ -130,7 +130,8 @@ class TweetBuilder
       {:profile_image_url => user.profile_image_url, 
        :screen_name       => '@' << user.screen_name, 
        :description       => user.description, 
-       :location          => user.location} 
+       :location          => user.location,
+       :url               => user.url} 
     end
     
     def map_retweet_to_profile(retweet)

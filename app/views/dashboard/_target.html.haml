@@ -82,6 +82,8 @@
                     %em= profile[:description]
                   %p
                     = profile[:location]
+                    %br
+                    %a{:href => profile[:url], :target => '_blank'}= profile[:url]
         - elsif not @retweets.nil? and @retweets.count > 0
           #mashout-target-checkboxes
             %br/

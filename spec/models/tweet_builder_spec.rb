@@ -88,12 +88,12 @@ describe TweetBuilder do
   end
 
   context 'with a user' do
-    let(:user1)   { double(:screen_name => 'john_doe1', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 1', :location => 'location 1') }
-    let(:user2)   { double(:screen_name => 'john_doe2', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 2', :location => 'location 2') }
-    let(:user3)   { double(:screen_name => 'jane_doe1', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 3', :location => 'location 3') }
-    let(:user4)   { double(:screen_name => 'john_doe3', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 4', :location => 'location 4') }
-    let(:user5)   { double(:screen_name => 'john_doe4', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 5', :location => 'location 5') }
-    let(:user6)   { double(:screen_name => 'jane_doe2', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 6', :location => 'location 6') }
+    let(:user1)   { double(:screen_name => 'john_doe1', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 1', :location => 'location 1', :url => 'http://link1.com') }
+    let(:user2)   { double(:screen_name => 'john_doe2', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 2', :location => 'location 2', :url => 'http://link2.com') }
+    let(:user3)   { double(:screen_name => 'jane_doe1', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 3', :location => 'location 3', :url => 'http://link3.com') }
+    let(:user4)   { double(:screen_name => 'john_doe3', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 4', :location => 'location 4', :url => 'http://link4.com') }
+    let(:user5)   { double(:screen_name => 'john_doe4', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 5', :location => 'location 5', :url => 'http://link5.com') }
+    let(:user6)   { double(:screen_name => 'jane_doe2', :profile_image_url => 'http://twitter-image.twitter', :description => 'description 6', :location => 'location 6', :url => 'http://link6.com') }
     let(:status1) { double(:user => user1, :text => 'foo', :created_at => Date.today, :source => 'web', :id => 1234) }
     let(:status2) { double(:user => user2, :text => 'bar', :created_at => Date.today, :source => 'web', :id => 2345) }
     let(:status3) { double(:user => user3, :text => 'hello world', :created_at => Date.today, :source => 'web', :id => 3456) }
@@ -129,9 +129,9 @@ describe TweetBuilder do
         
         mentioned, profiles, retweets = builder.target('TWEOPLE')
         
-        profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location},
-                            {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location},
-                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location}])
+        profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location, :url => user1.url},
+                            {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location, :url => user2.url},
+                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location, :url => user3.url}])
       end
     
       it 'should have TODAYS MENTIONS' do      
@@ -232,9 +232,9 @@ describe TweetBuilder do
       
         besties, profiles = builder.target('BESTIES')
 
-        profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location},
-                            {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location},
-                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location}])
+        profiles.should eq([{:profile_image_url => user1.profile_image_url, :screen_name => '@' << user1.screen_name, :description => user1.description, :location => user1.location, :url => user1.url},
+                            {:profile_image_url => user2.profile_image_url, :screen_name => '@' << user2.screen_name, :description => user2.description, :location => user2.location, :url => user2.url},
+                            {:profile_image_url => user3.profile_image_url, :screen_name => '@' << user3.screen_name, :description => user3.description, :location => user3.location, :url => user3.url}])
       end
       
       it 'should build a complex tweet' do
