@@ -29,7 +29,6 @@
       %select{:id => 'mashout-target-tweople-source-selection', :name => 'target-tweople-source', :style => "display: none;"}
         %option{:value => 'TWEOPLE_WEB_ONLY'} Web Only
         %option{:value => 'TWEOPLE_ALL_SOURCES'} All Sources
-        %option{:value => 'NONE'} None
       :javascript
         $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', '#hidden-targets', '#out-preview'); });
         $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', "#{target_source_path}"); });
