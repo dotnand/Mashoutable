@@ -19,7 +19,7 @@
           %img{:alt => "avatar", :src => bestie.profile_image_url, :width => "32", :height => "32"}/
           :javascript
             $(function() { bindUpdateBestieEditor("##{sanitized_screen_name}", '#bestie-editor', "#{real_screen_name}") });
-  = will_paginate @besties
+  = will_paginate @besties, :previous_label => "Previous", :next_label => "Next", :inner_window => 0, :outer_window => -1
   :javascript
     $(function() { ajaxifyPagination("#besties", "#{dashboard_besties_path}"); });
 
