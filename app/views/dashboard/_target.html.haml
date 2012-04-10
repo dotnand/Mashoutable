@@ -78,13 +78,13 @@
                     $(function() { bindDynamicPreviewCheckboxClick("##{profile_id}", '#hidden-targets', '#out-preview'); });
                 .span-6.prepend-1
                   %p
-                    - if profile[:description]
+                    - if profile[:description].present?
                       %p
                         %em= profile[:description]
-                    -if profile[:location]
+                    -if profile[:location].present?
                       = profile[:location]
                       %br
-                    -if profile[:url]
+                    -if profile[:url].present?
                       %a{:href => profile[:url], :target => '_blank'}= profile[:url]
                       %br
                     -if profile[:last_tweet_from] and (defined? @tweople_target) and @tweople_target.present?
