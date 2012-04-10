@@ -131,7 +131,8 @@ class TweetBuilder
        :screen_name       => '@' << user.screen_name, 
        :description       => user.description, 
        :location          => user.location,
-       :url               => user.url} 
+       :url               => user.url,
+       :last_tweet_from   => (user.status.present? ? user.status.source : nil)}
     end
     
     def map_retweet_to_profile(retweet)
