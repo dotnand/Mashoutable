@@ -27,7 +27,7 @@ class DashboardController < ApplicationController
 
   def targets
     @target                         = params['mashout-target']
-    @tweople_target                 = params['mashout-tweople-source']
+    @tweople_target                 = @target == 'TWEOPLE' ? (params['mashout-tweople-source'] ? params['mashout-tweople-source'] : 'TWEOPLE_WEB_ONLY') : nil
     @targets, @profiles, @retweets  = TweetBuilder.new(current_user).target(@target != 'TWEOPLE' ? @target : (@tweople_target || @target), false)
     @targets                        = group_hash_by(@targets, :screen_name)
 

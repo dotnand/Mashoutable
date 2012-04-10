@@ -268,7 +268,7 @@ describe DashboardController do
       assigns[:targets].should eq({"john_doe"=>[{"screen_name"=>"john_doe", "text"=>"foo"}], "jane_doe"=>[{"screen_name"=>"jane_doe", "text"=>"bar"}]})
     end
     
-    [['TWEOPLE', nil, 'TWEOPLE'], 
+    [['TWEOPLE', nil, 'TWEOPLE_WEB_ONLY'], 
      ['TWEOPLE', 'TWEOPLE_ALL_SOURCES', 'TWEOPLE_ALL_SOURCES'], 
      ['TWEOPLE', 'TWEOPLE_WEB_ONLY', 'TWEOPLE_WEB_ONLY']].each do |target, tweople_source, call_param|
       it "by #{tweople_source.to_s} should be successful" do

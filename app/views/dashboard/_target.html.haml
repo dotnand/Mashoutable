@@ -87,7 +87,7 @@
                     -if profile[:url]
                       %a{:href => profile[:url], :target => '_blank'}= profile[:url]
                       %br
-                    -if profile[:last_tweet_from]
+                    -if profile[:last_tweet_from] and (defined? @tweople_target) and @tweople_target.present?
                       != "Just Tweeted from #{profile[:last_tweet_from].casecmp('web') == 0 ? 'the Web' : profile[:last_tweet_from]}" 
                       %br
         - elsif not @retweets.nil? and @retweets.count > 0
