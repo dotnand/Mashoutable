@@ -189,7 +189,15 @@ describe User do
     end
     
     it 'should have celeb/verified followers' do
-      pending 'future release'
+      8.times { |n| FactoryGirl.create(:verified_twitter_user, :user_id => n) }
+      
+      twitter_profiles  = [twitter_profile1, twitter_profile2]
+
+      User.should_receive(:page_through_twitter_ids).with(twitter, :friend_ids, {}, 10000).and_return([2, 4])
+      User.should_receive(:page_through_twitter_ids).with(twitter, :follower_ids, {}, 10000).and_return([6, 8])
+      subject.twitter.should_receive(:users).with(an_instance_of Array).and_return(twitter_profiles)
+      
+      subject.verified.should eq(twitter_profiles)
     end
     
     it 'should have augmented interactions' do
@@ -242,5 +250,15 @@ describe User do
     
     subject.retweets_of_me.should eq([{:text => 'Hey dude!', :status_id => 1, :users => [twitter_profile1, twitter_profile2]}, 
                                       {:text => '#S/O My peeps~', :status_id => 2, :users => [twitter_profile3]}])
+  end
+  
+  it 'should have a mashoutable twitter client' do
+    twitter_client                = mock('twitter client')
+    ENV['TWITTER_ACCESS_TOKEN']   = 'ABC'
+    ENV['TWITTER_ACCESS_SECRET']  = '123'
+
+    Twitter::Client.should_receive(:new).with({:oauth_token => "ABC", :oauth_token_secret => "123"}).and_return(twitter_client)
+    
+    User.mashoutable_twitter.should eq(twitter_client)
   end
 end

@@ -15,8 +15,7 @@
       %option{:value => "TODAYS_SHOUTOUTS"} Today's #shoutouts
       %option{:value => "TODAYS_RTS"} Today's #RT's (Your Tweets retweeted)
       %option{:value => "BESTIES"} Your Twitter Besties
-      - # future release
-      - #%option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
+      %option{:value => "CELEB_VERIFIED"} Celeb/Verified Accounts
     :javascript
       $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-audience-container', '#mashout-target-selection', '#hidden-targets', '#out-preview'); });
   - if defined? @target and @target == 'TWEOPLE'

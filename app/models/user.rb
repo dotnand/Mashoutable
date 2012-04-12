@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
     # 2. get friends
     # 3. find from both where they are followers and friends (present on both lists)
     twitter_ids = twitter_ids(:follower_ids).shuffle & twitter_ids(:friend_ids).shuffle
-    twitter.users(twitter_ids[0..100])
+    twitter.users(twitter_ids[0..20])
   end
   
   def i_follow
@@ -152,15 +152,16 @@ class User < ActiveRecord::Base
     todays_retweets.map { |retweet| {:text => retweet.text, :status_id => retweet.id, :users => twitter.retweeters_of(retweet.id, :count => 10) } }
   end
   
-  def verified(type = :follower_ids)
-    twitter_user_ids = twitter_ids(type).shuffle + twitter_ids(:friend_ids).shuffle
-    return [] if twitter_user_ids.count < 1
-    verified_users = []
-    twitter_user_ids.in_groups_of(100) do |twitter_user_id_group| 
-      users = twitter.users(twitter_user_id_group).select { |user| user.verified }
-      verified_users += users if users.any?
-      Rails.logger.info verified_users.to_json + "\n\n"
-    end
+  def verified
+    tweep_ids = User.page_through_twitter_ids(self.twitter, :friend_ids, {}, 10000)
+    tweep_ids = tweep_ids + User.page_through_twitter_ids(self.twitter, :follower_ids, {}, 10000)
+    
+    return [] if tweep_ids.count < 1
+    
+    verified_ids    = VerifiedTwitterUser.all.map(&:user_id)
+    user_verified   = tweep_ids & verified_ids
+    verified_users  = twitter.users(user_verified.shuffle[0..20])
+    
     verified_users
   end
   
@@ -182,14 +183,23 @@ class User < ActiveRecord::Base
     []
   end
   
-  def twitter_ids(method)
+  def twitter_ids(method, params = {})
+    User.page_through_twitter_ids(twitter, method, params, 1000)
+  end
+  
+  def self.mashoutable_twitter
+    Twitter::Client.new(:oauth_token => ENV['TWITTER_ACCESS_TOKEN'], :oauth_token_secret => ENV['TWITTER_ACCESS_SECRET'])
+  end
+
+  def self.page_through_twitter_ids(twitter_client, method, params = {}, limit = nil)
     ids     = []
     cursor  = -1
     
-    while (results = twitter.send(method, :cursor => cursor))
+    while (results = twitter_client.send(method, params.merge({:cursor => cursor})))
       ids = ids + results['ids']
+      return ids[0..limit] if limit.present? and ids.count >= limit
       break if results['next_cursor'] == 0
-      cursor = cursor + 1
+      cursor = results['next_cursor']
     end
     
     ids

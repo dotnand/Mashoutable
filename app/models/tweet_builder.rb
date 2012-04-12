@@ -55,8 +55,7 @@ class TweetBuilder
       when 'TODAYS_MENTIONS'      then targets  = @user.mentioned.map { |status| map_status_to_target(status) }
       when 'TODAYS_SHOUTOUTS'     then targets  = @user.shoutouts.map { |status| map_status_to_target(status) }
       when 'TODAYS_RTS'           then retweets = @user.retweets_of_me.map { |status| map_retweet_to_profile(status) }
-      # future release
-      # when 'CELEB_VERIFIED'       then profiles = @user.verified.map { |verified| map_user_to_profile(verified) }
+      when 'CELEB_VERIFIED'       then profiles = @user.verified.map { |verified| map_user_to_profile(verified) }
       when 'BESTIES'              then profiles = @user.twitter_besties.map { |twitter_bestie| map_user_to_profile(twitter_bestie) }
       else ''
     end

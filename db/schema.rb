@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323181245) do
+ActiveRecord::Schema.define(:version => 20120412212539) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20120323181245) do
   end
 
   add_index "authorizations", ["provider"], :name => "authorizations_provider_idx"
-  add_index "authorizations", ["uid", "provider"], :name => "authorizations_uid_idx", :unique => true
+  add_index "authorizations", ["uid"], :name => "authorizations_uid_idx", :unique => true
   add_index "authorizations", ["user_id"], :name => "authorizations_user_id_idx"
 
   create_table "besties", :force => true do |t|
@@ -34,8 +34,24 @@ ActiveRecord::Schema.define(:version => 20120323181245) do
     t.datetime "updated_at"
   end
 
-  add_index "besties", ["screen_name", "user_id"], :name => "besties_screen_name_idx", :unique => true
+  add_index "besties", ["screen_name"], :name => "besties_screen_name_idx", :unique => true
   add_index "besties", ["user_id"], :name => "besties_user_id_idx"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "interactions", :force => true do |t|
     t.string   "target"
@@ -58,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20120323181245) do
 
   add_index "mentions", ["out_id"], :name => "mentions_out_id_idx"
   add_index "mentions", ["user_id"], :name => "mentions_user_id_index"
-  add_index "mentions", ["who", "user_id"], :name => "mentions_who_idx"
+  add_index "mentions", ["who"], :name => "mentions_who_idx", :unique => true
 
   create_table "out_hashtags", :force => true do |t|
     t.string   "tag"
@@ -124,11 +140,17 @@ ActiveRecord::Schema.define(:version => 20120323181245) do
   end
 
   add_index "replies", ["out_id"], :name => "replies_out_id_idx"
-  add_index "replies", ["status_id", "user_id"], :name => "replies_status_id_idx"
+  add_index "replies", ["status_id"], :name => "replies_status_id_idx", :unique => true
   add_index "replies", ["user_id"], :name => "replies_user_id_index"
 
   create_table "users", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "verified_twitter_users", :force => true do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -143,8 +165,8 @@ ActiveRecord::Schema.define(:version => 20120323181245) do
     t.string   "bitly_uri"
   end
 
-  add_index "videos", ["guid", "user_id"], :name => "videos_guid_idx", :unique => true
-  add_index "videos", ["name", "user_id"], :name => "videos_name_idx", :unique => true
+  add_index "videos", ["guid"], :name => "videos_guid_idx", :unique => true
+  add_index "videos", ["name"], :name => "videos_name_idx", :unique => true
   add_index "videos", ["user_id"], :name => "videos_user_id_idx"
 
 end

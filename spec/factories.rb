@@ -66,5 +66,9 @@ FactoryGirl.define do
     facebook  { false }
     youtube   { false }
   end
+  
+  factory :verified_twitter_user do
+    sequence(:user_id) {|n| n}
+  end
 end
 
