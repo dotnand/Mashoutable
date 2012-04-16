@@ -1,4 +1,4 @@
 cache_verified_twitter_users:
-  every: 10s
+  every: 3hrs
   class: CacheVerifiedTwitterUser
   description: 'Fetch and store verified twitter users'
