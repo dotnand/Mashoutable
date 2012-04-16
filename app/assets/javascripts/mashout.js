@@ -38,16 +38,16 @@ $(function() {
 function generateOutFragment(value, targetId, add) {
     var target  = $(targetId);
     var current = target.val();
-  
+
     if(add) {
         if(current.length == 0) {
             target.val(value);
         } else {
             target.val(current + ' ' + value);
         }
-    } else { 
+    } else {
         var regex = new RegExp('\\s*' + value, 'gi');
-        
+
         if(current.search(regex) == 0) {
             target.val(current.replace(new RegExp(value + '\\s*', 'gi'), ''));
         } else {
@@ -64,13 +64,13 @@ function generateDynamicOutPreview(outPreviewId) {
     var comment   = $('#hidden-comment').val();
     var video     = $('#hidden-video').val();
     var content   = ''
-    
+
     var needsPadding  = function() { return ; }
     var addContent    = function(fragment) {
         if(content.length > 0) {
             content += ' ';
         }
-      
+
         content += fragment;
         if(content.length > 140) {
             $('#mashout-chars-left').addClass('negative-char-count');
@@ -78,17 +78,17 @@ function generateDynamicOutPreview(outPreviewId) {
             $('#mashout-chars-left').removeClass('negative-char-count');
         }
     }
-    
+
     if(media.length > 0) {
         content += media;
     }
-    
+
     $.each([targets, hashtags, trends, comment, video], function() {
         if(this.length > 0) {
             addContent(this);
         }
     });
-    
+
     $(outPreviewId).val(content);
     calculateCharsLeft();
 }
@@ -106,41 +106,41 @@ function bindDynamicPreviewTargetChange(checkboxId, hiddenCheckboxId, outPreview
         var value       = $(this).val();
         var hiddenValue = $(hiddenCheckboxId).val();
         var anyChecked  = $('.' + checkboxClass + ':checked').length > 0;
-        
+
         // the current state of the checkbox
         var isChecking  = !($(checkboxId + ':checked').length < 1);
 
         if(hiddenValue.search(value) < 0) {
             // if the value is not present then add it
-            handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId); 
+            handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId);
         } else if(hiddenValue.search(value) >= 0 && !isChecking && !anyChecked) {
             // if the value is present and the checkbox is not being checked then remove it
             generateOutFragment(value, hiddenCheckboxId, false);
             generateDynamicOutPreview(outPreviewId);
-        } 
+        }
         // otherwise do nothing
     });
 }
 
 function bindDynamicPreviewAutoCompleteSelectAndHandleTarget(wrapperId, selectId, hiddenFieldId, outPreviewId) {
-    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { 
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) {
         var current = $(hiddenFieldId).val();
         var isNone  = newValue == 'NONE';
-        
+
         generateOutFragment(current, hiddenFieldId, false);
         generateDynamicOutPreview(outPreviewId);
     });
 }
 
 function bindDynamicPreviewAutoCompleteSelectAndHandle(wrapperId, selectId, hiddenFieldId, outPreviewId) {
-    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) { 
+    bindAutoCompleteSelect(wrapperId, selectId, function(oldValue, newValue) {
         var current = $(hiddenFieldId).val();
         var isNone  = newValue == 'NONE';
-        
+
         generateOutFragment(current, hiddenFieldId, false);
         generateOutFragment(isNone ? oldValue : unescape(newValue), hiddenFieldId, !isNone);
         generateDynamicOutPreview(outPreviewId);
-    });    
+    });
 }
 
 function bindDynamicPreviewVideoRadioClick(radioId, sourceId, hiddenRadioId, outPreviewId) {
@@ -175,7 +175,7 @@ function bindAutoCompleteSelect(wrapperId, selectId, callback) {
     $(wrapperId).bind('autocompleteselect', function (event, ui) {
         var oldValue = $(selectId).val();
         var newValue = ui.item.option.value;
-        
+
         $(selectId).val(newValue);
         $(selectId).change();
 
@@ -209,9 +209,9 @@ function handleTargetAutoCompleteSelection(path) {
     var tweopleExists   = $('#mashout-target-tweople-source-selection').length > 0;
 
     params['mashout-target'] = trendSelection;
-    
+
     if(tweopleExists) {
-        params['mashout-tweople-source'] = $('#mashout-target-tweople-source-selection').val(); 
+        params['mashout-tweople-source'] = $('#mashout-target-tweople-source-selection').val();
     }
 
     $.ajax({url: path,
@@ -224,7 +224,7 @@ function handleTargetAutoCompleteSelection(path) {
     });
 
     selectAutocomplete('#mashout-target-container', '#mashout-target-selection', trendSelection);
-    
+
     if(tweopleExists) {
         selectAutocomplete('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', params['mashout-tweople-source']);
     }
@@ -267,7 +267,7 @@ function handleTrendAutoCompleteSelection(path) {
 }
 
 function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
-  $(sourceId).click(function() { 
+  $(sourceId).click(function() {
       var content = $(outPreviewId).val();
       var link    = content.match(/http:\/\/out.am\/\w+/, 'gi');
 
@@ -281,27 +281,27 @@ function bindMashoutClearPreviewClick() {
         $('#mashout-form input[type=checkbox]').each(function() {
             $(this).prop("checked", false);
         });
-        
+
         // clear the hidden checkbox fields
         $('#mashout-form #hidden-hashtags').val('');
         $('#mashout-form #hidden-trends').val('');
-    
+
         // clear the drop-downs, except target orientated ones
         selectAutocomplete('#mashout-comment-container', '#mashout-comment', 'NONE');
         selectAutocomplete('#mashout-media-container', '#mashout-media', 'NONE');
-        
+
         // clear the hidden drop-down fields
         $('#mashout-form #hidden-comment').val('');
         $('#mashout-form #hidden-media').val('');
         $('#mashout-form #hidden-targets').val('');
-    
+
         // clear the video radio buttons and radio hidden field
         var videoRadioButton = $("#mashout-form input[name='mashout-video']");
         if(videoRadioButton.length > 0) {
             videoRadioButton.prop("checked", false);
             $('#mashout-form #hidden-video').val('');
         }
-    
+
         $('#out-preview').val('');
         calculateCharsLeft();
         return false;

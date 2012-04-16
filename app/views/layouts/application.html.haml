@@ -3,11 +3,14 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
     %link{:href => "http://mashout.greanetree.com/favicon.png", :rel => "icon", :type => "image/png"}
-    = yield :optional_meta
+    - if content_for?(:optional_meta)
+      %meta{:name => 'description', :content => 'Check out the latest social media tools and social media services available to boost your media from Mashoutable.com.'}
+    - else
+      = yield :optional_meta
     - if content_for?(:optional_meta_title)
       = yield :optional_meta_title
     - else
-      %title Mashoutable
+      %title Social Media Tools | Social Media Services | Mashoutable.com
     %meta{:content => "index,follow,noydir,noodp", :name => "robots"}/
     = stylesheet_link_tag     'application', :media => 'all'
     = stylesheet_link_tag     'application-print', :media => 'print'

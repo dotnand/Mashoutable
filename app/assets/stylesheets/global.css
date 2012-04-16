@@ -213,7 +213,7 @@ input[type="submit"]:hover,
 
 .safari .icon {
     background-position: -72px -1px; }
-    
+
 .rockmelt .icon {
     background-position: -143px -2px; }
 
@@ -705,7 +705,7 @@ h4 span.counter {
     top: -25px;
     right: 0; }
 
-#top #tagline span {
+#top #tagline h1 {
     display: block;
     color: #f26722;
     font-size: 3.7em;
