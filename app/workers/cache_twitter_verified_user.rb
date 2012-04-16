@@ -11,8 +11,5 @@ class CacheVerifiedTwitterUser
 
     VerifiedTwitterUser.remove_verified(remove_list)
     VerifiedTwitterUser.add_verified(add_list)
-    
-    rescue Exception => ex
-      Rails.logger.info ex.to_s
   end
 end
