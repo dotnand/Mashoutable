@@ -29,13 +29,38 @@ describe User do
     User.create_from_hash!(param)
   end
 
-  it 'should synchronize friends if no friends found' do
-    user = FactoryGirl.create(:user)
-    Resque.should_receive(:enqueue).with(TwitterFriendSynchronize, user.id)
-    Resque.should_receive(:enqueue).with(TwitterFollowerSynchronize, user.id)
-    user.synchronize
+  context 'synchronize' do
+    let(:user) { FactoryGirl.create(:user) }
+    
+    it 'should synchronize friends and followers NOW' do
+      Resque.should_receive(:enqueue).with(TwitterFriendSynchronize, user.id)
+      Resque.should_receive(:enqueue).with(TwitterFollowerSynchronize, user.id)
+      user.synchronize.should be < Time.now
+    end
+    
+    it 'should synchronize friends NOW and followers later' do
+      FactoryGirl.create(:follower, :user_id => user.id)
+      Resque.should_receive(:enqueue).with(TwitterFriendSynchronize, user.id)
+      Resque.should_receive(:enqueue_at).with(anything, TwitterFollowerSynchronize, user.id)
+      user.synchronize.should be > Time.now
+    end
+    
+    it 'should synchronize friends later and followers NOW' do
+      FactoryGirl.create(:friend, :user_id => user.id)
+      Resque.should_receive(:enqueue_at).with(anything, TwitterFriendSynchronize, user.id)
+      Resque.should_receive(:enqueue).with(TwitterFollowerSynchronize, user.id)
+      user.synchronize.should be > Time.now
+    end
+    
+    it 'should synchronize friends and followers later' do
+      FactoryGirl.create(:friend, :user_id => user.id)
+      FactoryGirl.create(:follower, :user_id => user.id)
+      Resque.should_receive(:enqueue_at).with(anything, TwitterFriendSynchronize, user.id)
+      Resque.should_receive(:enqueue_at).with(anything, TwitterFollowerSynchronize, user.id)
+      user.synchronize.should be > Time.now
+    end
   end
-  
+    
   [[:twitter, 'twitter'], [:facebook, 'facebook'], [:youtube, 'google']].each do |network, network_name|
     it "should remove #{network_name} authorization" do
       user = FactoryGirl.create(:user)
@@ -287,8 +312,8 @@ describe User do
     let(:user) { FactoryGirl.create(:user) }
     
     before do
-      3.times { |n| FactoryGirl.create(:follower, :user_id => user.id) }
-      3.times { |n| FactoryGirl.create(:friend, :user_id => user.id) }
+      3.times { |n| FactoryGirl.create(:follower, :user_id => user.id, :twitter_user_id => n) }
+      3.times { |n| FactoryGirl.create(:friend, :user_id => user.id, :twitter_user_id => n) }
     end
   
     it 'should have twitter friend ids' do

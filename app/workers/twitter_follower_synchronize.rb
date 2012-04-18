@@ -11,14 +11,15 @@ class TwitterFollowerSynchronize
     remove_list         = local_follower_ids - twitter_follower_ids
 
     ActiveRecord::Base.transaction do
-      remove_list.each { |id| user.followers.where(:twitter_user_id => id).each { |follower| follower.destroy } }
+      remove_list.uniq.each { |id| user.followers.where(:twitter_user_id => id).each { |follower| follower.destroy } }
     end    
 
     ActiveRecord::Base.transaction do
-      add_list.each { |id| user.followers.create(:twitter_user_id => id) }
+      add_list.uniq.each { |id| user.followers.create(:twitter_user_id => id) }
     end
 
-    Resque.remove_delayed(TwitterFollowerSynchronize, user.id)
-    Resque.enqueue_at(6.hours.from_now, TwitterFollowerSynchronize, user.id)
+    ensure
+      Resque.remove_delayed(TwitterFollowerSynchronize, user.id)
+      Resque.enqueue_at(6.hours.from_now, TwitterFollowerSynchronize, user.id)
   end
 end

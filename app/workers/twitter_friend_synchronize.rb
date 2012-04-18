@@ -11,14 +11,15 @@ class TwitterFriendSynchronize
     remove_list         = local_friend_ids - twitter_friend_ids
 
     ActiveRecord::Base.transaction do
-      remove_list.each { |id| user.friends.where(:twitter_user_id => id).each { |friend| friend.destroy } }
+      remove_list.uniq.each { |id| user.friends.where(:twitter_user_id => id).each { |friend| friend.destroy } }
     end    
 
     ActiveRecord::Base.transaction do
-      add_list.each { |id| user.friends.create(:twitter_user_id => id) }
+      add_list.uniq.each { |id| user.friends.create(:twitter_user_id => id) }
     end
 
-    Resque.remove_delayed(TwitterFriendSynchronize, user.id)
-    Resque.enqueue_at(6.hours.from_now, TwitterFriendSynchronize, user.id)
+    ensure
+      Resque.remove_delayed(TwitterFriendSynchronize, user.id)
+      Resque.enqueue_at(6.hours.from_now, TwitterFriendSynchronize, user.id)
   end
 end

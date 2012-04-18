@@ -6,11 +6,18 @@ class AuthorizationController < ApplicationController
     end
 
     self.current_user = @auth.user
-    self.current_user.synchronize if self.current_user.present?
+    self.synchronize(self.current_user) if self.current_user.present?
     redirect_to dashboard_path
   end
   
   def failure
     @message = params['message']
   end
+  
+  protected
+    def synchronize(user)
+      if user.synchronize < Time.now
+        flash[:notice] = 'It appears like we don\'t have your friends or followers.  Please wait a few minutes while we provision your account.'
+      end
+    end
 end
