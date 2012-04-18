@@ -2,11 +2,11 @@
 //= require select
 
 function bindEditNetworkPreferencesClick(buttonId, path) {
-    $(buttonId).click(function() { 
+    $(buttonId).click(function() {
         var params = 'mashout-network-twitter=' + $('#mashout-network-twitter').val() + '&' +
                      'mashout-network-facebook=' + $('#mashout-network-facebook').val() + '&' +
                      'mashout-network-youtube=' + $('#mashout-network-youtube').val();
-                     
+
         $.ajax({url: path,
                 type: 'DELETE',
                 data: encodeURI(params),

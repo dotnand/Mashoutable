@@ -1,3 +1,10 @@
+- content_for :optional_meta_title do
+  %title About Mashoutable | Mashoutable.com
+
+- content_for :optional_meta do
+  %meta{:name => 'keywords', :content=> 'About Mashoutable'}
+  %meta{:name => 'description', :content => 'Learn more about Mashoutable.com.'}
+
 - content_for :title do
   .prepend-top
     .left
