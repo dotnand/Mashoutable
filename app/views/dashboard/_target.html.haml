@@ -111,7 +111,7 @@
                       :javascript
                         $(function() { bindDynamicPreviewTargetChange("##{retweeter_id}", '#hidden-targets', '#out-preview', "#{retweet_parent}"); });
         - elsif defined? @target and @target != 'NONE'
-          %p No tweets were found
+          %p Nothing was found
     %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}
   :javascript
     $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-audience-container', '#mashout-target-selection', "#{target_source_path}"); });
