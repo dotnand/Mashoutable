@@ -13,8 +13,8 @@ describe VerifiedTwitterUser do
   end
     
   it 'have local verified ids' do
-    3.times { FactoryGirl.create(:verified_twitter_user) }
-    VerifiedTwitterUser.local_twitter_ids.should eq([1, 2, 3])
+    3.times { |n| FactoryGirl.create(:verified_twitter_user, :user_id => n) }
+    VerifiedTwitterUser.local_twitter_ids.should eq([0, 1, 2])
   end
   
   it 'should have remote verified ids' do

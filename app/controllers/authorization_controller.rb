@@ -6,6 +6,7 @@ class AuthorizationController < ApplicationController
     end
 
     self.current_user = @auth.user
+    self.current_user.synchronize if self.current_user.present?
     redirect_to dashboard_path
   end
   

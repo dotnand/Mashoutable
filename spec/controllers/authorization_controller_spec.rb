@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AuthorizationController do
   let(:omniauth) { {} }
-  let(:auth) { double(:user => double(:id => 1)) }
+  let(:auth) { double(:user => FactoryGirl.create(:user, :id => 1)) }
 
   before do
     request.env['omniauth.auth'] = omniauth
@@ -21,12 +21,14 @@ describe AuthorizationController do
 
   context 'without prior login' do
     it 'should create an authorization' do
+      auth.user.should_receive(:synchronize)
       Authorization.should_receive(:find_from_hash).with(omniauth).and_return(nil)
       Authorization.should_receive(:create_from_hash).with(omniauth, nil).and_return(auth)
       post_create 
     end
     
     it 'should not create an authorization' do
+      auth.user.should_receive(:synchronize)
       should_not_create_an_authorization
     end
   end
@@ -39,12 +41,14 @@ describe AuthorizationController do
     end    
     
     it 'should create an authorization' do
+      current_user.should_receive(:synchronize)
       Authorization.should_receive(:find_from_hash).with(omniauth).and_return(nil)
       Authorization.should_receive(:create_from_hash).with(omniauth, current_user).and_return(auth)
       post_create
     end
     
     it 'should not create an authorization' do
+      current_user.should_receive(:synchronize)
       should_not_create_an_authorization
     end
   end

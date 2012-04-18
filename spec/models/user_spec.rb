@@ -20,11 +20,20 @@ describe User do
   it { should have_many(:videos) }
   it { should have_many(:interactions) }
   it { should have_many(:outs) }
+  it { should have_many(:friends) }
+  it { should have_many(:followers) }
   
   it 'should create a user given a hash' do
     param = {'info' => {'name' => 'jane_doe'}}
     User.should_receive('create').with(:name => param['info']['name'])
     User.create_from_hash!(param)
+  end
+
+  it 'should synchronize friends if no friends found' do
+    user = FactoryGirl.create(:user)
+    Resque.should_receive(:enqueue).with(TwitterFriendSynchronize, user.id)
+    Resque.should_receive(:enqueue).with(TwitterFollowerSynchronize, user.id)
+    user.synchronize
   end
   
   [[:twitter, 'twitter'], [:facebook, 'facebook'], [:youtube, 'google']].each do |network, network_name|
@@ -132,53 +141,60 @@ describe User do
     let!(:user3) { double(:id => 3, :screen_name => 'jane_doe2', :verified => true) }
     
     it 'should have tweople' do
-      follower_ids      = [1]
-      friend_ids        = [5]
       twitter_users     = ['twitter_1', 'twitter_2', 'twitter_3', 'twitter_4', 'twitter_5']
       twitter_profiles  = [twitter_profile1, twitter_profile2, twitter_profile3, twitter_profile4, twitter_profile5]
       
-      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
-      subject.should_receive(:scrape_twitter_public_timeline).and_return(twitter_users)
-      subject.mentions.should_receive(:find).with(:all, :select => :who).and_return([double(:who => '@twitter_2')])
-      subject.twitter.should_receive(:users).with(twitter_users).and_return(twitter_profiles)
+      user = FactoryGirl.create(:user)
+      twitter = mock('twitter')
+      user.should_receive(:twitter) { twitter }
+    
+      FactoryGirl.create(:friend, :twitter_user_id => 5, :user_id => user.id)
+      FactoryGirl.create(:follower, :twitter_user_id => 1, :user_id => user.id)
       
-      subject.tweople.should eq([twitter_profile3, twitter_profile4])
+      user.should_receive(:scrape_twitter_public_timeline).and_return(twitter_users)
+      user.mentions.should_receive(:find).with(:all, :select => :who).and_return([double(:who => '@twitter_2')])
+      twitter.should_receive(:users).with(twitter_users).and_return(twitter_profiles)
+      
+      user.tweople.should eq([twitter_profile3, twitter_profile4])
     end
     
     it 'should have following me' do
-      follower_ids  = [3, 100, 55]
-      friend_ids    = [100, 8, 9]
+      user = FactoryGirl.create(:user)
+      twitter = mock('twitter')
+      user.should_receive(:twitter) { twitter }
+
+      [3, 100, 55].each { |follower_id| FactoryGirl.create(:follower, :twitter_user_id => follower_id, :user_id => user.id) }
+      [100, 8, 9].each { |friend_id| FactoryGirl.create(:friend, :twitter_user_id => friend_id, :user_id => user.id) }
+    
+      twitter.should_receive(:users).with(an_instance_of(Array)).and_return([user1, user2, user3])
       
-      follower_ids.should_receive(:shuffle).and_return([55, 100, 3])
-      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
-      twitter.should_receive(:users).with([55, 3]).and_return([user1, user2, user3])
-      
-      subject.following_me.should eq([user1, user2, user3])
+      user.following_me.should eq([user1, user2, user3])
     end
     
     it 'should have tweeps' do
-      follower_ids  = [3, 100, 55]
-      friend_ids    = [8, 3, 99]
+      user = FactoryGirl.create(:user)
+      twitter = mock('twitter')
+      user.should_receive(:twitter) { twitter }
+
+      [3, 100, 55].each { |follower_id| FactoryGirl.create(:follower, :twitter_user_id => follower_id, :user_id => user.id) }
+      [100, 8, 9].each { |friend_id| FactoryGirl.create(:friend, :twitter_user_id => friend_id, :user_id => user.id) }
+    
+      twitter.should_receive(:users).with(an_instance_of(Array)).and_return([user1])
       
-      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
-      twitter.should_receive(:users).with([3]).and_return([user1])
-      
-      subject.followed_by_i_follow.should eq([user1])
+      user.followed_by_i_follow.should eq([user1])
     end
     
     it 'should have I follow' do
-      friend_ids    = [3, 100, 55]
-      follower_ids  = [88, 55, 2]
+      user = FactoryGirl.create(:user)
+      twitter = mock('twitter')
+      user.should_receive(:twitter) { twitter }
+    
+      friend_ids    = [3, 100, 55].each { |friend_id| FactoryGirl.create(:friend, :twitter_user_id => friend_id, :user_id => user.id) }
+      follower_ids  = [88, 55, 2].each { |follower_id| FactoryGirl.create(:follower, :twitter_user_id => follower_id, :user_id => user.id) }
       
-      friend_ids.should_receive(:shuffle).and_return([55, 100, 3])
-      subject.should_receive(:twitter_ids).with(:friend_ids).and_return(friend_ids)
-      subject.should_receive(:twitter_ids).with(:follower_ids).and_return(follower_ids)
-      twitter.should_receive(:users).with([100, 3]).and_return([user1, user2, user3])
+      twitter.should_receive(:users).with(an_instance_of(Array)).and_return([user1, user2, user3])
       
-      subject.i_follow.should eq([user1, user2, user3])
+      user.i_follow.should eq([user1, user2, user3])
     end
     
     it 'should have twitter besties' do
@@ -193,11 +209,16 @@ describe User do
       
       twitter_profiles  = [twitter_profile1, twitter_profile2]
 
-      User.should_receive(:page_through_twitter_ids).with(twitter, :friend_ids, {}, 10000).and_return([2, 4])
-      User.should_receive(:page_through_twitter_ids).with(twitter, :follower_ids, {}, 10000).and_return([6, 8])
-      subject.twitter.should_receive(:users).with(an_instance_of Array).and_return(twitter_profiles)
+      user = FactoryGirl.create(:user)
+      twitter = mock('twitter')
+      user.should_receive(:twitter) { twitter }
+    
+      friend_ids    = [3, 100, 55].each { |friend_id| FactoryGirl.create(:friend, :twitter_user_id => friend_id, :user_id => user.id) }
+      follower_ids  = [88, 55, 2].each { |follower_id| FactoryGirl.create(:follower, :twitter_user_id => follower_id, :user_id => user.id) }
       
-      subject.verified.should eq(twitter_profiles)
+      twitter.should_receive(:users).with(an_instance_of Array).and_return(twitter_profiles)
+      
+      user.verified.should eq(twitter_profiles)
     end
     
     it 'should have augmented interactions' do
@@ -260,5 +281,24 @@ describe User do
     Twitter::Client.should_receive(:new).with({:oauth_token => "ABC", :oauth_token_secret => "123"}).and_return(twitter_client)
     
     User.mashoutable_twitter.should eq(twitter_client)
+  end
+  
+  context 'local' do
+    let(:user) { FactoryGirl.create(:user) }
+    
+    before do
+      3.times { |n| FactoryGirl.create(:follower, :user_id => user.id) }
+      3.times { |n| FactoryGirl.create(:friend, :user_id => user.id) }
+    end
+  
+    it 'should have twitter friend ids' do
+      friends = Friend.where(:user_id => user.id).select(:twitter_user_id).map(&:twitter_user_id)
+      user.local_friend_ids.sort.should eq(friends.sort)
+    end
+    
+    it 'should have twitter follower ids' do
+      followers = Follower.where(:user_id => user.id).select(:twitter_user_id).map(&:twitter_user_id)
+      user.local_friend_ids.sort.should eq(followers.sort)
+    end
   end
 end

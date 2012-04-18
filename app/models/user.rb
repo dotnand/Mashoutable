@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :videos
   has_many :interactions
   has_many :outs
+  has_many :friends
+  has_many :followers
   
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])
@@ -13,6 +15,20 @@ class User < ActiveRecord::Base
   
   def find_bestie(bestie)
     besties.where('lower(screen_name) = ?', bestie.downcase).first
+  end
+  
+  def synchronize
+    if self.friends.count < 1
+      Resque.enqueue(TwitterFriendSynchronize, self.id) 
+    else
+      Resque.enqueue_at(6.hours.from_now, TwitterFriendSynchronize, self.id)
+    end
+    
+    if self.followers.count < 1
+      Resque.enqueue(TwitterFollowerSynchronize, self.id) 
+    else
+      Resque.enqueue_at(6.hours.from_now, TwitterFollowerSynchronize, self.id)
+    end
   end
   
   def twitter
@@ -82,8 +98,8 @@ class User < ActiveRecord::Base
   
   def tweople(web_only = true)
     tweople             = []
-    follower_ids        = twitter_ids(:follower_ids)
-    friend_ids          = twitter_ids(:friend_ids)
+    follower_ids        = self.local_follower_ids
+    friend_ids          = self.local_friend_ids
     public_screen_names = scrape_twitter_public_timeline(web_only)
     public_users        = public_screen_names.count > 0 ? twitter.users(public_screen_names) : []
     local_mentions      = self.mentions.find(:all, :select => :who).map { |mention| mention.who }
@@ -104,9 +120,9 @@ class User < ActiveRecord::Base
     # 1. get followers
     # 2. get friends
     # 3. remove friends from followers
-    follower_ids      = twitter_ids(:follower_ids).shuffle
-    friend_ids        = twitter_ids(:friend_ids).shuffle  
-    following_me_ids  = follower_ids - friend_ids
+    follower_ids      = self.local_follower_ids
+    friend_ids        = self.local_friend_ids
+    following_me_ids  = (follower_ids - friend_ids).shuffle!
 
     return [] if following_me_ids.count < 1
 
@@ -117,17 +133,20 @@ class User < ActiveRecord::Base
     # 1. get followers
     # 2. get friends
     # 3. find from both where they are followers and friends (present on both lists)
-    twitter_ids = twitter_ids(:follower_ids).shuffle & twitter_ids(:friend_ids).shuffle
-    twitter.users(twitter_ids[0..20])
+    follower_ids      = self.local_follower_ids
+    friend_ids        = self.local_friend_ids
+    following_me_ids  = (follower_ids & friend_ids).shuffle!
+
+    twitter.users(following_me_ids[0..20])
   end
   
   def i_follow
     # 1. get friends
     # 2. get followers
     # 3. remove followers from friends
-    friend_ids    = twitter_ids(:friend_ids).shuffle
-    follower_ids  = twitter_ids(:follower_ids).shuffle
-    i_follow_ids  = friend_ids - follower_ids
+    friend_ids    = self.local_friend_ids
+    follower_ids  = self.local_follower_ids
+    i_follow_ids  = (friend_ids - follower_ids).shuffle!
     
     return [] if friend_ids.count < 1
     
@@ -153,12 +172,11 @@ class User < ActiveRecord::Base
   end
   
   def verified
-    tweep_ids = User.page_through_twitter_ids(self.twitter, :friend_ids, {}, 10000)
-    tweep_ids = tweep_ids + User.page_through_twitter_ids(self.twitter, :follower_ids, {}, 10000)
+    tweep_ids = self.local_friend_ids + self.local_follower_ids
     
     return [] if tweep_ids.count < 1
     
-    verified_ids    = VerifiedTwitterUser.all.map(&:user_id)
+    verified_ids    = VerifiedTwitterUser.select(:user_id).map(&:user_id)
     user_verified   = tweep_ids & verified_ids
     verified_users  = twitter.users(user_verified.shuffle[0..20])
     
@@ -183,8 +201,8 @@ class User < ActiveRecord::Base
     []
   end
   
-  def twitter_ids(method, params = {})
-    User.page_through_twitter_ids(twitter, method, params, 1000)
+  def twitter_ids(method, params = {}, limit = 1000)
+    User.page_through_twitter_ids(twitter, method, params, limit)
   end
   
   def self.mashoutable_twitter
@@ -203,6 +221,14 @@ class User < ActiveRecord::Base
     end
     
     ids
+  end
+  
+  def local_friend_ids
+    self.friends.select(:twitter_user_id).map { |friend| friend.twitter_user_id }
+  end
+  
+  def local_follower_ids
+    self.followers.select(:twitter_user_id).map { |follower| follower.twitter_user_id }
   end
   
   protected

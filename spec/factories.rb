@@ -70,5 +70,15 @@ FactoryGirl.define do
   factory :verified_twitter_user do
     sequence(:user_id) {|n| n}
   end
+  
+  factory :friend do
+    user 
+    sequence(:twitter_user_id) {|n| n}
+  end
+
+  factory :follower do
+    user 
+    sequence(:twitter_user_id) {|n| n}
+  end
 end
 

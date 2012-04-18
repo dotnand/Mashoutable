@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412212539) do
+ActiveRecord::Schema.define(:version => 20120418002311) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -52,6 +52,24 @@ ActiveRecord::Schema.define(:version => 20120412212539) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "followers", :force => true do |t|
+    t.integer  "twitter_user_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "followers", ["user_id"], :name => "index_followers_on_user_id", :unique => true
+
+  create_table "friends", :force => true do |t|
+    t.integer  "twitter_user_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "friends", ["user_id"], :name => "index_friends_on_user_id", :unique => true
 
   create_table "interactions", :force => true do |t|
     t.string   "target"
