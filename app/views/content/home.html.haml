@@ -1,106 +1,24 @@
 - content_for :body do
-  / tagline
-  #tagline.clear
-    .left
-      %h1.inset-type
-        Free Tools to Amplify
-        %br/
-        .prepend-1 Your Social Media
-    / tagline toolbox
-    #toolbox-icon.right.last
-      %img{:alt => "Toolbox", :src => "#{asset_path('tools.png')}"}
-  / Call to action wrapper
-  #call-to-action
-    / Call to action container
-    .container
-      / Call to action start content
-      #cta-steps.span-24.append-bottom.prepend-top
-        / Call to action social media login
-        #home-sign-in.span-24.clear
-          %img#sign-in-arrow.left{:alt => "Sign In", :src => "#{asset_path('sign-in-arrow.png')}"}
-          %a{:href => facebook_auth_path}
-            %span#sign-in-facebook.left.append-1
-          %a{:href => twitter_auth_path}
-            %span#sign-in-twitter.left
-        / Call to action step 1
-        .clear.box.left.span-6.first
-          %span.number.left 1.
-          %span.list-item
-            %span
-              Start
-              %span.orange Here
-          %p Sign in with Twitter or Facebook
-        / Call to action step 2
-        .box.left.span-7
-          %span.number.left 2.
-          %span.list-item
-            %span
-              Choose the
-              %span.orange Tool
-          %p Search, target, optimize, construct and save time with one or multiple tools via MASHOUTABLE™
-        / Call to action step 3
-        .box.left.last.span-6
-          %span.number.left 3.
-          %span.list-item
-            %span.orange MASHOUT!
-          %p Use as many tools as you like over and over again!
-  / tools wrapper
-  #tools.clear
-    / tools container
-    .container
-      / tools start content
-      %span.title The Tools:
-      / mashout tool
-      #mashout-tool.box
-        / mashout tool container
-        .tool-inner
-          / mashout start content
-          %span
-            %a{:href => mashout_url}
-              %span.tool-orange
-                &#35;Targeted
-              MASHOUT&#8482;
-        %p.clear Select, Target, Infuse &amp; Fire! NO TYPING REQUIRED!
-      / blastout tool wrapper
-      #blastout-tool.box
-        / blastout tool container
-        .tool-inner
-          / blastout start content
-          %span
-            %a{:href => blastout_url}
-              %span.blue
-                &#35;Video
-              BLASTOUT&#8482;
-        %p.clear Add a 60 second video to your Tweet in just seconds!
-      / shoutout tool wrapper
-      #shoutout-tool.box
-        / shoutout tool container
-        .tool-inner
-          / shoutout start content
-          %span
-            %a{:href => shoutout_url}
-              %span.green
-                &#35;Top Trend
-              SHOUTOUT&#8482;
-        %p.clear Use Mashoutable™ to "Click Construct" Tweets directly to celebs, brands, or top 10 networks!
-      / pickout tool wrapper
-      #pickout-tool.box
-        / pickout tool container
-        .tool-inner
-          / pickout start content
-          %span
-            %a{:href => pickout_url}
-              %span.red
-                &#35;Credible Winner
-              PICKOUT&#8482;
-        %p.clear Generate instant name and QR code for instant credibility!
-      / coming soon wrapper
-      .coming-soon.box
-        / coming soon tool container
-        .tool-inner
-          / coming soon start content
-          %span #COMING SOON
-        %p.clear Get ready for what's coming! Live in the "wow" with Mashoutable™!
+  #steps
+    .create
+      %span.light-blue
+        Easily Create, Target, & Direct,
+      %span
+        Fresh & Relevant Content
+
+    .publish
+      %span.light-blue
+        Quickly Publish
+      %span
+        to your Social Networks
+
+    .influence
+      %span.light-blue
+        Be instantly influential
+
+    %a{:href => 'dashboard'}
+      %span.start
+
   - content_for :optional_body do
     #welcome.clear
       .divider-shadow
@@ -108,7 +26,7 @@
       .container
         / footer welcome start content
         %span.inset-type Welcome to Mashoutable™
-        %p
+        %h2
           Free Social Media Tools for Social Media Amplification
         %p
           = render 'mashout_desc'
