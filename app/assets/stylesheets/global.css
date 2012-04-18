@@ -257,6 +257,9 @@ h4 span.counter {
 .red {
     color: #FF0B00; }
 
+.light-blue {
+    color: #3eb7df !important; }
+
 .inset-type{
     text-shadow: #474747 0px -1px 0;}
 
@@ -365,11 +368,69 @@ h4 span.counter {
 #header #navigation-social #h-navigation li a:hover {
     background: #f26722; }
 
+/*Home page steps*/
+#steps {
+    background: url('steps.png');
+    background-repeat: no-repeat;
+    width: 623px;
+    height: 510px;
+    margin: -9px auto 0 auto;
+    position: relative; }
+
+#steps span {
+    clear: both;
+    text-align: center;
+    width: 100%;
+    float: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.2em;
+    color: #2e6f95; }
+
+#steps span.light-blue {
+    font-size: 2em; }
+
+#steps .create,
+#steps .publish,
+#steps .influence {
+    position: absolute;
+    height: 56px;
+    padding: 15px; }
+
+#steps .create {
+    top: 56px;
+    left: 34px;
+    width: 523px; }
+
+#steps .publish {
+    top: 164px;
+    left: 63px;
+    width: 458px; }
+
+#steps .influence {
+    top: 270px;
+    left: 109px;
+    width: 358px;
+    height: 33px;
+    padding: 27px; }
+
+#steps .influence span.light-blue {
+    font-size: 1.8em; }
+
+#steps .start {
+    background: url('start.png');
+    background-repeat: no-repeat;
+    width: 188px;
+    height: 90px;
+    position: absolute;
+    top: 382px;
+    left: 225px; }
+
 
 /*Black bar at top and main background*/
 #top {
     background: url('top-bg.jpg') repeat-x;
-    min-height: 800px; }
+    min-height: 685px; }
 
 #top #top-bar {
     font-style: italic;
@@ -378,53 +439,7 @@ h4 span.counter {
     height: 10px;
     font-family: Trebuchet MS;}
 
-
-/*Call to Action*/
-#top #call-to-action {
-    background: none;}
-
-#top #call-to-action #cta-steps {
-    margin-top: -30px;
-    padding: 10px 0;
-    margin-left: 20px; }
-
-#top #call-to-action #cta-steps .box {
-    padding: 10px 10px 0 10px;
-    margin-bottom:0;
-    display: block; }
-
-#top #call-to-action #cta-steps .box.first {
-    margin-left: 55px; }
-
-#top #call-to-action #cta-steps .number,
-#top #call-to-action #cta-steps .list-item {
-    line-height: 1em;
-    margin-bottom: 0.5em;  }
-
-#top #call-to-action #cta-steps .number {
-    height: 85px; }
-
-#top #call-to-action #cta-steps .list-item {
-    background: none;
-    margin-left: 0;
-    line-height: 2em;
-    float: none; }
-
-#top #call-to-action #home-sign-in {
-    margin: 0 auto;
-    background: url('social-banner.png');
-    background-repeat: no-repeat;
-    width: 977px;
-    height: 130px;
-    position: relative;
-    margin-bottom: -25px;
-    margin-left: -40px; }
-
-#top #call-to-action #sign-in-arrow {
-    position: absolute;
-    top: 80px;
-    left: 235px; }
-
+/*sign in*/
 #sign-in-twitter,
 #sign-in-facebook {
     display: block;
@@ -438,16 +453,6 @@ h4 span.counter {
 
 #sign-in-facebook {
     background-position: -300px 0; }
-
-#home-sign-in #sign-in-twitter {
-    top: 27px;
-    left: 250px;
-    position: absolute; }
-
-#home-sign-in #sign-in-facebook {
-    top: 27px;
-    right: 190px;
-    position: absolute; }
 
 #sign-in-youtube {
     display: block;
@@ -497,10 +502,14 @@ h4 span.counter {
     font-style: italic;
     font-size: 2em; }
 
-#welcome p {
-    margin-top: 5px;
+#welcome h2 {
+    margin-top: 0px;
     margin-left: 3px;
-    clear: both;}
+    clear: both;
+    font-size: 1em;
+    color: #333333;
+    margin-bottom: 10px;
+    font-style: normal; }
 
 #welcome .container {
     padding: 20px 0;
@@ -690,70 +699,8 @@ h4 span.counter {
     padding-left: 0; }
 
 
-/*--------------------Home page------------------*/
-/*Tagline*/
-#top #tagline {
-    background: url('tagline-bg.png') no-repeat;
-    width:950px;
-    height:235px;
-    margin-top: 5px;
-    position: relative; }
-
-#top #tagline #toolbox-icon {
-    width: 240px;
-    position: absolute;
-    top: -25px;
-    right: 0; }
-
-#top #tagline h1 {
-    display: block;
-    color: #f26722;
-    font-size: 3.7em;
-    line-height: 1.4em;
-    font-style: italic;
-    font-family: Trebuchet MS;
-    font-weight: bold;
-    margin-top: 40px;
-    float: left; }
-
-#top #tagline .prepend-1 {
-    font-size: 1.7em; }
 
 /*Tools bubbles*/
-#top #tools {
-    margin-left: -10px;
-    margin-top: -25px;
-    float: left; }
-
-#top #tools .box {
-    float: left;
-    width: 154px;
-    text-align: center;
-    margin-bottom: 0;
-    padding-top: 5px;}
-
-#top #tools .box p {
-    width: 180px;
-    margin-left: -15px;
-    margin-bottom: 0;}
-
-#top #tools .tool-inner:first-child {
-    margin-left: -20px;}
-
-#top #tools .tool-inner .box{
-    margin-top: 65px;}
-
-#top #tools .title {
-    color: #3a789f;
-    border-bottom: 1px dashed #c9d2d9;
-    padding: 15px 0 5px 0;
-    font-style: italic;
-    font-family: Trebuchet MS;
-    font-weight: bold;
-    font-size: 2em;
-    float: left;
-    width: 100%; }
-
 #tools span,
 #tools .button span,
 #dropdown-buttons span,
@@ -786,20 +733,6 @@ h4 span.counter {
 #tools span .red {
     font-size: 0.7em;
     line-height: 1em; }
-
-#top #tools #mashout-tool .tool-inner,
-#top #tools #blastout-tool .tool-inner,
-#top #tools #shoutout-tool .tool-inner,
-#top #tools #pickout-tool .tool-inner,
-#top #tools .coming-soon .tool-inner {
-    display: block;
-    background-image: url("bubbles.png");
-    background-repeat: no-repeat;
-    background-position: 0px -463px;
-    width: 188px;
-    height: 215px;
-    padding: 0;
-    margin-top: 0px;}
 
 #tools .coming-soon span,
 #tools .button .coming-soon span {
