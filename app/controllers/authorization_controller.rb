@@ -7,7 +7,7 @@ class AuthorizationController < ApplicationController
 
     self.current_user = @auth.user
     self.synchronize(self.current_user) if self.current_user.present?
-    redirect_to dashboard_path
+    redirect_to dashboard_blastout_path
   end
   
   def failure
