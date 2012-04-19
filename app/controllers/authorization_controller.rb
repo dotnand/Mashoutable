@@ -17,7 +17,7 @@ class AuthorizationController < ApplicationController
   protected
     def synchronize(user)
       if user.synchronize < Time.now
-        flash[:notice] = 'It appears like we don\'t have your friends or followers.  Please wait a few minutes while we provision your account.'
+        flash[:notice] = 'It appears like we don\'t have your friends or followers.  Please be patient, it may take several minutes to provision your account.'
       end
     end
 end
