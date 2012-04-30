@@ -18,17 +18,23 @@ class User < ActiveRecord::Base
   end
   
   def synchronize
+    to_process_at = Time.now
+    
     if self.friends.count < 1
       Resque.enqueue(TwitterFriendSynchronize, self.id) 
     else
-      Resque.enqueue_at(6.hours.from_now, TwitterFriendSynchronize, self.id)
+      to_process_at = 6.hours.from_now
+      Resque.enqueue_at(to_process_at, TwitterFriendSynchronize, self.id)
     end
     
     if self.followers.count < 1
       Resque.enqueue(TwitterFollowerSynchronize, self.id) 
     else
-      Resque.enqueue_at(6.hours.from_now, TwitterFollowerSynchronize, self.id)
+      to_process_at = 6.hours.from_now
+      Resque.enqueue_at(to_process_at, TwitterFollowerSynchronize, self.id)
     end
+    
+    to_process_at
   end
   
   def twitter

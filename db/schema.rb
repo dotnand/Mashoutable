@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418002311) do
+ActiveRecord::Schema.define(:version => 20120425000356) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120418002311) do
     t.datetime "updated_at"
   end
 
-  add_index "followers", ["user_id"], :name => "index_followers_on_user_id", :unique => true
+  add_index "followers", ["user_id", "twitter_user_id"], :name => "index_followers_on_user_id_and_twitter_user_id", :unique => true
 
   create_table "friends", :force => true do |t|
     t.integer  "twitter_user_id"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20120418002311) do
     t.datetime "updated_at"
   end
 
-  add_index "friends", ["user_id"], :name => "index_friends_on_user_id", :unique => true
+  add_index "friends", ["user_id", "twitter_user_id"], :name => "index_friends_on_user_id_and_twitter_user_id", :unique => true
 
   create_table "interactions", :force => true do |t|
     t.string   "target"
@@ -144,6 +144,18 @@ ActiveRecord::Schema.define(:version => 20120418002311) do
   add_index "replies", ["out_id"], :name => "replies_out_id_idx"
   add_index "replies", ["status_id", "user_id"], :name => "replies_status_id_idx"
   add_index "replies", ["user_id"], :name => "replies_user_id_index"
+
+  create_table "trendspottr_searches", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "trendspottr_topics", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

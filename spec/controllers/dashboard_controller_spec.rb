@@ -297,16 +297,34 @@ describe DashboardController do
       response.should be_success
     end
     
-    it 'should get locations given a Twitter source' do
+    def setup_trend_lookup(source)
       locations     = [{'name' => 'United States', 'value' => 12345}, {'name' => 'China', 'value' => 54321}, {'name' => 'Spain', 'value' => 878787}] 
       trend_lookup  = [locations, nil, nil]
-      Trend.should_receive(:trends).with(current_user, 'Twitter', nil, nil).and_return(trend_lookup)
+      Trend.should_receive(:trends).with(current_user, source, nil, nil).and_return(trend_lookup)
+      
+      locations
+    end
+    
+    it 'should get locations given a Twitter source' do
+      locations = setup_trend_lookup('Twitter')
       
       get :trends, {:trend_source => 'Twitter'}
       
       assigns[:locations].should eq(locations)
       response.should be_success
     end    
+    
+    it 'should get trendspottr trends' do
+      3.times { FactoryGirl.create(:trendspottr_topic) }
+      3.times { FactoryGirl.create(:trendspottr_search) }
+      
+      setup_trend_lookup('Trendspottr')
+      
+      get :trends, { :trend_source => 'Trendspottr' }
+      
+      assigns[:topics].should eq(TrendspottrTopic.select(:name).map(&:name))
+      assigns[:searches].should eq(TrendspottrSearch.select(:name).map(&:name))
+    end
   end
 
   it 'GET should redirect to root when not signed in' do

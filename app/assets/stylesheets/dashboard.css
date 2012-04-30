@@ -28,6 +28,10 @@
     width: 905px;
     min-height: 100px; }
 
+#content-wrapper .button { 
+    margin-top: 3px;
+}
+
 #content-wrapper.span-all #tools .button span a,
 #content-wrapper.span-all #dropdown-buttons .button span a {
     background: url('button-bg.jpg');
@@ -344,4 +348,8 @@
     width: 100%; }
 
 .hidden { display: none; }
+
+#trendspottr-search {
+    margin-left: 5px;  
+}
 

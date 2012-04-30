@@ -44,6 +44,11 @@ class DashboardController < ApplicationController
 
     @locations, @regions, @trends = Trend.trends(current_user, @trend_source, @trend_region, @trend_woeid)
 
+    if @trend_source == 'Trendspottr'
+      @topics   = Trend.trendspottr_popular_topics
+      @searches = Trend.trendspottr_popular_searches
+    end
+
     render :partial => 'trend'
   end
 
