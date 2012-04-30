@@ -5,16 +5,6 @@ input.button {
     padding-left: 0 !important;
     padding-right: 0 !important; }
 
-.ui-button-icon-only .ui-button-text {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 0.75em;
-    padding-left: 0.75em;
-    margin-top: 7px; }
-
-button {
-    top: 0.2em; }
-
 h3.list-item {
     margin-left: -10px; }
 

@@ -29,7 +29,7 @@
       / feedback floater
       %a#feedback{:href => contact_us_path, :style => "margin-top: 0px;"} Feedback
       / container
-      .container.content.clear
+      .container.content.clear{:class => home? ? 'home' : nil}
         / top section
         #top.clear
           / top-black bar
@@ -74,6 +74,20 @@
             / footer first blog item
             .entry.clear
               .left.blog-date
+                %span.day 25
+                %span.month APR
+              .left.blog-desc.span-6
+                %span.title
+                  =truncate("The Tweople Target", :length => 25)
+                %span.category Posted in Twitter, Tweet...
+                %p
+                  =truncate('The "Tweople" target at Mashoutable.com is a little gem in itself. Algorithmic process here behind the scenes, ensures a couple of things for you, first, ALL these folks have Tweeted inside the last 4 minutes, second, you can filter these for "Web Only"', :length => 130)
+                  %br/
+                  %br/
+                  %a{:href => blog_path+ "#post-2"} Read More
+            / footer second blog item
+            .entry.left
+              .left.blog-date
                 %span.day 05
                 %span.month SEP
               .left.blog-desc.span-6
@@ -84,21 +98,7 @@
                   =truncate("Welcome to Mashoutable™!  We enhance and simplify the Social Media User’s ability to discover, engage, and interact across the Social Web.", :length => 130)
                   %br/
                   %br/
-                  %a{:href => blog_path} Read More
-            / footer second blog item
-            .entry
-              .left.blog-date
-                %span.day 12
-                %span.month MAR
-              .left.blog-desc.span-6
-                %span.title
-                  =truncate("Mashoutable™ News", :length => 25)
-                %span.category Posted in News
-                %p
-                  =truncate("Here you will be able to find vital and/or breaking news regarding Mashoutable™ products/services, partnerships, awesome users, and Mashoutable™ usage achievements!", :length => 130)
-                  %br/
-                  %br/
-                  %a{:href => "http://mashoutable.wordpress.com/mashoutable-news/", :target => "_blank"} Read More
+                  %a{:href => blog_path + "#post-1"} Read More
           / footer twitter section
           #twitter.right.last
             %span.title.left Twitter:

@@ -1,9 +1,7 @@
 #mashout-target-container
-  .content-bubble.span-6.left.clear
-    .bubble-top
-    .bubble-body
-      %p Pick your target audience
-    .bubble-bottom
+  .help.clear
+    %span.icon
+    %p.message Pick your target audience
   #mashout-target-audience-container.span-9.left.ui-combobox
     %select{:id => 'mashout-target-selection', :name => 'mashout-target-selection', :style => "display: none;"}
       %option{:value => "NONE"} None
@@ -19,11 +17,9 @@
     :javascript
       $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-audience-container', '#mashout-target-selection', '#hidden-targets', '#out-preview'); });
   - if defined? @target and @target == 'TWEOPLE'
-    .content-bubble.span-6.left.clear
-      .bubble-top
-      .bubble-body
-        %p Pick the source of your audience
-      .bubble-bottom
+    .help.clear
+      %span.icon
+      %p.message Pick the source of your audience
     #mashout-target-tweople-container.span-9.left.ui-combobox
       %select{:id => 'mashout-target-tweople-source-selection', :name => 'target-tweople-source', :style => "display: none;"}
         %option{:value => 'TWEOPLE_WEB_ONLY'} Web Only
@@ -56,7 +52,7 @@
                   %p
                     %em
                       %a{:href => '#', :id => target_tweets_toggle_id}= pluralize(statuses.count, 'more tweet') << '...'
-                
+
                 :javascript
                   $(function() { bindMashoutShowMoreTweets("##{target_tweets_toggle_id}", "##{target_tweets_slider_id}"); });
                 %div{:id => target_tweets_slider_id, :style => 'display:none;'}
@@ -87,7 +83,7 @@
                       %a{:href => profile[:url], :target => '_blank'}= profile[:url]
                       %br
                     -if profile[:last_tweet_from] and (defined? @tweople_target) and @tweople_target.present?
-                      != "Just Tweeted from #{profile[:last_tweet_from].casecmp('web') == 0 ? 'the Web' : profile[:last_tweet_from]}" 
+                      != "Just Tweeted from #{profile[:last_tweet_from].casecmp('web') == 0 ? 'the Web' : profile[:last_tweet_from]}"
                       %br
         - elsif not @retweets.nil? and @retweets.count > 0
           #mashout-target-checkboxes

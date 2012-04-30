@@ -1,6 +1,12 @@
 //= require jquery-ui-1.8.16.custom.min
 //= require select
 
+function bindMediaIconToggle() {
+    $('#media-icons li').click(function() {
+        $(this).toggleClass('on');
+    });
+}
+
 function bindEditNetworkPreferencesClick(buttonId, path) {
     $(buttonId).click(function() {
         var params = 'mashout-network-twitter=' + $('#mashout-network-twitter').val() + '&' +

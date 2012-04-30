@@ -6,15 +6,8 @@ input.button {
 #header #social-media {
     margin-right: -5px;}
 
-.ui-button-icon-only .ui-button-text {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-right: 0.75em;
-    padding-left: 0.75em;
-    margin-top: 9px; }
-
-button {
-    top: 0.2em; }
+.ui-button {
+    margin-top: 0; }
 
 #footer #back-to-top {
     margin-top: 15px;
