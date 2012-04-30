@@ -19,7 +19,7 @@ function createAutocompleteComboboxes(postCreateCallback) {
 					}
 				});
 
-            var input = this.input = $("<input type='text' />")
+            var input = this.input = $("<input type='text' readonly='readonly'/>")
 					.insertAfter(select)
 					.val(value)
 					.keydown( function( event ) {

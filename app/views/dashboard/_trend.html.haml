@@ -9,35 +9,29 @@
       %option{:value => 'Google'} Google
       %option{:value => 'Trendspottr'} Trendspottr
   - if defined? @trend_source and @trend_source == 'Trendspottr'
-    .content-bubble.span-6.left.clear
-      .bubble-top
-      .bubble-body
-        %p Select a Filter
-      .bubble-bottom
+    .help.clear
+      %span.icon
+      %p.message Select a Filter
     #mashout-location-container.span-9.left.ui-combobox
       %select{:id => 'mashout-trendspottr-selection', :name => 'trend-filter', :style => "display: none;"}
         %option{:value => 'Twitter'} Twitter
         %option{:value => 'Facebook'} Facebook
         %option{:value => 'NONE'} None
-    .content-bubble.span-6.left.clear
-      .bubble-top
-      .bubble-body
-        %p Type a query
-      .bubble-bottom
+    .help.clear
+      %span.icon
+      %p.message Type a query
     #mashout-trendspottr-container.span-9.left
       %input.span-7{:id => 'trendspottr-query', :type => "text"}
       %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
       :javascript
         $(function() { decorateMashoutTrendAutoCompleteSelect(); });
     - if @topics or @searches
-      .content-bubble.span-6.left.clear
-        .bubble-top
-        .bubble-body
-          %p Pick a Trend
-        .bubble-bottom
+      .help.clear
+        %span.icon
+        %p.message Pick a Trend
       #mashout-trendspottr-container.span-9.left
         .span-4.left
-          %strong 
+          %strong
             %em Trending Topics
           %hr.space
           - if @topics

@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120425000356) do
     t.datetime "updated_at"
   end
 
-  add_index "followers", ["user_id", "twitter_user_id"], :name => "index_followers_on_user_id_and_twitter_user_id", :unique => true
+  add_index "followers", ["user_id"], :name => "index_followers_on_user_id", :unique => true
 
   create_table "friends", :force => true do |t|
     t.integer  "twitter_user_id"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20120425000356) do
     t.datetime "updated_at"
   end
 
-  add_index "friends", ["user_id", "twitter_user_id"], :name => "index_friends_on_user_id_and_twitter_user_id", :unique => true
+  add_index "friends", ["user_id"], :name => "index_friends_on_user_id", :unique => true
 
   create_table "interactions", :force => true do |t|
     t.string   "target"
