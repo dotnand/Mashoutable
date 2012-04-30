@@ -26,6 +26,10 @@ google_trend_feed = <<END_OF_STRING
   ]]></content></entry></feed>
 END_OF_STRING
 
+trendspottr_response_body = <<END_OF_STRING
+{\"results\":{\"links\":[{\"value\":\"http:\\/\\/t.co\\/Gjt1qkVX\",\"weight\":2.7788178313998},{\"value\":\"http:\\/\\/t.co\\/snyjskgZ\",\"weight\":1.4431392717159},{\"value\":\"http:\\/\\/t.co\\/pH02LQmJ\",\"weight\":0.35459315564975}],\"hashtags\":[{\"value\":\"#post\",\"weight\":0.037334335720286},{\"value\":\"#video\",\"weight\":0.037334335720286},{\"value\":\"#create\",\"weight\":0.037334335720286},{\"value\":\"#record\",\"weight\":0.037334335720286},{\"value\":\"#2click\",\"weight\":0.037334335720286},{\"value\":\"#clickconstruct\",\"weight\":0.037334335720286}],\"phrases\":[{\"value\":\"easier sincerely everyone\",\"weight\":0.032273718955589},{\"value\":\"dear mashoutable thanks\",\"weight\":0.022343343892331},{\"value\":\"twitter easier sincerely\",\"weight\":0.012102644608346},{\"value\":\"making twitter easier\",\"weight\":0.011521836672213},{\"value\":\"will love this..soooo\",\"weight\":0.0073596594296579},{\"value\":\"love twitter like\",\"weight\":0.0036798297148289}],\"sources\":[{\"value\":\"@xstrology\",\"weight\":2.0996880241338},{\"value\":\"@lovequotes\",\"weight\":1.0995406162265},{\"value\":\"@friendshlp\",\"weight\":0.35459315564975}]}}
+END_OF_STRING
+
 describe Trend do  
   it 'should have Twitter trends' do
     Trend::TWITTER.should eq('Twitter')
@@ -43,6 +47,9 @@ describe Trend do
     
     Trend.should_receive(:google).and_return(Object.new)
     Trend.trends(user, Trend::GOOGLE).should_not be_nil
+    
+    Trend.should_receive(:trendspottr).with('mashoutable').and_return(Object.new)
+    Trend.trends(user, Trend::TRENDSPOTTR, nil, nil, 'mashoutable').should_not be_nil
   end
 
   context 'using twitter' do
@@ -114,5 +121,37 @@ describe Trend do
     trends[2].should have(10).items
     trends[2].first.should eq({:name => 'facebook ipo', :value => 'facebook ipo'})
     trends[2].last.should eq({:name => 'the grey review', :value => 'the grey review'})
+  end
+  
+  context 'trendspottr' do
+    it 'should return empty results if query isn\'t specified' do
+      Trend.trendspottr(nil).should eq([[], [], []])
+    end
+  
+    it 'should retrieve trends from trendspottr' do
+      ENV['TRENDSPOTTR_USERNAME'] = 'Mashoutable'
+      ENV['TRENDSPOTTR_PASSWORD'] = 'foobar'
+      
+      options   = {:query => {:q => 'mashoutable'}, :basic_auth => {:username => 'Mashoutable', :password => 'foobar'}}
+      response  = mock('response') 
+      
+      HTTParty.should_receive(:get).with('http://trendspottr.com/api/v1.1/search.php', options).and_return(response)
+      response.should_receive(:body).and_return(trendspottr_response_body)
+      
+      trends = Trend.trendspottr('mashoutable')
+      trends[0].should have(0).items
+      trends[1].should have(0).items
+      trends[2].should eq(["#post", "#video", "#create", "#record", "#2click", "#clickconstruct"])
+    end
+    
+    it 'should have popular topics' do
+      3.times { FactoryGirl.create(:trendspottr_topic) }
+      Trend.trendspottr_popular_topics.should eq(TrendspottrTopic.select(:name).map(&:name))
+    end
+    
+    it 'should have popular searches' do
+      3.times { FactoryGirl.create(:trendspottr_search) }
+      Trend.trendspottr_popular_searches.should eq(TrendspottrSearch.select(:name).map(&:name))
+    end
   end
 end

@@ -80,5 +80,13 @@ FactoryGirl.define do
     user 
     sequence(:twitter_user_id) {|n| n}
   end
+  
+  factory :trendspottr_topic do
+    sequence(:name) {|n| "Trendspottr Topic #{n}"}
+  end
+  
+  factory :trendspottr_search do
+    sequence(:name) {|n| "Trendspottr Search #{n}"}
+  end
 end
 
