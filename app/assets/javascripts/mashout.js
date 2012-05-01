@@ -320,3 +320,36 @@ function bindMashoutShowMoreTweets(sourceId, targetId) {
     });
 }
 
+function updateDynamicTrendspottrSearch(queryTargetId) {
+    var searchTerms = $(queryTargetId).data('searchList')
+
+    if(searchTerms) {
+        $(queryTargetId).val(searchTerms.join(' '))
+    } else {
+        $(queryTargetId).val()
+    }
+}
+
+function bindDynamicTrendSpottrCheckboxClick(checkboxName, targetId) {
+    $('input[name="' + checkboxName + '"]').click(function() {
+        var value     = $(this).val()
+        var isChecked = $(this).attr('checked') == 'checked'
+
+        if (!$(targetId).data('searchList')) {
+            $(targetId).data('searchList', [])
+        }
+
+        if (isChecked) {
+            $(targetId).data('searchList').push(value)
+        } else {
+            var index = $(targetId).data('searchList').indexOf(value)
+
+            if (index != -1) {
+                $(targetId).data('searchList').splice(index, 1)
+            }
+        }
+
+        updateDynamicTrendspottrSearch(targetId)
+    })
+}
+

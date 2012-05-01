@@ -35,17 +35,23 @@
             %em Trending Topics
           %hr.space
           - if @topics
-            - @topics.each do |topic|
-              %input{:id => 'mashout-trendspottr-topics', :name => "mashout-topics[]", :type => "checkbox", :value => topic}
-              %label= topic
+            - @topics.each_with_index do |topic, index|
+              - topic_id = "mashout-trendspotter-topic-#{index}"
+              %input{:id => topic_id, :name => "mashout-trendspottr-topics[]", :type => "checkbox", :value => topic}
+              %label{:for => topic_id}= topic
+            :javascript
+              $(function() { bindDynamicTrendSpottrCheckboxClick("mashout-trendspottr-topics[]", '#trendspottr-query'); });
         .span-4.left
           %strong
             %em Trending Searches
           %hr.space
           - if @searches
-            - @searches.each do |search|
-              %input{:id => 'mashout-trendspottr-searches', :name => "mashout-search[]", :type => "checkbox", :value => search}
-              %label= search
+            - @searches.each_with_index do |search, index|
+              - search_id = "mashout-trendspottr-search-#{index}"
+              %input{:id => search_id, :name => "mashout-trendspottr-searches[]", :type => "checkbox", :value => search}
+              %label{:for => search_id}= search
+            :javascript
+              $(function() { bindDynamicTrendSpottrCheckboxClick('mashout-trendspottr-searches[]', '#trendspottr-query'); });
   - if defined? @trend_source and @trend_source == 'Twitter'
     .help.clear
       %span.icon
