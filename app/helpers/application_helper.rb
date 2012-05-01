@@ -35,6 +35,16 @@ module ApplicationHelper
     false
   end
 
+  def home?
+    if controller.controller_name == 'authorization' and controller.action_name == 'failure'
+      return true
+    elsif controller.controller_name == 'content' and ['home'].include?(controller.action_name)
+      return true
+    end
+
+    false
+  end
+
   def conditional_div(condition, attributes, &block)
     if condition
       haml_tag :div, attributes, &block

@@ -28,6 +28,10 @@
     width: 905px;
     min-height: 100px; }
 
+#content-wrapper .button { 
+    margin-top: 3px;
+}
+
 #content-wrapper.span-all #tools .button span a,
 #content-wrapper.span-all #dropdown-buttons .button span a {
     background: url('button-bg.jpg');
@@ -222,6 +226,52 @@
     float: left;
     min-width: 280px; }
 
+/*Targeted tweet media icons*/
+#media-icons {
+   margin-top: 10px; }
+
+#media-icons ul {
+    margin: 0;
+    padding: 0; }
+
+#media-icons ul li {
+    list-style-type: none;
+    float: left;
+    margin-bottom: 10px;
+    width: 128px;
+    display: block;
+    color: #808080;
+    text-align: center;
+    min-height: 165px;
+    margin-right: 19px; }
+
+#media-icons ul li.on {
+    color: #000000; }
+
+#media-icons ul li .icon {
+    width: 128px;
+    height: 128px;
+    float: left;
+    position: relative;
+    background: #ffffff; }
+
+#media-icons ul li .icon img {
+    width: 128px;
+    height: 128px; }
+
+#media-icons ul li.on .icon .overlay,
+#media-icons ul li .icon .overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url('media-icon-overlay.png');
+    width: 128px;
+    height: 128px; }
+
+#media-icons ul li.on .icon .overlay {
+    display: none; }
+
 /*Large Dashboard Network Toggle*/
 .networks {
     position: relative; }
@@ -298,4 +348,8 @@
     width: 100%; }
 
 .hidden { display: none; }
+
+#trendspottr-search {
+    margin-left: 5px;  
+}
 

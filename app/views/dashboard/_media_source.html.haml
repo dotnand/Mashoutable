@@ -1,8 +1,6 @@
-.content-bubble.span-6.left.clear
-  .bubble-top
-  .bubble-body
-    %p Target/Direct My Content to a top T.V. Show, Network, Celebrity or Social Powerhouse
-  .bubble-bottom
+.help.right.clear
+  %span.icon
+  %p.message Target/Direct My Content to a top T.V. Show, Network, Celebrity or Social Powerhouse
 #mashout-media-container.span-9.left.ui-combobox
   %select{:id => 'mashout-media', :name => 'mashout-media', :style => "display: none;"}
     %option{:value => "NONE"} None
@@ -16,7 +14,7 @@
     %option{:value => "@Starbucks"} Starbucks
     %option{:value => "@Google"} Google
     %option{:value => "@Amazon"} Amazon
-    %option{:value => "@ConanOBrien,"} Conan O'Brien
+    %option{:value => "@ConanOBrien"} Conan O'Brien
     %option{:value => "@JayLeno"} Jay Leno
     %option{:value => "@GMA"} Good Morning America
     %option{:value => "@MTV"} MTV
@@ -24,5 +22,85 @@
   %input{:id => 'hidden-media', :type => 'hidden', :value => ''}
   :javascript
     $(function() { bindDynamicPreviewAutoCompleteSelectAndHandle('#mashout-media-container', '#mashout-media', '#hidden-media', '#out-preview'); });
-%hr.space/
+
+#media-icons.span-15.left.clear
+  %ul
+    %li.espn
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/espn.jpg')}", :alt => 'ESPN', :title =>'ESPN'}
+      @ESPN
+    %li.sports-center
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/sports-center.png')}", :alt => 'Sports Center', :title =>'Sports Center'}
+      @Sports Center
+    %li.bet
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/BET.jpg')}", :alt => 'BET', :title =>'BET'}
+      @BET
+    %li.cnn
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/cnn.png')}", :alt => 'CNN', :title =>'CNN'}
+      @CNN
+    %li.fox-news
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/fox-news.png')}", :alt => 'Fox News', :title =>'Fox News'}
+      @Fox News
+    %li.bbc-news
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/BBC-news.jpg')}", :alt => 'BBC News', :title =>'BBC News'}
+      @BBC News
+    %li.weather-channel
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/weather-channel.png')}", :alt => 'Weather Channel', :title =>'Weather Channel'}
+      @Weather Channel
+    %li.starbucks
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/starbucks.png')}", :alt => 'Starbucks', :title =>'Starbucks'}
+      @Starbucks
+    %li.google
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/google.png')}", :alt => 'Google', :title =>'Google'}
+      @Google
+    %li.amazon
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/amazon.png')}", :alt => 'Amazon', :title =>'Amazon'}
+      @Amazon
+    %li.conan-obrien
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/conan-obrien.jpg')}", :alt => "Conan O'Brien", :title =>"Conan O'Brien"}
+      @Conan O'Brien
+    %li.jay-leno
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/jay-leno.jpg')}", :alt => "Jay Leno", :title =>"Jay Leno"}
+      @Jay Leno
+    %li.gma
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/gma.JPG')}", :alt => "Good Morning America", :title =>"Good Morning America"}
+      @Good Morning America
+    %li.mtv
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/mtv.jpg')}", :alt => "MTV", :title =>"MTV"}
+      @MTV
+    %li.10-on-top
+      %span.icon
+        %span.overlay
+        %img{:src => "#{asset_path('media-icons/10-on-top.jpg')}", :alt => "10 on Top", :title =>"10 on Top"}
+      10 on Top
+
+    :javascript
+      bindMediaIconToggle();
 

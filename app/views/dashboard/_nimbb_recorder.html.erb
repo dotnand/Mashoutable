@@ -7,11 +7,12 @@
        value="http://player.nimbb.com/nimbb.swf?recordlength=60&mode=record&simplepage=1&logoimageurl=<%= root_url + asset_path('video-logo.png') %>&key=b47ef629cb&redirecturl=/dashboard/blastout" />
 <param name="allowScriptAccess" value="always" />
 <param name="allowFullScreen" value="true" />
-<param value="transparent" name="wmode">
+<param name="wmode" value="opaque">
 <embed name="nimbb"
        src="http://player.nimbb.com/nimbb.swf?recordlength=60&mode=record&simplepage=1&logoimageurl=<%= root_url + asset_path('video-logo.png') %>&key=b47ef629cb&redirecturl=/dashboard/blastout"
        width="320"
        height="240"
+       wmode="opaque"
        allowScriptAccess="always"
        allowFullScreen="true"
        pluginspage="http://www.adobe.com/go/getflashplayer"

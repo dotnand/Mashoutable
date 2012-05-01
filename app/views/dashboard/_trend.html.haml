@@ -1,20 +1,55 @@
 #mashout-trend
-  .content-bubble.span-6.left.clear
-    .bubble-top
-    .bubble-body
-      %p Pick a Top Trend Source
-    .bubble-bottom
+  .help.clear
+    %span.icon
+    %p.message Pick a Top Trend Source
   #mashout-trend-container.span-9.left.ui-combobox
     %select{:id => 'mashout-trend-selection', :name => 'trend-source', :style => "display: none;"}
       %option{:value => 'NONE'} None
       %option{:value => 'Twitter'} Twitter
       %option{:value => 'Google'} Google
+      %option{:value => 'Trendspottr'} Trendspottr
+  - if defined? @trend_source and @trend_source == 'Trendspottr'
+    .help.clear
+      %span.icon
+      %p.message Select a Filter
+    #mashout-location-container.span-9.left.ui-combobox
+      %select{:id => 'mashout-trendspottr-selection', :name => 'trend-filter', :style => "display: none;"}
+        %option{:value => 'Twitter'} Twitter
+        %option{:value => 'Facebook'} Facebook
+        %option{:value => 'NONE'} None
+    .help.clear
+      %span.icon
+      %p.message Type a query
+    #mashout-trendspottr-container.span-9.left
+      %input.span-7{:id => 'trendspottr-query', :type => "text"}
+      %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
+      :javascript
+        $(function() { decorateMashoutTrendAutoCompleteSelect(); });
+    - if @topics or @searches
+      .help.clear
+        %span.icon
+        %p.message Pick a Trend
+      #mashout-trendspottr-container.span-9.left
+        .span-4.left
+          %strong
+            %em Trending Topics
+          %hr.space
+          - if @topics
+            - @topics.each do |topic|
+              %input{:id => 'mashout-trendspottr-topics', :name => "mashout-topics[]", :type => "checkbox", :value => topic}
+              %label= topic
+        .span-4.left
+          %strong
+            %em Trending Searches
+          %hr.space
+          - if @searches
+            - @searches.each do |search|
+              %input{:id => 'mashout-trendspottr-searches', :name => "mashout-search[]", :type => "checkbox", :value => search}
+              %label= search
   - if defined? @trend_source and @trend_source == 'Twitter'
-    .content-bubble.span-6.left.clear
-      .bubble-top
-      .bubble-body
-        %p Pick a Location
-      .bubble-bottom
+    .help.clear
+      %span.icon
+      %p.message Pick a Location
     #mashout-location-container.span-9.left.ui-combobox
       %select{:id => 'mashout-location-selection', :name => 'trend-location', :style => "display: none;"}
         %option{:value => 'NONE'} None
@@ -23,11 +58,9 @@
     :javascript
       $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-location-container', '#mashout-location-selection', "#{trend_source_path}"); });
     - if defined? @trend_region and @trend_region.present? and @regions.present? and @regions.count > 0
-      .content-bubble.span-6.left.clear
-        .bubble-top
-        .bubble-body
-          %p Pick a Region
-        .bubble-bottom
+      .help.clear
+        %span.icon
+          %p.message Pick a Region
       #mashout-region-container.span-9.left.ui-combobox
         %select{:id => 'mashout-region-selection', :name => 'trend-region', :style => 'display: none;'}
           %option{:value => 'NONE'} None
@@ -36,15 +69,13 @@
       :javascript
         $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-region-container', '#mashout-region-selection', "#{trend_source_path}"); });
     - if defined? @trends and @trends.count > 0
-      .content-bubble.span-6.left.clear
-        .bubble-top
-        .bubble-body
-          %p Pick a Twitter Trend
-        .bubble-bottom
+      .help.clear
+        %span.icon
+        %p.message Pick a Twitter Trend
       #mashout-twitter-container.span-9.left.ui-combobox
         #mashout-trend-checkboxes
           - count = 0
-          - @trends.each do |trend| 
+          - @trends.each do |trend|
             - id = "mashout-trend-#{count += 1}"
             %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
             %label= trend[:name]
@@ -52,15 +83,13 @@
             :javascript
               $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
   - if defined? @trend_source and @trend_source == 'Google'
-    .content-bubble.span-6.left.clear
-      .bubble-top
-      .bubble-body
-        %p Pick a Google Trend
-      .bubble-bottom
+    .help.clear
+      %span.icon
+      %p.message Pick a Google Trend
     #mashout-google-container.span-9.left.ui-combobox
       #mashout-trend-checkboxes
         - count = 0
-        - @trends.each do |trend| 
+        - @trends.each do |trend|
           - id = "mashout-trend-#{count += 1}"
           %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
           %label= trend[:name]

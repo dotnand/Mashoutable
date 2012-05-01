@@ -169,6 +169,7 @@ function decorateMashoutTrendAutoCompleteSelect() {
     $('#mashout-location-container .ui-autocomplete-input').css('width','300px');
     $('#mashout-google-container .ui-autocomplete-input').css('width','300px');
     $('#mashout-region-container .ui-autocomplete-input').css('width','300px');
+    $('#mashout-trendspottr-container .ui-autocomplete-input').css('width','300px');
 }
 
 function bindAutoCompleteSelect(wrapperId, selectId, callback) {

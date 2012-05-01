@@ -2,3 +2,7 @@ cache_verified_twitter_users:
   every: 3hs
   class: CacheVerifiedTwitterUser
   description: 'Fetch and store verified twitter users'
+  
+  every: 1m
+  class: CacheTrendspottrPopularTrends
+  description: 'Fetch and store Trendspottr popular topics and searches'
