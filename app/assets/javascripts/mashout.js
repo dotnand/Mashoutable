@@ -57,7 +57,7 @@ function generateOutFragment(value, targetId, add) {
 }
 
 function generateDynamicOutPreview(outPreviewId) {
-    var media     = $('#hidden-media').val();
+    var media     = $('#hidden-media-sources').val();
     var targets   = $('#hidden-targets').val();
     var hashtags  = $('#hidden-hashtags').val();
     var trends    = $('#hidden-trends').val();
@@ -79,11 +79,7 @@ function generateDynamicOutPreview(outPreviewId) {
         }
     }
 
-    if(media.length > 0) {
-        content += media;
-    }
-
-    $.each([targets, hashtags, trends, comment, video], function() {
+    $.each([media, targets, hashtags, trends, comment, video], function() {
         if(this.length > 0) {
             addContent(this);
         }

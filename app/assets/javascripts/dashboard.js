@@ -4,6 +4,11 @@
 function bindMediaIconToggle() {
     $('#media-icons li').click(function() {
         $(this).toggleClass('on');
+
+        var $checkbox = $(this).find(':checkbox');
+        $checkbox.prop('checked', !$checkbox[0].checked);
+
+        handleDynamicPreviewCheckboxChange('#' + $checkbox.attr('id'), '#hidden-media-sources', '#out-preview');
     });
 }
 
