@@ -35,5 +35,12 @@ class ApplicationController < ActionController::Base
     def per_page(default = 10)
       params[:per_page] || default
     end
+
+    def auth_required
+      if current_user.nil?
+        flash[:error] = 'Please sign in with Twitter or Facebook'
+        redirect_to root_path
+      end
+    end
 end
 

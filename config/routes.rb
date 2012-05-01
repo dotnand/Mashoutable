@@ -52,6 +52,11 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source
   match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
 
+  # Friends of current_user
+  scope "user", :as => "user" do
+    resources :friends, :only => [:create, :destroy]
+  end
+
   # default
   match '/' => 'content#home', :as => :home
 

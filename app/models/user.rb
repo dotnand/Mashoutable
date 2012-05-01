@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :videos
   has_many :interactions
   has_many :outs
-  has_many :friends
+  has_many :friends, :dependent => :destroy
   has_many :followers
 
   def self.create_from_hash!(hash)
@@ -143,6 +143,8 @@ class User < ActiveRecord::Base
     friend_ids        = self.local_friend_ids
     following_me_ids  = (follower_ids & friend_ids).shuffle!
 
+    return [] if following_me_ids.count < 1
+
     twitter.users(following_me_ids[0..20])
   end
 
@@ -154,7 +156,7 @@ class User < ActiveRecord::Base
     follower_ids  = self.local_follower_ids
     i_follow_ids  = (friend_ids - follower_ids).shuffle!
 
-    return [] if friend_ids.count < 1
+    return [] if i_follow_ids.count < 1
 
     twitter.users(i_follow_ids[0..[i_follow_ids.count, 15].min])
   end

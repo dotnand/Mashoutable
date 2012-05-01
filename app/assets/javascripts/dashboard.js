@@ -144,3 +144,67 @@ function ajaxifyPagination(targetId, path, src) {
     });
 }
 
+function updateTweetTargetList()
+{
+    if ($('#target-tweet-list').find('.target-content').length == 0) {
+        $('#target-tweet-list').append('<p>Nothing was found.</p>');
+    }
+}
+
+function bindFollowForm(formId, profileId) {
+    $(formId).submit(function() {
+        $(formId).find('input[type="submit"]').attr('disabled', 'disabled');
+        $(formId).next('span').html('<img class="spinner" src="/assets/spinner.gif" />');
+
+        $.ajax({type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    var data = response.data;
+
+                    if (data.success && data.message == '')
+                    {
+                        $(formId).next('span').html('Success.');
+                        $(profileId).delay(1000).fadeOut('slow', function() { $(this).remove(); updateTweetTargetList(); });
+                    }
+                    else
+                    {
+                        $(formId).next('span').html(data.message);
+                    }
+                },
+                dataType: 'json'
+        });
+
+        return false;
+    });
+}
+
+function bindUnfollowButton(buttonId, profileId, path)
+{
+    $(buttonId).click(function() {
+        if (confirm('Are you sure?'))
+        {
+            $(buttonId).attr('disabled', 'disabled');
+            $(buttonId).next('span').html('<img class="spinner" src="/assets/spinner.gif" />');
+
+            $.ajax({type: 'DELETE',
+                    url: path,
+                    success: function(response) {
+                        var data = response.data;
+                        if (data.success)
+                        {
+                            $(buttonId).next('span').html('Success.')
+                            $(profileId).delay(1000).fadeOut('slow', function() { $(this).remove(); updateTweetTargetList(); });
+                        }
+                        else
+                        {
+                            $(buttonId).next('span').html(data.message);
+                        }
+                    },
+                    dataType: 'json'
+            });
+        }
+        return false;
+    });
+}
+
