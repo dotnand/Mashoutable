@@ -13,29 +13,39 @@
     .help.clear
       %span.icon
       %p.message We make it easy to get out to more people. Choose as many tags as you like!
-    #mashout-hashtag-checkboxes.span-9.left
-      .left.span-4
+    #mashout-hashtag-checkboxes.span-13.left
+      .left.span-6
         %input{:id => 'mashout-shoutout-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#Shoutout")}
-        %label #Shoutout
+        %label{:for => 'mashout-shoutout-hashtag'} #Shoutout
+
         %input{:id => 'mashout-ff-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#ff")}
-        %label #ff
+        %label{:for => 'mashout-ff-hashtag'} #ff
+
         %input{:id => 'mashout-tfb-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#TFB")}
-        %label #TFB
+        %label{:for => 'mashout-tfb-hashtag'} #TFB
+
         %input{:id => 'mashout-team-follow-back-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#TeamFollowBack")}
-        %label #TeamFollowBack
+        %label{:for => 'mashout-team-follow-back-hashtag'} #TeamFollowBack
+
         %input{:id => 'mashout-f4f-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#F4F")}
-        %label #F4F
-      .left.span-4
+        %label{:for => 'mashout-f4f-hashtag'} #F4F
+
+      .left.span-6
         %input{:id => 'mashout-follow-for-follow-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#FollowForFollow")}
-        %label #FollowForFollow
+        %label{:for => 'mashout-follow-for-follow-hashtag'} #FollowForFollow
+
         %input{:id => 'mashout-gratitude-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#Gratitude")}
-        %label #Gratitude
+        %label{:for => 'mashout-gratitude-hashtag'} #Gratitude
+
         %input{:id => 'mashout-so-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#SO")}
-        %label #S/O
+        %label{:for => 'mashout-so-hashtag'} #S/O
+
         %input{:id => 'mashout-thank-you-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#ThankYou")}
-        %label #ThankYou
+        %label{:for => 'mashout-thank-you-hashtag'} #ThankYou
+
         %input{:id => 'mashout-tweeps-hashtag', :name => "mashout-hashtag[]", :type => "checkbox", :value => URI.encode("#Tweeps")}
-        %label #Tweeps
+        %label{:for => 'mashout-tweeps-hashtag'} #Tweeps
+
         %input{:id => 'hidden-hashtags', :type => :hidden, :value => ''}
       :javascript
         $(function() { bindDynamicPreviewCheckboxClick('#mashout-shoutout-hashtag', '#hidden-hashtags', '#out-preview'); });
