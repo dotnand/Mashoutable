@@ -101,20 +101,21 @@ function bindDynamicPreviewTargetChange(checkboxId, hiddenCheckboxId, outPreview
     $(checkboxId).change(function() {
         var value       = $(this).val();
         var hiddenValue = $(hiddenCheckboxId).val();
-        var anyChecked  = $('.' + checkboxClass + ':checked').length > 0;
-
-        // the current state of the checkbox
-        var isChecking  = !($(checkboxId + ':checked').length < 1);
+        var isChecking  = $(checkboxId).prop('checked') // the current state of the checkbox
 
         if(hiddenValue.search(value) < 0) {
             // if the value is not present then add it
             handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId);
-        } else if(hiddenValue.search(value) >= 0 && !isChecking && !anyChecked) {
+        } else if(hiddenValue.search(value) >= 0 && !isChecking) {
             // if the value is present and the checkbox is not being checked then remove it
             generateOutFragment(value, hiddenCheckboxId, false);
             generateDynamicOutPreview(outPreviewId);
         }
         // otherwise do nothing
+
+        // Update the parent checkbox
+        var allChecked = $('.' + checkboxClass + ':checked').length == $('.' + checkboxClass).length
+        $('#' + checkboxClass).prop('checked', allChecked)
     });
 }
 
