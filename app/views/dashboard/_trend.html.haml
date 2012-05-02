@@ -17,6 +17,8 @@
         %option{:value => 'Twitter'} Twitter
         %option{:value => 'Facebook'} Facebook
         %option{:value => 'NONE'} None
+      :javascript
+        $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-location-container', '#mashout-trendspottr-selection', "#{trend_source_path}")})
     .help.clear
       %span.icon
       %p.message Type a query

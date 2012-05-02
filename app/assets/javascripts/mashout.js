@@ -229,10 +229,11 @@ function handleTargetAutoCompleteSelection(path) {
 }
 
 function handleTrendAutoCompleteSelection(path) {
-    var params          = {};
-    var trendExists     = $('#mashout-trend-container').length > 0;
-    var locationExists  = $('#mashout-location-container').length > 0;
-    var regionExists    = $('#mashout-region-container').length > 0;
+    var params            = {};
+    var trendExists       = $('#mashout-trend-container').length > 0;
+    var locationExists    = $('#mashout-location-container').length > 0;
+    var regionExists      = $('#mashout-region-container').length > 0;
+    var trendSpottrExists = $('#mashout-location-container #mashout-trendspottr-selection').length > 0;
 
     if(trendExists) {
         params.trend_source = $('#mashout-trend-selection').val();
@@ -244,6 +245,10 @@ function handleTrendAutoCompleteSelection(path) {
 
     if(regionExists) {
         params.trend_region = $('#mashout-region-selection').val();
+    }
+
+    if(trendSpottrExists) {
+        params.trendspottr_location = $('#mashout-trendspottr-selection').val();
     }
 
     $.ajax({url: path,
@@ -262,6 +267,13 @@ function handleTrendAutoCompleteSelection(path) {
     if(locationExists) {
         selectAutocomplete('#mashout-location-container', '#mashout-location-selection', params.trend_location);
     }
+
+    if(trendSpottrExists) {
+        selectAutocomplete('#mashout-location-container', '#mashout-trendspottr-selection', params.trendspottr_location);
+    }
+
+    $('#hidden-trends').val('');
+    generateDynamicOutPreview('#out-preview');
 }
 
 function bindCaptureOutPreviewVideoLink(sourceId, outPreviewId, targetId) {
@@ -360,15 +372,20 @@ function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
     params.trend_location = $('#mashout-trendspottr-selection').val()
     params.trend_search = $('#trendspottr-query').val()
 
-
     $.ajax({url: path,
             data: params,
             success: function(data) {
                 $(targetId).html(data)
+            },
+            error: function() {
+                $(targetId).html('<hr class="space" /><strong><em>Search Results</em></strong><hr class="space" />No results.')
+            },
+            complete: function() {
                 $(targetId).removeClass('hidden')
                 $('#mashout-trendspottr-container img.spinner').remove()
                 $(buttonId).prop('disabled', false)
-            }
+            },
+            timeout: 15000
     })
 
     return false
@@ -376,9 +393,16 @@ function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
 
 function bindTrendSpottrSearchButton(buttonId, targetId, path) {
     $(buttonId).click(function() {
+        if ($.trim($('#trendspottr-query').val()) == '')
+        {
+            $('#trendspottr-query').focus()
+            return false
+        }
+
         $(buttonId).prop('disabled', true)
         $('#mashout-trendspottr-container').append('<img class="spinner" src="/assets/spinner.gif" />')
         handleTrendSpottrSearchSubmission(buttonId, targetId, path)
+
         return false
     })
 }
