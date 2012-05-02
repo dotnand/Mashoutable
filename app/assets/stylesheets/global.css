@@ -829,6 +829,10 @@ h4 span.counter {
     padding-left: 30px;
 }
 
+#content-wrapper #main-content #content-body #media-icons input[type="checkbox"] {
+    display: none;
+}
+
 #content-wrapper.span-all #content-body {
     background:url('content-bg-dashboard.png');
     background-repeat: repeat-y;
@@ -926,6 +930,9 @@ h4 span.counter {
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content img {
     margin-top:5px;
     float:right; }
+
+#content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content img.spinner {
+    float:left; }
 
 #content-wrapper #main-content #content-body #content-inner #mashout-target-container #mashout-target-checkboxes .target-content {
     padding:5px;

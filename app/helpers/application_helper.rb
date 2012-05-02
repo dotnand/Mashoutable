@@ -56,5 +56,24 @@ module ApplicationHelper
   def sanitize_twitter_screen_name(screen_name)
     screen_name.gsub(/[^0-9a-z\-\_]+/i, '')
   end
+
+  protected
+  def media_sources
+    [{ :screen_name => '@ESPN', :name => 'ESPN', :image => 'espn.jpg' },
+     { :screen_name => '@SportsCenter', :name => 'Sports Center', :image => 'sports-center.png' },
+     { :screen_name => '@106andPark', :name => 'BET', :image => 'BET.jpg' },
+     { :screen_name => '@CNN', :name => 'CNN', :image => 'cnn.png' },
+     { :screen_name => '@FoxNews', :name => 'Fox News', :image => 'fox-news.png' },
+     { :screen_name => '@BBCNews', :name => 'BBC News', :image => 'BBC-news.jpg' },
+     { :screen_name => '@WeatherChannel', :name => 'Weather Channel', :image => 'weather-channel.png' },
+     { :screen_name => '@Starbucks', :name => 'Starbucks', :image => 'starbucks.png' },
+     { :screen_name => '@Google', :name => 'Google', :image => 'google.png' },
+     { :screen_name => '@Amazon', :name => 'Amazon', :image => 'amazon.png' },
+     { :screen_name => '@ConanOBrien', :name => 'Conan O\'Brien', :image => 'conan-obrien.jpg' },
+     { :screen_name => '@JayLeno', :name => 'Jay Leno', :image => 'jay-leno.jpg' },
+     { :screen_name => '@GMA', :name => 'Good Morning America', :image => 'gma.JPG' },
+     { :screen_name => '@MTV', :name => 'MTV', :image => 'mtv.jpg' },
+     { :screen_name => '@10onTop', :name => '10 on Top', :image => '10-on-top.jpg' }]
+   end
 end
 

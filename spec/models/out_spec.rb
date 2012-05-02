@@ -9,18 +9,20 @@ describe Out do
   it { should have_many :trends }
   it { should have_many :targets }
   it { should have_many :replies }
+  it { should have_many :media }
   it { should validate_presence_of :user }
-  
+
   context 'should initialize and mass assign' do
     let(:params)          { {} }
     let(:param_hashtags)  { ['hashtags1', 'hashtags2', 'hashtags3'] }
     let(:param_targets)   { ['targets1', 'targets2', 'targets3'] }
     let(:param_replies)   { ['replies1', 'replies2', 'replies3'] }
     let(:param_trends)    { ['trends1', 'trends2', 'trends3'] }
-    
+    let(:param_media)     { (1..3).map{|i| "media#{i}"} }
+
     before do
       params['out']                       = 'content'
-      params['mashout-media']             = 'media'
+      params['mashout-media']             = param_media
       params['mashout-hashtag']           = param_hashtags
       params['mashout-trend']             = param_trends
       params['mashout-comment']           = 'comment'
@@ -33,13 +35,13 @@ describe Out do
       params['mashout-network-youtube']   = 'true'
       params['pending']                   = false
     end
-    
+
     it 'should accept params' do
       out = Out.new(params)
-      
+
       out.user = user
       out.content.should eq('content')
-      out.media.should eq('media')  
+      out.media.map(&:media).should eq(param_media)
       out.hashtags.map(&:tag).should eq(param_hashtags)
       out.trend_source.should eq('trend-source')
       out.trends.map(&:trend).should eq(param_trends)
@@ -55,3 +57,4 @@ describe Out do
     end
   end
 end
+

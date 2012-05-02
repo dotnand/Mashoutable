@@ -1,6 +1,6 @@
 class TwitterFriendSynchronize
   @queue = :twitter_friend_synchronize_queue
-   
+
   def self.perform(user_id)
     user                = User.find(user_id)
     local_friend_ids    = user.local_friend_ids
@@ -11,8 +11,8 @@ class TwitterFriendSynchronize
     remove_list         = local_friend_ids - twitter_friend_ids
 
     ActiveRecord::Base.transaction do
-      remove_list.uniq.each { |id| user.friends.where(:twitter_user_id => id).each { |friend| friend.destroy } }
-    end    
+      user.friends.where(:twitter_user_id => remove_list.uniq).delete_all
+    end
 
     ActiveRecord::Base.transaction do
       add_list.uniq.each { |id| user.friends.create(:twitter_user_id => id) }
@@ -23,3 +23,4 @@ class TwitterFriendSynchronize
       Resque.enqueue_at(6.hours.from_now, TwitterFriendSynchronize, user.id)
   end
 end
+

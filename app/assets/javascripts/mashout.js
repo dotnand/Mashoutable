@@ -79,11 +79,7 @@ function generateDynamicOutPreview(outPreviewId) {
         }
     }
 
-    if(media.length > 0) {
-        content += media;
-    }
-
-    $.each([targets, hashtags, trends, comment, video], function() {
+    $.each([media, targets, hashtags, trends, comment, video], function() {
         if(this.length > 0) {
             addContent(this);
         }
@@ -322,5 +318,67 @@ function bindMashoutShowMoreTweets(sourceId, targetId) {
         $(targetId).toggle();
         return false;
     });
+}
+
+function updateDynamicTrendspottrSearch(queryTargetId) {
+    var searchTerms = $(queryTargetId).data('searchList')
+
+    if(searchTerms) {
+        $(queryTargetId).val(searchTerms.join(' '))
+    } else {
+        $(queryTargetId).val()
+    }
+}
+
+function bindDynamicTrendSpottrCheckboxClick(checkboxName, targetId) {
+    $('input[name="' + checkboxName + '"]').click(function() {
+        var value     = $(this).val()
+        var isChecked = $(this).attr('checked') == 'checked'
+
+        if (!$(targetId).data('searchList')) {
+            $(targetId).data('searchList', [])
+        }
+
+        if (isChecked) {
+            $(targetId).data('searchList').push(value)
+        } else {
+            var index = $(targetId).data('searchList').indexOf(value)
+
+            if (index != -1) {
+                $(targetId).data('searchList').splice(index, 1)
+            }
+        }
+
+        updateDynamicTrendspottrSearch(targetId)
+    })
+}
+
+function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
+    var params = {}
+
+    params.trend_location = $('#mashout-trendspottr-selection').val()
+    params.trend_search = $('#trendspottr-query').val()
+
+
+    $.ajax({url: path,
+            data: params,
+            success: function(data) {
+                $(targetId).html(data)
+                $(targetId).removeClass('hidden')
+                $('#mashout-trendspottr-container img.spinner').remove()
+                $(buttonId).prop('disabled', false)
+            }
+    })
+
+    return false
+}
+
+function bindTrendSpottrSearchButton(buttonId, targetId, path) {
+    $(buttonId).click(function() {
+        $(buttonId).prop('disabled', true)
+        $('#mashout-trendspottr-container').append('<img class="spinner" src="/assets/spinner.gif" />')
+        handleTrendSpottrSearchSubmission(buttonId, targetId, path)
+        return false
+    })
 }
 

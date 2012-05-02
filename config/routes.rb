@@ -38,19 +38,25 @@ Mashoutable::Application.routes.draw do
   match 'pickout'             => 'content#pickout',     :as => :pickout
 
   # dashboard
-  match 'dashboard'               => 'dashboard#index'
-  match 'dashboard/tool'          => 'dashboard#tool'
-  match 'dashboard/besties'       => 'dashboard#besties'
-  match 'dashboard/videos'        => 'dashboard#videos'
-  match 'dashboard/mashout'       => 'dashboard#mashout'
-  match 'dashboard/blastout'      => 'dashboard#blastout'
-  match 'dashboard/shoutout'      => 'dashboard#shoutout'
+  match 'dashboard'                    => 'dashboard#index'
+  match 'dashboard/tool'               => 'dashboard#tool'
+  match 'dashboard/besties'            => 'dashboard#besties'
+  match 'dashboard/videos'             => 'dashboard#videos'
+  match 'dashboard/mashout'            => 'dashboard#mashout'
+  match 'dashboard/blastout'           => 'dashboard#blastout'
+  match 'dashboard/shoutout'           => 'dashboard#shoutout'
   # TODO: the following tool is temporarily unavailable
-  # match 'dashboard/pickout'       => 'dashboard#pickout'
-  match 'dashboard/interactions'  => 'dashboard#interactions'
-  match 'dashboard/signout'       => 'dashboard#signout'
-  match 'dashboard/trends'        => 'dashboard#trends',    :via => :get, :as => :trend_source
-  match 'dashboard/targets'       => 'dashboard#targets',   :via => :get, :as => :target_source
+  # match 'dashboard/pickout'            => 'dashboard#pickout'
+  match 'dashboard/interactions'       => 'dashboard#interactions'
+  match 'dashboard/signout'            => 'dashboard#signout'
+  match 'dashboard/trends'             => 'dashboard#trends',    :via => :get, :as => :trend_source
+  match 'dashboard/targets'            => 'dashboard#targets',   :via => :get, :as => :target_source
+  match 'dashboard/trendspottr_search' => 'dashboard#trendspottr_search', :via => :get, :as => :trendspottr_search
+
+  # Friends of current_user
+  scope "user", :as => "user" do
+    resources :friends, :only => [:create, :destroy]
+  end
 
   # default
   match '/' => 'content#home', :as => :home
