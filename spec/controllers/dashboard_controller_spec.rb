@@ -188,7 +188,7 @@ describe DashboardController do
 
         post :create_shoutout, params
 
-        create_out_should_be_successful(dashboard_shoutout_path, tweet)
+        create_out_should_be_successful(dashboard_shoutout_url, tweet)
         response.should be_redirect
       end
 
@@ -198,7 +198,7 @@ describe DashboardController do
 
         post :create_mashout, params
 
-        create_out_should_be_successful(dashboard_mashout_path, tweet)
+        create_out_should_be_successful(dashboard_mashout_url, tweet)
         response.should be_redirect
       end
 
@@ -208,7 +208,7 @@ describe DashboardController do
 
         post :create_blastout, params
 
-        create_out_should_be_successful(dashboard_blastout_path, tweet)
+        create_out_should_be_successful(dashboard_blastout_url, tweet)
         response.should be_redirect
       end
     end
@@ -341,15 +341,15 @@ describe DashboardController do
     subject.stub(:current_user) { nil }
 
     get :index
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
     get :mashout
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
     get :blastout
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
     get :shoutout
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
     get :signout
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
   end
 
   it 'GET index should be successful' do
@@ -509,20 +509,20 @@ describe DashboardController do
     setup_current_user_grouped_augmented_interactions
 
     get :index
-    assigns[:current_tool].should eq(dashboard_path)
+    assigns[:current_tool].should eq(dashboard_url)
 
     get :mashout
-    assigns[:current_tool].should eq(dashboard_mashout_path)
+    assigns[:current_tool].should eq(dashboard_mashout_url)
 
     get :blastout
-    assigns[:current_tool].should eq(dashboard_blastout_path)
+    assigns[:current_tool].should eq(dashboard_blastout_url)
 
     get :shoutout
-    assigns[:current_tool].should eq(dashboard_shoutout_path)
+    assigns[:current_tool].should eq(dashboard_shoutout_url)
 
     # TODO: the following tool is temporarily unavailable
     # get :pickout
-    # assigns[:current_tool].should eq(dashboard_pickout_path)
+    # assigns[:current_tool].should eq(dashboard_pickout_url)
   end
 
   context 'available networks' do

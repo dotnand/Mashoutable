@@ -26,7 +26,7 @@
         %option{:value => 'TWEOPLE_ALL_SOURCES'} All Sources
       :javascript
         $(function() { bindDynamicPreviewAutoCompleteSelectAndHandleTarget('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', '#hidden-targets', '#out-preview'); });
-        $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', "#{target_source_path}"); });
+        $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-tweople-container', '#mashout-target-tweople-source-selection', "#{target_source_url}"); });
   .prepend-6.span-9.left
     - if defined? @targets
       #target-tweet-list
@@ -95,7 +95,7 @@
                           %span.span-4
                             = "You've already requested to follow #{profile[:screen_name].from(1)}."
                         - else
-                          = form_for Friend.new, :url => user_friends_path, :html => { :id => form_id } do |f|
+                          = form_for Friend.new, :url => user_friends_url, :html => { :id => form_id } do |f|
                             = f.hidden_field :twitter_user_id, :value => profile[:twitter_id]
                             = f.submit 'Follow', :class => %w(button span-2)
                           %span.span-4
@@ -105,7 +105,7 @@
                         %input.button.left{:type => :submit, :id => form_id, :value => 'Unfollow'}
                         %span.span-4
                         :javascript
-                          $(function() { bindUnfollowButton("##{form_id}", "##{profile_container_id}", "#{user_friend_path(profile[:local_friend_id])}"); });
+                          $(function() { bindUnfollowButton("##{form_id}", "##{profile_container_id}", "#{user_friend_url(profile[:local_friend_id])}"); });
 
         - elsif not @retweets.nil? and @retweets.count > 0
           #mashout-target-checkboxes
@@ -132,5 +132,5 @@
           %p Nothing was found
     %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}
   :javascript
-    $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-audience-container', '#mashout-target-selection', "#{target_source_path}"); });
+    $(function() { bindTargetAutoCompleteSelectAndHandle('#mashout-target-audience-container', '#mashout-target-selection', "#{target_source_url}"); });
 

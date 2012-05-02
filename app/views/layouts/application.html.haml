@@ -27,7 +27,7 @@
     / body wrapper
     #wrapper
       / feedback floater
-      %a#feedback{:href => contact_us_path, :style => "margin-top: 0px;"} Feedback
+      %a#feedback{:href => contact_us_url, :style => "margin-top: 0px;", :title => 'Give us some Feedback'} Feedback
       / container
       .container.content.clear{:class => home? ? 'home' : nil}
         / top section
@@ -38,19 +38,19 @@
           #header
             / header logo
             #logo.left
-              %a{:href => "/"}
-                %img{:alt => "Mashoutable", :src => "#{asset_path('logo.png')}"}
+              %a{:href => root_url, :title => 'Mashoutable.com'}
+                %img{:alt => "Mashoutable", :src => "#{asset_path('logo.png')}", :alt => 'Image of Mashoutable logo'}
             / navigation and time savings
             #navigation-social.right.last
               = render 'shared/login'
               / navigation
               #h-navigation
                 %ul.right.last.clear
-                  = render 'shared/navigation_link', :href => '/', :controller_name => 'content', :action_name => 'home', :name => 'Home'
-                  = render 'shared/navigation_link', :href => "#{dashboard_path}", :controller_name => 'dashboard', :name => 'Tools'
-                  = render 'shared/navigation_link', :href => "#{about_us_path}", :controller_name => 'content', :action_name => 'about_us', :name => 'About Us'
-                  = render 'shared/navigation_link', :href => "#{blog_path}", :controller_name => 'content', :action_name => 'blog', :name => 'Blog'
-                  = render 'shared/navigation_link', :href => "#{contact_us_path}", :controller_name => 'content', :action_name => 'contact_us', :name => 'Contact Us'
+                  = render 'shared/navigation_link', :href => "#{root_url}", :title => 'Home', :controller_name => 'content', :action_name => 'home', :name => 'Home'
+                  = render 'shared/navigation_link', :href => "#{dashboard_url}", :title => 'Mashoutable Tools', :controller_name => 'dashboard', :name => 'Tools'
+                  = render 'shared/navigation_link', :href => "#{about_us_url}", :title => 'About us', :controller_name => 'content', :action_name => 'about_us', :name => 'About Us'
+                  = render 'shared/navigation_link', :href => "#{blog_url}", :title => 'Blog', :controller_name => 'content', :action_name => 'blog', :name => 'Blog'
+                  = render 'shared/navigation_link', :href => "#{contact_us_url}", :title => 'Contact us', :controller_name => 'content', :action_name => 'contact_us', :name => 'Contact Us'
             %hr.space
           - if flash[:notice]
             %p.notice= flash[:notice]
@@ -84,7 +84,7 @@
                   =truncate('The "Tweople" target at Mashoutable.com is a little gem in itself. Algorithmic process here behind the scenes, ensures a couple of things for you, first, ALL these folks have Tweeted inside the last 4 minutes, second, you can filter these for "Web Only"', :length => 130)
                   %br/
                   %br/
-                  %a{:href => blog_path+ "#post-2"} Read More
+                  %a{:href => blog_url + "#post-2", :title => 'The Tweople Target'} Read More
             / footer second blog item
             .entry.left
               .left.blog-date
@@ -98,7 +98,7 @@
                   =truncate("Welcome to Mashoutable™!  We enhance and simplify the Social Media User’s ability to discover, engage, and interact across the Social Web.", :length => 130)
                   %br/
                   %br/
-                  %a{:href => blog_path + "#post-1"} Read More
+                  %a{:href => blog_url + "#post-1", :title => 'Mashoutable Social Media'} Read More
           / footer twitter section
           #twitter.right.last
             %span.title.left Twitter:
@@ -110,8 +110,8 @@
       #back-to-top.clear
         .container
           .right.last
-            %a{:href => "#top"}
-              %img{:alt => "Back To Top", :src => "#{asset_path('footer-back-to-top.png')}"}
+            %a{:href => "#top", :title => 'Back to top'}
+              %img{:alt => "Back To Top", :src => "#{asset_path('footer-back-to-top.png')}", :alt => 'Back to top image'}
       / footer bottom bar wrapper
       #navigation-copyright.clear
         / footer bottom bar container
@@ -121,25 +121,25 @@
             #f-navigation.left
               %ul
                 %li
-                  %a{:href => home_path} Home
+                  %a{:href => root_url, :title => 'Home'} Home
                 %li
-                  %a{:href => dashboard_path} Tools
+                  %a{:href => dashboard_url, :title => 'Mashoutable tools'} Tools
                 %li
-                  %a{:href => about_us_path} About Us
+                  %a{:href => about_us_url, :title => 'About us'} About Us
                 %li
-                  %a{:href => blog_path} Blog
+                  %a{:href => blog_url, :title => 'Blog'} Blog
                 %li
-                  %a{:href => contact_us_path} Contact Us
+                  %a{:href => contact_us_url, :title => 'Contact us'} Contact Us
             #policies.clear.left
-              %a{:href => privacy_policy_path} Privacy Policy
+              %a{:href => privacy_policy_url,:title => 'Privacy policy'} Privacy Policy
               &bull;
-              %a{:href => terms_and_conditions_path} Terms and Conditions
+              %a{:href => terms_and_conditions_url, :title => 'Terms and conditions'} Terms and Conditions
           .right
             / footer, bottom bar, copyright notice, and social media icons
             #copyright.right.last
-              %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank"}
+              %a.facebook{:href => "http://www.facebook.com/mashoutable", :target => "_blank", :title => 'Mashoutable Facebook'}
                 %span.icon.left
-              %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank"}
+              %a.twitter{:href => "http://www.twitter.com/mashoutable", :target => "_blank", :title => 'Mashoutable Twitter'}
                 %span.icon.left
               %span.left &copy; Copyright 2011-2012 Mashoutable.com
             #browser-support.right.last.clear

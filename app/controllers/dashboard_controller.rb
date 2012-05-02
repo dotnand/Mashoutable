@@ -15,13 +15,13 @@ class DashboardController < ApplicationController
 
   def tool
     case(params['tool-selection'])
-      when dashboard_mashout_path then redirect_to dashboard_mashout_path
-      when dashboard_blastout_path then redirect_to dashboard_blastout_path
-      when dashboard_shoutout_path then redirect_to dashboard_shoutout_path
+      when dashboard_mashout_url then redirect_to dashboard_mashout_url
+      when dashboard_blastout_url then redirect_to dashboard_blastout_url
+      when dashboard_shoutout_url then redirect_to dashboard_shoutout_url
       # TODO: temporarily disabled
-      # when dashboard_pickout_path then redirect_to dashboard_pickout_path
-      when dashboard_signout_path then redirect_to dashboard_signout_path
-      else redirect_to dashboard_path
+      # when dashboard_pickout_url then redirect_to dashboard_pickout_url
+      when dashboard_signout_url then redirect_to dashboard_signout_url
+      else redirect_to dashboard_url
     end
   end
 
@@ -74,17 +74,17 @@ class DashboardController < ApplicationController
 
   def create_mashout
     create_out(params)
-    redirect_to dashboard_mashout_path
+    redirect_to dashboard_mashout_url
   end
 
   def create_shoutout
     create_out(params)
-    redirect_to dashboard_shoutout_path
+    redirect_to dashboard_shoutout_url
   end
 
   def create_blastout
     create_out(params)
-    redirect_to dashboard_blastout_path
+    redirect_to dashboard_blastout_url
   end
 
   def blastout
@@ -110,7 +110,7 @@ class DashboardController < ApplicationController
 
   def signout
     session[:user_id] = nil
-    redirect_to root_path
+    redirect_to root_url
   end
 
   def besties
@@ -229,14 +229,14 @@ class DashboardController < ApplicationController
   protected
     def current_tool
       case params[:action].to_sym
-        when :index then @current_tool = dashboard_path
-        when :mashout then @current_tool = dashboard_mashout_path
-        when :create_mashout then @current_tool = dashboard_mashout_path
-        when :blastout then @current_tool = dashboard_blastout_path
-        when :shoutout then @current_tool = dashboard_shoutout_path
-        when :pickout then @current_tool = dashboard_pickout_path
-        when :signout then @current_tool = dashboard_signout_path
-        else @current_tool = dashboard_signout_path
+        when :index then @current_tool = dashboard_url
+        when :mashout then @current_tool = dashboard_mashout_url
+        when :create_mashout then @current_tool = dashboard_mashout_url
+        when :blastout then @current_tool = dashboard_blastout_url
+        when :shoutout then @current_tool = dashboard_shoutout_url
+        when :pickout then @current_tool = dashboard_pickout_url
+        when :signout then @current_tool = dashboard_signout_url
+        else @current_tool = dashboard_signout_url
       end
     end
 

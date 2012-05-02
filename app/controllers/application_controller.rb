@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected
     def default_url_options
       if Rails.env.development? or Rails.env.test?
-        { :host => "127.0.0.1" }
+        { :host => "localhost", :port => 3000}
       else
         {}
       end
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     def auth_required
       if current_user.nil?
         flash[:error] = 'Please sign in with Twitter or Facebook'
-        redirect_to root_path
+        redirect_to root_url
       end
     end
 end

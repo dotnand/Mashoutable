@@ -28,7 +28,7 @@
     width: 905px;
     min-height: 100px; }
 
-#content-wrapper .button { 
+#content-wrapper .button {
     margin-top: 3px;
 }
 
@@ -203,7 +203,8 @@
 
 #content-wrapper.span-all #besties #list-people ul li a{
     width: 238px;
-    display: block; }
+    display: block;
+    line-height: 2.7em; }
 
 #content-wrapper.span-all #besties input.text,
 #content-wrapper.span-all #besties input[type="text"] {
@@ -350,6 +351,6 @@
 .hidden { display: none; }
 
 #trendspottr-search {
-    margin-left: 5px;  
+    margin-left: 5px;
 }
 

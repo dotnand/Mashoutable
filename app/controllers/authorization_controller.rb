@@ -1,5 +1,5 @@
 class AuthorizationController < ApplicationController
-  def create  
+  def create
     auth = request.env['omniauth.auth']
     unless @auth = Authorization.find_from_hash(auth)
       @auth = Authorization.create_from_hash(auth, current_user)
@@ -7,13 +7,13 @@ class AuthorizationController < ApplicationController
 
     self.current_user = @auth.user
     self.synchronize(self.current_user) if self.current_user.present?
-    redirect_to dashboard_blastout_path
+    redirect_to dashboard_blastout_url
   end
-  
+
   def failure
     @message = params['message']
   end
-  
+
   protected
     def synchronize(user)
       if user.synchronize < Time.now
@@ -21,3 +21,4 @@ class AuthorizationController < ApplicationController
       end
     end
 end
+
