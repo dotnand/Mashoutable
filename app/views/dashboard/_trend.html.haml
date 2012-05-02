@@ -20,9 +20,9 @@
     .help.clear
       %span.icon
       %p.message Type a query
-    #mashout-trendspottr-container.span-9.left
+    #mashout-trendspottr-container.span-10.left
       %input.span-7{:id => 'trendspottr-query', :type => "text"}
-      %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
+      %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search', :class => 'left'}
       :javascript
         $(function() { decorateMashoutTrendAutoCompleteSelect(); });
         $(function() { bindTrendSpottrSearchButton('#trendspottr-search', '#mashout-trendspottr-trends', "#{trendspottr_search_path}"); });

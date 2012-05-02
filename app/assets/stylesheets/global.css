@@ -256,6 +256,10 @@ input[type="submit"]:hover,
 .help:hover .message {
     display: block; }
 
+/*Spinner*/
+.spinner {
+    margin: 8px; }
+
 /*misc*/
 .align-right {
     text-align: right; }
@@ -824,6 +828,7 @@ h4 span.counter {
     min-height: 500px; color:#363636; }
 
 #content-wrapper #main-content #content-body .span-9,
+#content-wrapper #main-content #content-body .span-10,
 #content-wrapper #main-content #content-body .span-13,
 #content-wrapper #main-content #content-body #media-icons {
     padding-left: 30px;
