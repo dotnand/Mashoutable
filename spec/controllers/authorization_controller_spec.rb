@@ -18,7 +18,7 @@ describe AuthorizationController do
 
   def post_create
     post :create, :provider => "twitter"
-    response.should redirect_to(dashboard_blastout_url)
+    response.should redirect_to(dashboard_url)
   end
 
   def should_not_create_an_authorization
