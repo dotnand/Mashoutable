@@ -13,7 +13,7 @@ class TweetBuilder
   def build(out = @out)
     @tweet  = ''
 
-    media(out.media)
+    media(out.media.map(&:media))
     target(out.target)
     targets(out.targets.map(&:target))
     hashtag(out.hashtags.map(&:tag))
@@ -73,7 +73,7 @@ class TweetBuilder
   end
 
   def media(value)
-    option(value)
+    options(value)
   end
 
   def hashtag(tags)

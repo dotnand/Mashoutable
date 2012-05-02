@@ -57,7 +57,7 @@ function generateOutFragment(value, targetId, add) {
 }
 
 function generateDynamicOutPreview(outPreviewId) {
-    var media     = $('#hidden-media-sources').val();
+    var media     = $('#hidden-media').val();
     var targets   = $('#hidden-targets').val();
     var hashtags  = $('#hidden-hashtags').val();
     var trends    = $('#hidden-trends').val();

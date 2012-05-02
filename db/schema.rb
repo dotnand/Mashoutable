@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425000356) do
+ActiveRecord::Schema.define(:version => 20120502163716) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -87,6 +87,15 @@ ActiveRecord::Schema.define(:version => 20120425000356) do
 
   add_index "out_hashtags", ["out_id"], :name => "out_hashtags_out_id_idx"
 
+  create_table "out_media", :force => true do |t|
+    t.integer  "out_id"
+    t.string   "media"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "out_media", ["out_id"], :name => "index_out_media_on_out_id"
+
   create_table "out_replies", :force => true do |t|
     t.string   "reply"
     t.integer  "out_id"
@@ -115,7 +124,6 @@ ActiveRecord::Schema.define(:version => 20120425000356) do
   add_index "out_trends", ["out_id"], :name => "out_trends_out_id_idx"
 
   create_table "outs", :force => true do |t|
-    t.string   "media"
     t.string   "trend_source"
     t.string   "comment"
     t.string   "target"

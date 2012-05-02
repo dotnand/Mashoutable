@@ -83,8 +83,8 @@ describe TweetBuilder do
     builder.video('abc123').should eq('http://out.am/oix ')
   end
 
-  it 'should build with a media' do
-    builder.media('foo bar').should eq('foo bar ')
+  it 'should build with many media' do
+    builder.media(%w(foo bar)).should eq('foo bar ')
   end
 
   context 'with a user' do
@@ -246,7 +246,7 @@ describe TweetBuilder do
 
       it 'should build a complex tweet' do
         params                              = {}
-        params['mashout-media']             = 'media'
+        params['mashout-media']             = ['media1', 'media2']
         params['mashout-hashtag']           = ['hashtag 1', 'hashtag 2']
         params['mashout-trend']             = ['trend 1', 'trend 2']
         params['mashout-comment']           = 'comment'
@@ -255,7 +255,7 @@ describe TweetBuilder do
 
         user.should_receive(:following_me).and_return(users)
 
-        builder.build(Out.new(params)).should eq('media @john_doe1 @john_doe2 @jane_doe1 target 1 target 2 hashtag 1 hashtag 2 trend 1 trend 2 comment')
+        builder.build(Out.new(params)).should eq('media1 media2 @john_doe1 @john_doe2 @jane_doe1 target 1 target 2 hashtag 1 hashtag 2 trend 1 trend 2 comment')
       end
 
       it 'should not build' do
