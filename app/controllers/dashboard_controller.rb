@@ -57,6 +57,18 @@ class DashboardController < ApplicationController
     render :partial => 'trend'
   end
 
+  def trendspottr_search
+    @trend_location = params[:trend_location].downcase
+    @trend_search = params[:trend_search]
+
+    if not %w(twitter facebook).include?(@trend_location)
+      @trend_location = 'all'
+    end
+
+    @trends = Trend.trendspottr(@trend_search, @trend_location).last
+    render :partial => 'trendspottr_results'
+  end
+
   def mashout
   end
 

@@ -353,3 +353,32 @@ function bindDynamicTrendSpottrCheckboxClick(checkboxName, targetId) {
     })
 }
 
+function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
+    var params = {}
+
+    params.trend_location = $('#mashout-trendspottr-selection').val()
+    params.trend_search = $('#trendspottr-query').val()
+
+
+    $.ajax({url: path,
+            data: params,
+            success: function(data) {
+                $(targetId).html(data)
+                $(targetId).removeClass('hidden')
+                $('#mashout-trendspottr-container img.spinner').remove()
+                $(buttonId).prop('disabled', false)
+            }
+    })
+
+    return false
+}
+
+function bindTrendSpottrSearchButton(buttonId, targetId, path) {
+    $(buttonId).click(function() {
+        $(buttonId).prop('disabled', true)
+        $('#mashout-trendspottr-container').append('<img class="spinner" src="/assets/spinner.gif" />')
+        handleTrendSpottrSearchSubmission(buttonId, targetId, path)
+        return false
+    })
+}
+

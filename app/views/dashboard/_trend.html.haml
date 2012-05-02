@@ -25,6 +25,7 @@
       %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
       :javascript
         $(function() { decorateMashoutTrendAutoCompleteSelect(); });
+        $(function() { bindTrendSpottrSearchButton('#trendspottr-search', '#mashout-trendspottr-trends', "#{trendspottr_search_path}"); });
     - if @topics or @searches
       .help.clear
         %span.icon
@@ -52,6 +53,7 @@
               %label{:for => search_id}= search
             :javascript
               $(function() { bindDynamicTrendSpottrCheckboxClick('mashout-trendspottr-searches[]', '#trendspottr-query'); });
+    #mashout-trendspottr-trends.span-9.left.hidden
   - if defined? @trend_source and @trend_source == 'Twitter'
     .help.clear
       %span.icon
