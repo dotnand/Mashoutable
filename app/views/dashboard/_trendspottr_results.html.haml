@@ -1,4 +1,3 @@
-/=begin
 %hr.space
 %strong
   %em Search Results
@@ -6,7 +5,7 @@
 - if @trends.any?
   - @trends.in_groups_of(10, false).each_with_index do |trend_group, trend_group_index|
     - trend_group.each_with_index do |trend, trend_index|
-      .span-4.left
+      .span-12.left
         - id = "mashout-trend-#{trend_group_index * 10 + trend_index}"
         %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
         %label{:for => id}
