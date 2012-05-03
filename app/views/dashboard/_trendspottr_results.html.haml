@@ -9,7 +9,8 @@
       .span-4.left
         - id = "mashout-trend-#{trend_group_index * 10 + trend_index}"
         %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-        %label{:for => id}= trend[:name]
+        %label{:for => id}
+          = "#{trend[:name]} (#{'%.2f' % trend[:weight]})"
         %br/
         :javascript
           $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
