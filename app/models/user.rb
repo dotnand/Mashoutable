@@ -198,14 +198,26 @@ class User < ActiveRecord::Base
   end
 
   def grouped_augmented_interactions(params)
-    local_interactions  = self.interactions.count(:all, params)
-    twitter_users       = self.twitter.users(local_interactions.map { |target, count| target.gsub('@', '') }) if local_interactions.count > 0
+    page                 = params.delete(:page) || 1
+    per_page             = params.delete(:per_page) || 8
+    interactions         = self.interactions.count(:all, params)
 
-    return twitter_users.map do |twitter_user|
-      {:screen_name       => '@' << twitter_user.screen_name,
-       :profile_image_url => twitter_user.profile_image_url,
-       :count             => local_interactions['@' << twitter_user.screen_name.downcase]}
-    end if twitter_users.present?
+    return [] if not interactions.count > 0
+
+    interactions = interactions.map { |target, count| { :screen_name => target, :count => count } }
+    interactions.sort_by! { |interaction| interaction[:count].nil? ? 0 : interaction[:count] }
+    interactions.reverse!
+    interactions_on_page = interactions.paginate(:page => page, :per_page => per_page)
+
+    twitter_users = self.twitter.users(interactions_on_page.map { |interaction| interaction[:screen_name].gsub('@', '') }) rescue []
+    twitter_users.each do |twitter_user|
+      # Find the interaction corresponding to the twitter user
+      user_interaction = interactions_on_page.select { |interaction| interaction[:screen_name].downcase == "@#{twitter_user.screen_name.downcase}" }.first
+      user_interaction[:screen_name] = "@#{twitter_user.screen_name}"
+      user_interaction[:profile_image_url] = twitter_user.profile_image_url
+    end
+
+    return interactions_on_page if twitter_users
     []
   end
 
