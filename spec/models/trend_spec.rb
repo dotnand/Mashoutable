@@ -141,7 +141,7 @@ describe Trend do
       trends = Trend.trendspottr('mashoutable')
       trends[0].should have(0).items
       trends[1].should have(0).items
-      trends[2].should eq(["#post", "#video", "#create", "#record", "#2click", "#clickconstruct"].map{ |trend| { :name => trend, :value => trend } })
+      trends[2].should eq(["#post", "#video", "#create", "#record", "#2click", "#clickconstruct"].map{ |trend| { :name => trend, :value => trend, :weight => 0.037334335720286} })
     end
 
     it 'should have popular topics' do

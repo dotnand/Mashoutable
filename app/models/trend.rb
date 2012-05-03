@@ -51,7 +51,7 @@ class Trend
     results_json  = body['results'] || {}
     hashtags      = results_json['hashtags'] || []
 
-    [[], [], hashtags.map{ |tag| { name: tag['value'], value: tag['value'] } }]
+    [[], [], hashtags.map{ |tag| { name: tag['value'], value: tag['value'], weight: tag['weight'] } }]
   end
 
   def self.trendspottr_popular_topics
