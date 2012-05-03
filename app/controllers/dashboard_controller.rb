@@ -293,8 +293,9 @@ class DashboardController < ApplicationController
     end
 
     def get_interactions
-      interactions = current_user.grouped_augmented_interactions(:group => 'lower(target)')
-      interactions.sort_by { |interaction| interaction[:count].nil? ? 0 : interaction[:count] }.reverse.paginate(:page => page, :per_page => per_page(8))
+      current_user.grouped_augmented_interactions(:group => 'lower(target)',
+                                                  :page => page,
+                                                  :per_page => per_page(8))
     end
 end
 
