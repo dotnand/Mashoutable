@@ -23,7 +23,7 @@
       %span.icon
       %p.message Type a query
     #mashout-trendspottr-container.span-9.left
-      %input.span-7{:id => 'trendspottr-query', :type => "text"}
+      %input.span-7{:id => 'trendspottr-query', :type => "text", :placeholder => 'Search Terms'}
       %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
       :javascript
         $(function() { decorateMashoutTrendAutoCompleteSelect(); });

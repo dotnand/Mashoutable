@@ -293,9 +293,13 @@ class DashboardController < ApplicationController
     end
 
     def get_interactions
-      current_user.grouped_augmented_interactions(:group => 'lower(target)',
-                                                  :page => page,
-                                                  :per_page => per_page(8))
+      local_interactions = current_user.grouped_augmented_interactions(:group => 'lower(target)',
+                                                                       :page => page,
+                                                                       :per_page => per_page(8))
+
+      # Make sure we return a paginated array so will_paginate doesn't fail
+      return local_interactions if local_interactions.respond_to?(:total_pages)
+      local_interactions.paginate(:page => page, :per_page => per_page(8))
     end
 end
 
