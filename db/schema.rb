@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503164303) do
+ActiveRecord::Schema.define(:version => 20120504170918) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -77,6 +77,16 @@ ActiveRecord::Schema.define(:version => 20120503164303) do
   add_index "mentions", ["out_id"], :name => "mentions_out_id_idx"
   add_index "mentions", ["user_id"], :name => "mentions_user_id_index"
   add_index "mentions", ["who", "user_id"], :name => "mentions_who_idx"
+
+  create_table "out_errors", :force => true do |t|
+    t.integer  "out_id"
+    t.string   "source"
+    t.string   "error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "out_errors", ["out_id"], :name => "index_out_errors_on_out_id"
 
   create_table "out_hashtags", :force => true do |t|
     t.string   "tag"

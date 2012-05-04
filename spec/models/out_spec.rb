@@ -10,6 +10,7 @@ describe Out do
   it { should have_many :targets }
   it { should have_many :replies }
   it { should have_many :media }
+  it { should have_many :out_errors }
   it { should validate_presence_of :user }
 
   context 'should initialize and mass assign' do

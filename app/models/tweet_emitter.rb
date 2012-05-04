@@ -35,6 +35,11 @@ class TweetEmitter
     if @user.save
       twitter_post if @out.twitter?
       facebook_post(params) if @out.facebook?
+
+      # Propagate any exceptions that occured with the posts
+      if @out.out_errors.any?
+        raise StandardError.new(@out.out_errors.map(&:error).join(' '))
+      end
     else
       raise StandardError.new('Unable to save content')
     end
@@ -50,11 +55,16 @@ class TweetEmitter
     else
       @user.twitter.update(@out.content)
     end
+  rescue Twitter::Error => e
+    @out.out_errors << OutError.new(:source => 'twitter', :error => e.message)
   end
 
   def facebook_post(params = {})
     # :content => content, :link => link, :source => source, :picture => picture
     @user.facebook.feed!({:message => @out.content}.merge!(params)) if @out.facebook?
+
+  rescue FbGraph::Exception => e
+    @out.out_errors << OutError.new(:source => 'facebook', :error => e.message)
   end
 
   def capture_mentions

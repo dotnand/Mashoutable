@@ -6,6 +6,7 @@ class Out < ActiveRecord::Base
   has_many :targets,  :class_name => 'OutTarget'
   has_many :replies,  :class_name => 'OutReply'
   has_many :media,    :class_name => 'OutMedia'
+  has_many :out_errors
   validates_presence_of :user
   accepts_nested_attributes_for :hashtags, :trends, :targets, :replies, :media
 
