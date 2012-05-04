@@ -2,7 +2,14 @@ cache_verified_twitter_users:
   every: 3hs
   class: CacheVerifiedTwitterUser
   description: 'Fetch and store verified twitter users'
-  
-  every: 1m
+
+cache_trendspottr_trends:
+  every: 1hs
   class: CacheTrendspottrPopularTrends
   description: 'Fetch and store Trendspottr popular topics and searches'
+
+generate_reports:
+  cron: '0 0 * * *'
+  class: GenerateReports
+  description: 'Generate provider / out reports and email them.'
+

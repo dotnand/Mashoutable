@@ -33,13 +33,8 @@ class TweetEmitter
     capture_metrics
 
     if @user.save
-      begin
-        twitter_post if @out.twitter?
-        facebook_post(params) if @out.facebook?
-      rescue => e
-        @out.update_attribute(:error, e.message)
-        raise StandardError.new(e.message)
-      end
+      twitter_post if @out.twitter?
+      facebook_post(params) if @out.facebook?
     else
       raise StandardError.new('Unable to save content')
     end

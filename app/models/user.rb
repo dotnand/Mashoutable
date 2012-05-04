@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :videos
   has_many :interactions
   has_many :outs
+  has_many :targeted_mashouts,   :class_name => 'Out', :conditions => { :type => Mashout }
+  has_many :top_trend_shoutouts, :class_name => 'Out', :conditions => { :type => Shoutout }
+  has_many :video_blastouts,     :class_name => 'Out', :conditions => { :type => Blastout }
   has_many :friends, :dependent => :destroy
   has_many :followers
 

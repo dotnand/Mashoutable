@@ -1,0 +1,5 @@
+<% @reports.each do |report| %>
+  <%= "#{report[:name]}\n" %>
+  <%= report[:table].to_s %>
+<% end %>
+

@@ -23,6 +23,7 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'sass'
 gem 'thin'
+gem 'ruport'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -36,7 +37,7 @@ group :test do
 
   gem 'factory_girl',       '~> 2.3.2'
   gem 'rspec-rails',        '~> 2.8.0'
-  gem 'cucumber-rails',     '~> 1.0.2'
+  gem 'cucumber-rails',     '~> 1.0.2', :require => false
   gem 'capybara',           '~> 1.0.1'
   gem 'database_cleaner',   '~> 0.6.7'
   gem 'launchy',            '~> 2.0.5'
@@ -65,3 +66,4 @@ end
 group :development, :test do
   gem 'pg'
 end
+
