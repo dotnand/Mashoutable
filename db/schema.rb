@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502163716) do
+ActiveRecord::Schema.define(:version => 20120503204812) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -136,6 +136,8 @@ ActiveRecord::Schema.define(:version => 20120502163716) do
     t.datetime "updated_at"
     t.string   "content"
     t.boolean  "pending",      :default => false
+    t.string   "type"
+    t.string   "error"
   end
 
   add_index "outs", ["user_id"], :name => "outs_user_id_idx"
