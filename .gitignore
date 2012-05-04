@@ -21,3 +21,6 @@
 /config/redis.yml
 /config/resque.yml
 /config/email.yml
+/config/trendspottr.yml
+/config/database.yml
+/config/nimbb.yml

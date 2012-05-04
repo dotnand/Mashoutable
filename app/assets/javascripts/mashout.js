@@ -400,7 +400,7 @@ function bindTrendSpottrSearchButton(buttonId, targetId, path) {
         }
 
         $(buttonId).prop('disabled', true)
-        $('#mashout-trendspottr-container').append('<img class="spinner" src="/assets/spinner.gif" />')
+        $('#mashout-trendspottr-container').append('<img class="spinner left" src="/assets/spinner.gif" />')
         handleTrendSpottrSearchSubmission(buttonId, targetId, path)
 
         return false

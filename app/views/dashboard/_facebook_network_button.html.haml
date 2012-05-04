@@ -3,16 +3,17 @@
     %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
   %div{:style => 'display:none;'}
     #facebook-auth
-      - if defined? oops and oops == false 
+      - if defined? oops and oops == false
         Just this once you'll need to
-      - else 
+      - else
         Oops, just this once you'll need to
-      %a{:href => facebook_auth_path}
+      %a{:href => facebook_auth_url}
         %span.prepend-top#sign-in-facebook
   :javascript
     $(function() { $('#facebook-auth-button').fancybox(); });
-- else 
+- else
   %input.left{:id => 'toggle-facebook', :value => '', :type => 'submit'}
   :javascript
     $(function() { enableNetworkButton('#toggle-facebook', true); });
-    $(function() { bindNetworkToggleButton('#toggle-facebook', '#mashout-network-facebook'); });   
+    $(function() { bindNetworkToggleButton('#toggle-facebook', '#mashout-network-facebook'); });
+

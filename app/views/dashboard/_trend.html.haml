@@ -22,9 +22,9 @@
     .help.clear
       %span.icon
       %p.message Type a query
-    #mashout-trendspottr-container.span-9.left
+    #mashout-trendspottr-container.span-10.left
       %input.span-7{:id => 'trendspottr-query', :type => "text", :placeholder => 'Search Terms'}
-      %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search'}
+      %input.submit.button{:id => 'trendspottr-search', :type => 'submit', :value => 'Search', :class => 'left'}
       :javascript
         $(function() { decorateMashoutTrendAutoCompleteSelect(); });
         $(function() { bindTrendSpottrSearchButton('#trendspottr-search', '#mashout-trendspottr-trends', "#{trendspottr_search_path}"); });
@@ -32,8 +32,8 @@
       .help.clear
         %span.icon
         %p.message Pick a Trend
-      #mashout-trendspottr-container.span-9.left
-        .span-4.left
+      #mashout-trendspottr-container.span-13.left
+        .span-6.left
           %strong
             %em Trending Topics
           %hr.space
@@ -44,7 +44,7 @@
               %label{:for => topic_id}= topic
             :javascript
               $(function() { bindDynamicTrendSpottrCheckboxClick("mashout-trendspottr-topics[]", '#trendspottr-query'); });
-        .span-4.left
+        .span-6.left
           %strong
             %em Trending Searches
           %hr.space
@@ -60,7 +60,7 @@
     .help.clear
       %span.icon
       %p.message Pick a Location
-    #mashout-location-container.span-9.left.ui-combobox
+    #mashout-location-container.span-13.left.ui-combobox
       %select{:id => 'mashout-location-selection', :name => 'trend-location', :style => "display: none;"}
         %option{:value => 'NONE'} None
         - @locations.each do |location|
@@ -71,7 +71,7 @@
       .help.clear
         %span.icon
           %p.message Pick a Region
-      #mashout-region-container.span-9.left.ui-combobox
+      #mashout-region-container.span-13.left.ui-combobox
         %select{:id => 'mashout-region-selection', :name => 'trend-region', :style => 'display: none;'}
           %option{:value => 'NONE'} None
           - @regions.each do |region|
@@ -82,13 +82,13 @@
       .help.clear
         %span.icon
         %p.message Pick a Twitter Trend
-      #mashout-twitter-container.span-9.left.ui-combobox
-        #mashout-trend-checkboxes
+      #mashout-twitter-container.span-13.left
+        #mashout-trend-checkboxes.left
           - count = 0
           - @trends.each do |trend|
             - id = "mashout-trend-#{count += 1}"
             %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-            %label= trend[:name]
+            %label{:for => id}= trend[:name]
             %br/
             :javascript
               $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
@@ -96,13 +96,13 @@
     .help.clear
       %span.icon
       %p.message Pick a Google Trend
-    #mashout-google-container.span-9.left.ui-combobox
-      #mashout-trend-checkboxes
+    #mashout-google-container.span-13.left
+      #mashout-trend-checkboxes.left
         - count = 0
         - @trends.each do |trend|
           - id = "mashout-trend-#{count += 1}"
           %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-          %label= trend[:name]
+          %label{:for => id}= trend[:name]
           %br/
           :javascript
             $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });

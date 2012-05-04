@@ -1,5 +1,5 @@
 - content_for :content_body do
-  = form_tag blastout_create_path, :id => 'mashout-form' do
+  = form_tag blastout_create_url, :id => 'mashout-form' do
     .span-15.box
       .left.list
         %span.number.left.clear  1.
@@ -27,5 +27,5 @@
     = render 'hidden_out'
 
 - content_for :out do
-  = render "out", :form_path => blastout_create_path
+  = render "out", :form_path => blastout_create_url
 

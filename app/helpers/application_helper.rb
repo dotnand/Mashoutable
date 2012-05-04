@@ -1,13 +1,13 @@
 module ApplicationHelper
-  def twitter_auth_path
+  def twitter_auth_url
    '/auth/twitter'
   end
 
-  def facebook_auth_path
+  def facebook_auth_url
     '/auth/facebook'
   end
 
-  def youtube_auth_path
+  def youtube_auth_url
     '/auth/google'
   end
 

@@ -1,5 +1,5 @@
 - content_for :content_body do
-  = form_tag shoutout_create_path, :id => 'mashout-form' do
+  = form_tag shoutout_create_url, :id => 'mashout-form' do
     = render 'trend_list_item', :item_number => 1
     = render 'hashtag_list_item', :item_number => 2
     = render 'comment_list_item', :item_number => 3
@@ -7,5 +7,5 @@
     = render 'hidden_out'
 
 - content_for :out do
-  = render "out", :form_path => shoutout_create_path
+  = render "out", :form_path => shoutout_create_url
 

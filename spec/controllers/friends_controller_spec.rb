@@ -57,10 +57,10 @@ describe FriendsController do
     subject.stub(:current_user) { nil }
 
     post :create, { friend: { twitter_user_id: '000000' } }
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
 
     delete :destroy, { user_id: other_user.id, id: friend.id}
-    response.should redirect_to(root_path)
+    response.should redirect_to(root_url)
   end
 
 end

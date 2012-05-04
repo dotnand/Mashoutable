@@ -256,6 +256,10 @@ input[type="submit"]:hover,
 .help:hover .message {
     display: block; }
 
+/*Spinner*/
+.spinner {
+    margin: 8px; }
+
 /*misc*/
 .align-right {
     text-align: right; }
@@ -824,6 +828,8 @@ h4 span.counter {
     min-height: 500px; color:#363636; }
 
 #content-wrapper #main-content #content-body .span-9,
+#content-wrapper #main-content #content-body .span-10,
+#content-wrapper #main-content #content-body .span-13,
 #content-wrapper #main-content #content-body #media-icons {
     padding-left: 30px;
 }
@@ -1115,11 +1121,11 @@ h4 span.counter {
     list-style-type:none;
     display:block;
     min-height:90px;
-    clear:left;}
+    clear:left; }
 
 #content-wrapper #video-player object {
     text-align:center;
-    width:100%;}
+    width:100%; }
 
 #content-wrapper #video-library #videos .edit-video-container {
     display:none;
@@ -1135,7 +1141,7 @@ label {
     display: block;
     float: left;
     min-width: 85px;
-    line-height:2em; }
+    line-height: 1.5em; }
 
 label.mail {
     height: 40px;}
