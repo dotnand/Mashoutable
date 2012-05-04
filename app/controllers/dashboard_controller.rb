@@ -73,17 +73,17 @@ class DashboardController < ApplicationController
   end
 
   def create_mashout
-    create_out(params)
+    create_out(params.merge('mashout-type' => 'Mashout'))
     redirect_to dashboard_mashout_path
   end
 
   def create_shoutout
-    create_out(params)
+    create_out(params.merge('mashout-type' => 'Shoutout'))
     redirect_to dashboard_shoutout_path
   end
 
   def create_blastout
-    create_out(params)
+    create_out(params.merge('mashout-type' => 'Blastout'))
     redirect_to dashboard_blastout_path
   end
 

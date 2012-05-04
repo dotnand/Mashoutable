@@ -8,10 +8,22 @@ class Out < ActiveRecord::Base
   has_many :media,    :class_name => 'OutMedia'
   has_many :out_errors
   validates_presence_of :user
+  attr_accessible :hashtags_attributes, :trends_attributes,
+                  :targets_attributes, :replies_attributes,
+                  :media_attributes
   accepts_nested_attributes_for :hashtags, :trends, :targets, :replies, :media
+  attr_accessible :content, :comment, :target,
+                  :trend_source, :twitter, :facebook,
+                  :youtube, :pending, :type
+
+  scope :created_yesterday, lambda { where("created_at BETWEEN ? and ?", (Time.now.midnight - 1.day).to_formatted_s(:db), Time.now.midnight.to_formatted_s(:db)) }
 
   def initialize(params = {})
     super map_incoming_params(params)
+  end
+
+  def successful?
+    not out_errors.any?
   end
 
   private
@@ -23,7 +35,8 @@ class Out < ActiveRecord::Base
               :twitter      => params['mashout-network-twitter'] == 'true',
               :facebook     => params['mashout-network-facebook'] == 'true',
               :youtube      => params['mashout-network-youtube'] == 'true',
-              :pending      => params['pending']}
+              :pending      => params['pending'],
+              :type         => params['mashout-type']}
 
       atts[:hashtags_attributes]  = params['mashout-hashtag'].map {|tag| {:tag => uri_decode(tag), :out => self}} if params['mashout-hashtag'].present?
       atts[:trends_attributes]    = params['mashout-trend'].map {|trend| {:trend => uri_decode(trend), :out => self}} if params['mashout-trend'].present?
