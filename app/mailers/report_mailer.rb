@@ -1,5 +1,7 @@
 class ReportMailer < ActionMailer::Base
-  default :from => "reports@mashoutable.com"
+  default :from => "reports@mashoutable.com",
+          :to => "mhhenterprises@aim.com",
+          :cc => "nicholaspapillon@gmail.com"
 
   def report_email(reports)
     @reports = reports
@@ -13,7 +15,7 @@ class ReportMailer < ActionMailer::Base
         attachments[report[:filename]] = report[:table].to_csv
       end
     end
-    mail(:to => 'user@example.com', :subject => "Report for #{Date.yesterday}")
+    mail(:subject => "Report for #{Date.yesterday}")
   end
 end
 
