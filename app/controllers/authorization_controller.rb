@@ -6,7 +6,7 @@ class AuthorizationController < ApplicationController
     end
 
     self.current_user = @auth.user
-    self.synchronize(self.current_user) if self.current_user.present?
+    self.synchronize(self.current_user) if (self.current_user.present? && self.current_user.twitter.present?)
     redirect_to dashboard_url
   end
 
