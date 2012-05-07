@@ -19,6 +19,7 @@ gem 'resque',                     '~> 1.20.0', :require => 'resque/server'
 gem 'foreman',                    '~> 0.40.0'
 gem 'resque-scheduler',           '~> 1.9.9'
 gem 'ruport',                     '~> 1.6.3'
+gem 'hoe',                        '~> 2.8.0'
 gem 'therubyracer'
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -65,6 +66,5 @@ end
 
 group :development, :test do
   gem 'pg'
-  gem 'hoe', '~> 3.0.4'
 end
 
