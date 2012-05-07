@@ -257,6 +257,12 @@ class User < ActiveRecord::Base
   protected
     def remove_network(network_name)
       provider = self.authorizations.find_by_provider(network_name)
+
+      if network_name == Authorization::TWITTER
+        Resque.remove_delayed(TwitterFriendSynchronize, self.id)
+        Resque.remove_delayed(TwitterFollowerSynchronize, self.id)
+      end
+
       provider.delete if provider.present?
     end
 
