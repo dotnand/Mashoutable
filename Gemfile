@@ -18,12 +18,12 @@ gem 'youtube_it',                 '~> 2.1.4'
 gem 'resque',                     '~> 1.20.0', :require => 'resque/server'
 gem 'foreman',                    '~> 0.40.0'
 gem 'resque-scheduler',           '~> 1.9.9'
+gem 'ruport',                     '~> 1.6.3'
 gem 'therubyracer'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'sass'
 gem 'thin'
-gem 'ruport'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -65,5 +65,6 @@ end
 
 group :development, :test do
   gem 'pg'
+  gem 'hoe', '~> 3.0.4'
 end
 
