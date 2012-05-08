@@ -59,8 +59,10 @@ function generateOutFragment(value, targetId, add) {
 function generateDynamicOutPreview(outPreviewId) {
     var media     = $('#hidden-media').val();
     var targets   = $('#hidden-targets').val();
+    var tsTargets = $('#hidden-trendspottr-targets').val();
     var hashtags  = $('#hidden-hashtags').val();
     var trends    = $('#hidden-trends').val();
+    var tsTrends  = $('#hidden-trendspottr-trends').val();
     var comment   = $('#hidden-comment').val();
     var video     = $('#hidden-video').val();
     var content   = ''
@@ -79,7 +81,7 @@ function generateDynamicOutPreview(outPreviewId) {
         }
     }
 
-    $.each([media, targets, hashtags, trends, comment, video], function() {
+    $.each([media, targets, tsTargets, hashtags, trends, tsTrends, comment, video], function() {
         if(this.length > 0) {
             addContent(this);
         }

@@ -3,16 +3,27 @@
   %em Search Results
 %hr.space
 - if @trends.any?
-  - @trends.in_groups_of(10, false).each_with_index do |trend_group, trend_group_index|
-    - trend_group.each_with_index do |trend, trend_index|
-      .span-12.left
-        - id = "mashout-trend-#{trend_group_index * 10 + trend_index}"
-        %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-        %label{:for => id}
-          = "#{trend[:name]} (#{'%.2f' % trend[:weight]})"
-        %br/
-        :javascript
-          $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
+  %input{:id => 'hidden-trendspottr-trends', :type => :hidden}
+  %input{:id => 'hidden-trendspottr-targets', :type => :hidden}
+  - @trends.group_by { |trend| trend[:type] }.each do |trend_type, trends|
+    %strong
+      %em= trend_type.titleize << ':'
+    %hr.space
+    - trends.in_groups_of(10, false).each_with_index do |trend_group, trend_group_index|
+      .span-6.left
+        - trend_group.each_with_index do |trend, trend_index|
+          - id = "mashout-trend-#{trend_type}-#{trend_group_index * 10 + trend_index}"
+          %input{:id => id, :name => trend[:type] == 'sources' ? 'mashout-trendspottr-targets[]' : "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+          %label{:for => id}
+            = (trend[:type] == 'links' ? link_to(trend[:name], trend[:name]) : trend[:name]) + " (#{'%.2f' % trend[:weight]})"
+          - if %w(links hashtags phrases).include?(trend[:type])
+            :javascript
+              $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
+          - else
+            :javascript
+              $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
+    - if trend_type != 'sources'
+      %hr.space
 - else
   No results.
 

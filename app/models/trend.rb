@@ -49,9 +49,31 @@ class Trend
                              { :query => { :q => query, :w => location }, :basic_auth => {:username => ENV['TRENDSPOTTR_USERNAME'], :password => ENV['TRENDSPOTTR_PASSWORD'] } })
     body          = JSON::parse(response.body) || {}
     results_json  = body['results'] || {}
-    hashtags      = results_json['hashtags'] || []
+    trends        = []
 
-    [[], [], hashtags.map{ |tag| { name: tag['value'], value: tag['value'], weight: tag['weight'] } }]
+    results_json.each do |trend_type, trend_array|
+      trend_array.each do |trend|
+        if trend_type == 'links'
+          uri = URI.parse(trend['value'])
+
+          unless uri.host == 't.co'
+            bitly = Bitly::Client.new(trend['value'])
+
+            bitly.shorten
+
+            trend['value'] = bitly.shortened_url
+          end
+        end
+        trends << { :type   => trend_type,
+                    :name   => trend['value'],
+                    :value  => trend['value'],
+                    :weight => trend['weight']}
+      end
+    end
+
+    trends.group_by { |trend| trend[:type] }.select { |trend_type, trend_array| trend_type == 'links' }
+
+    [[], [], trends]
   end
 
   def self.trendspottr_popular_topics

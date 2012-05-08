@@ -40,8 +40,10 @@ class Out < ActiveRecord::Base
 
       atts[:hashtags_attributes]  = params['mashout-hashtag'].map {|tag| {:tag => uri_decode(tag), :out => self}} if params['mashout-hashtag'].present?
       atts[:trends_attributes]    = params['mashout-trend'].map {|trend| {:trend => uri_decode(trend), :out => self}} if params['mashout-trend'].present?
+      atts[:trends_attributes]    = (atts[:trends_attributes] || []) + params['mashout-trendspottr-trends'].map { |trend| { :trend => uri_decode(trend), :out => self } } if params['mashout-trendspottr-trends'].present?
       atts[:replies_attributes]   = params['mashout-replies'].map {|reply| {:reply => uri_decode(reply), :out => self}} if params['mashout-replies'].present?
       atts[:targets_attributes]   = params['mashout-targets'].map {|target| {:target => uri_decode(target), :out => self}} if params['mashout-targets'].present?
+      atts[:targets_attributes]   = (atts[:targets_attributes] || []) + params['mashout-trendspottr-targets'].map { |target| { :target => uri_decode(target), :out => self } } if params['mashout-trendspottr-targets'].present?
       atts[:media_attributes]     = params['mashout-media'].map{ |media| { :media => uri_decode(media), :out => self } } if params['mashout-media'].present?
 
       atts

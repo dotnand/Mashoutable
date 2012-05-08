@@ -124,6 +124,25 @@ describe Trend do
   end
 
   context 'trendspottr' do
+    let(:trendspottr_response_body) { trendspottr_response_body }
+
+    def trendspottr_results
+      trends  = []
+      body    = JSON::parse(trendspottr_response_body)
+      results = body['results']
+
+      results.each do |trend_type, trend_array|
+        trend_array.each do |trend|
+          trends << { :type => trend_type,
+                      :name => trend['value'],
+                      :value => trend['value'],
+                      :weight => trend['weight'] }
+        end
+      end
+
+      trends
+    end
+
     it 'should return empty results if query isn\'t specified' do
       Trend.trendspottr(nil).should eq([[], [], []])
     end
@@ -141,7 +160,7 @@ describe Trend do
       trends = Trend.trendspottr('mashoutable')
       trends[0].should have(0).items
       trends[1].should have(0).items
-      trends[2].should eq(["#post", "#video", "#create", "#record", "#2click", "#clickconstruct"].map{ |trend| { :name => trend, :value => trend, :weight => 0.037334335720286} })
+      trends[2].should eq(trendspottr_results)
     end
 
     it 'should have popular topics' do
