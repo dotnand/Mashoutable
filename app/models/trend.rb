@@ -54,20 +54,22 @@ class Trend
     results_json.each do |trend_type, trend_array|
       trend_array.each do |trend|
         if trend_type == 'links'
-          uri = URI.parse(trend['value'])
+          begin
+            uri = URI.parse(trend['value'])
+          rescue URI::InvalidURIError
+            uri = nil
+          end
 
-          unless uri.host == 't.co'
-            bitly = Bitly::Client.new(trend['value'])
+          if uri.present? and uri.host != 't.co'
+            bitly = Bitly::Client.new(uri.to_s)
 
-            bitly.shorten
-
-            trend['value'] = bitly.shortened_url
+            bitly.shorten and (trend['value'] = bitly.shortened_url)
           end
         end
         trends << { :type   => trend_type,
                     :name   => trend['value'],
                     :value  => trend['value'],
-                    :weight => trend['weight']}
+                    :weight => trend['weight'] }
       end
     end
 
