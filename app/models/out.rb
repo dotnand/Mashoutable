@@ -16,7 +16,7 @@ class Out < ActiveRecord::Base
                   :trend_source, :twitter, :facebook,
                   :youtube, :pending, :type
 
-  scope :created_yesterday, lambda { where("created_at BETWEEN ? and ?", (Time.now.midnight - 1.day).to_formatted_s(:db), Time.now.midnight.to_formatted_s(:db)) }
+  scope :created_yesterday, lambda { where("created_at BETWEEN ? and ?", (Time.now.yesterday.midnight), Time.now.midnight) }
 
   def initialize(params = {})
     super map_incoming_params(params)

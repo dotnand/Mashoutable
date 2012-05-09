@@ -4,7 +4,7 @@ class Authorization < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id, :uid, :provider
   validates_uniqueness_of :uid, :scope => :provider
-  scope :created_yesterday, lambda { where("created_at BETWEEN ? and ?", (Time.now.midnight - 1.day).to_formatted_s(:db), Time.now.midnight.to_formatted_s(:db)) }
+  scope :created_yesterday, lambda { where("created_at BETWEEN ? and ?", (Time.now.yesterday.midnight), Time.now.midnight) }
 
   def self.find_from_hash(hash)
     find_by_provider_and_uid(hash['provider'], hash['uid'])
