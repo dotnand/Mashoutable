@@ -68,7 +68,11 @@ class TweetEmitter
   end
 
   def capture_mentions
-    parse_mentions(@out.content).each { |who| @user.mentions.find_or_create_by_who(who, :out => @out) }
+    if @out.new_record?
+      @out.save!
+    end
+
+    parse_mentions(@out.content).each { |who| @user.mentions.find_or_create_by_who_and_out_id(who, @out.id) }
   end
 
   def capture_replies

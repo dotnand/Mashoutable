@@ -181,7 +181,7 @@ describe TweetEmitter do
       user.should_receive(:twitter).and_return(twitter)
       user.should_receive(:mentions).exactly(2).times.and_return(mentions)
       twitter.should_receive(:update).with(params['out'])
-      mentions.should_receive(:find_or_create_by_who).exactly(2).times
+      mentions.should_receive(:find_or_create_by_who_and_out_id).exactly(2).times
       user.should_receive(:save).and_return(true)
 
       subject.emit.should eq(params['out'])

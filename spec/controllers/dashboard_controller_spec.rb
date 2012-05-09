@@ -163,7 +163,11 @@ describe DashboardController do
       else
         emitter.should_receive(:queued_emit?).and_return(false)
         emitter.should_receive(:errors).and_return([])
-        emitter.should_receive(:emit).with(out).and_return(tweet)
+        emitter.should_receive(:emit).with(out) do
+          emitter.should_receive(:send_content)
+          out.should_receive(:new_record?).and_return(true)
+          out.should_receive(:save)
+        end.and_return(tweet)
       end
     end
 
