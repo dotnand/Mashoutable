@@ -9,7 +9,7 @@ cache_trendspottr_trends:
   description: 'Fetch and store Trendspottr popular topics and searches'
 
 generate_reports:
-  cron: '0 0 * * *'
+  cron: '0 0 * * * America/New_York'
   class: GenerateReports
   description: 'Generate provider / out reports and email them.'
 
