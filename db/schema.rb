@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504170918) do
+ActiveRecord::Schema.define(:version => 20120509194301) do
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"
@@ -114,6 +114,16 @@ ActiveRecord::Schema.define(:version => 20120504170918) do
   end
 
   add_index "out_replies", ["out_id"], :name => "out_replies_out_id_idx"
+
+  create_table "out_retweet_targets", :force => true do |t|
+    t.integer  "out_id"
+    t.string   "target"
+    t.string   "status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "out_retweet_targets", ["out_id"], :name => "index_out_retweet_targets_on_out_id"
 
   create_table "out_targets", :force => true do |t|
     t.string   "target"

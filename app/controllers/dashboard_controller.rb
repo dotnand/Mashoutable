@@ -29,11 +29,26 @@ class DashboardController < ApplicationController
     @target                         = params['mashout-target']
     @tweople_target                 = @target == 'TWEOPLE' ? (params['mashout-tweople-source'] ? params['mashout-tweople-source'] : 'TWEOPLE_WEB_ONLY') : nil
     @targets, @profiles, @retweets  = TweetBuilder.new(current_user).target(@target != 'TWEOPLE' ? @target : (@tweople_target || @target), false)
+
     if @profiles and @target == 'I_FOLLOW'
       @profiles.each do |profile|
         profile.merge!(local_friend_id: current_user.friends.find_by_twitter_user_id(profile[:twitter_id]).id)
       end
     end
+
+    if @retweets
+      @retweets.each do |retweet|
+        # Filter out users that we have replied to
+        retweet[:users].delete_if do |user|
+          current_user.outs
+                      .joins(:retweet_targets)
+                      .where(:out_retweet_targets => { :status_id => retweet[:status_id].to_s,
+                                                       :target    => user[:screen_name] })
+                      .any?
+        end
+      end
+    end
+
     @targets                        = group_hash_by(@targets, :screen_name)
 
     render :partial => 'target'
@@ -247,7 +262,7 @@ class DashboardController < ApplicationController
     end
 
     def create_out(params)
-     begin
+      begin
         @out          = params['out']
         new_out       = Out.new(params)
         new_out.user  = self.current_user

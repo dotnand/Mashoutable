@@ -3,9 +3,15 @@ require 'spec_helper'
 describe Out do
   let(:user) { FactoryGirl.create(:user) }
 
-  [:user, :video].map { |parent| it { should belong_to(parent) } }
-  [:hashtags, :trends, :targets, :replies, :media, :out_errors].map { |children| it { should have_many(children) } }
-  [:user].map { |required| it { should validate_presence_of(required) } }
+  [:user, :video].each do |parent|
+    it { should belong_to(parent) }
+  end
+  [:hashtags, :trends, :targets, :replies, :media, :out_errors, :retweet_targets].each do |children|
+     it { should have_many(children) }
+  end
+  [:user].each do |required|
+    it { should validate_presence_of(required) }
+  end
 
   context 'should initialize and mass assign' do
     let(:params)          { {} }

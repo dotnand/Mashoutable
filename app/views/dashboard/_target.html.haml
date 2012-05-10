@@ -109,24 +109,7 @@
         - elsif not @retweets.nil? and @retweets.count > 0
           #mashout-target-checkboxes
             %br/
-            - @retweets.each do |retweet|
-              .target-content
-                .append-bottom
-                  - retweet_parent = "mashout-retweet-#{retweet[:status_id]}"
-                  %input.span-1{:id => "#{retweet_parent}", :name => "#{retweet_parent}", :type => 'checkbox'}
-                  :javascript
-                    $(function() { bindMashoutMasterTargetToChildTargets("#{retweet_parent}"); });
-                  %em
-                    %label.span-7.append-bottom{:for => "#{retweet_parent}"}= retweet[:text]
-                  .span-7.prepend-1
-                    - retweet[:users] .each do |user|
-                      - sanitized_screen_name = sanitize_twitter_screen_name(user[:screen_name])
-                      - retweeter_id = "mashout-retweet-#{retweet_parent}-#{sanitized_screen_name}"
-                      %input{:id => retweeter_id, :name => "mashout-targets[]", :type => 'checkbox', :value=> "#{user[:screen_name]}", :class => "#{retweet_parent} target-checkbox"}
-                      %label{:for => retweeter_id}= user[:screen_name]
-                      %img.right{:src => user[:profile_image_url], :style => 'width:45px; height:45px;'}
-                      :javascript
-                        $(function() { bindDynamicPreviewTargetChange("##{retweeter_id}", '#hidden-targets', '#out-preview', "#{retweet_parent}"); });
+            = render :partial => 'target_retweet', :collection => @retweets, :as => 'retweet'
         - elsif defined? @target and @target != 'NONE'
           %p Nothing was found
     %input{:id => 'hidden-targets', :type => 'hidden', :value => ''}

@@ -60,6 +60,7 @@ function generateDynamicOutPreview(outPreviewId) {
     var media     = $('#hidden-media').val();
     var targets   = $('#hidden-targets').val();
     var tsTargets = $('#hidden-trendspottr-targets').val();
+    var rtTargets = $('input[name^="hidden-retweet-targets"]');
     var hashtags  = $('#hidden-hashtags').val();
     var trends    = $('#hidden-trends').val();
     var tsTrends  = $('#hidden-trendspottr-trends').val();
@@ -84,6 +85,24 @@ function generateDynamicOutPreview(outPreviewId) {
     $.each([media, targets, tsTargets, hashtags, trends, tsTrends, comment, video], function() {
         if(this.length > 0) {
             addContent(this);
+        }
+    });
+
+    var rtTargetsArray = $.map(rtTargets, function(target, index) {
+        var value = $(target).val();
+
+        if(value.length > 0)
+        {
+            return value;
+        }
+    });
+
+    rtTargetsArray = $.unique(rtTargetsArray);
+
+    $.each(rtTargetsArray, function(index, target) {
+        if(target.length > 0)
+        {
+            addContent(target);
         }
     });
 
