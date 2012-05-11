@@ -87,5 +87,14 @@ FactoryGirl.define do
   factory :trendspottr_search do
     sequence(:name) {|n| "Trendspottr Search #{n}"}
   end
+
+  factory :advertisement do
+    sequence(:image_path) { |n| "ad#{n}.png" }
+  end
+
+  factory :advertisement_email do
+    advertisement
+    sequence(:email) { |n| "user#{n}@example.com" }
+  end
 end
 

@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509194301) do
+ActiveRecord::Schema.define(:version => 20120511133132) do
+
+  create_table "advertisement_emails", :force => true do |t|
+    t.integer  "advertisement_id"
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "advertisement_emails", ["advertisement_id"], :name => "index_advertisement_emails_on_advertisement_id"
+
+  create_table "advertisements", :force => true do |t|
+    t.string   "image_path"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "authorizations", :force => true do |t|
     t.string   "provider"

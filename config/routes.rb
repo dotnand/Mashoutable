@@ -36,6 +36,7 @@ Mashoutable::Application.routes.draw do
   match 'blastout'            => 'content#blastout',    :as => :blastout
   match 'shoutout'            => 'content#shoutout',    :as => :shoutout
   match 'pickout'             => 'content#pickout',     :as => :pickout
+  match 'signup_iframe'       => 'content#signup_iframe', :as => :signup_iframe
 
   # dashboard
   match 'dashboard'                    => 'dashboard#index'
@@ -57,6 +58,9 @@ Mashoutable::Application.routes.draw do
   scope "user", :as => "user" do
     resources :friends, :only => [:create, :destroy]
   end
+
+  resources :advertisements, :only => [:show]
+  resources :advertisement_emails, :only => [:create]
 
   # default
   match '/' => 'content#home', :as => :home

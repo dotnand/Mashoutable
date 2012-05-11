@@ -35,5 +35,9 @@ class ContentController < ApplicationController
 
     render :contact_us
   end
+
+  def signup_iframe
+    render :layout => nil
+  end
 end
 

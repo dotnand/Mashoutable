@@ -353,23 +353,36 @@ h4 span.counter {
     text-align: right; }
 
 #header #navigation-social #social-media,
-#header #navigation-social #time-savings {
+#header #navigation-social #time-savings,
+#social-iframe #navigation-social #social-media {
     padding: 10px 0;
     height: 40px; }
 
+#social-iframe #navigation-social #social-media {
+    height: auto; }
+
 #header #navigation-social #social-media #navigation-sign-in-twitter,
-#header #navigation-social #social-media #navigation-sign-in-facebook {
+#social-iframe #navigation-social #social-media #navigation-sign-in-twitter,
+#header #navigation-social #social-media #navigation-sign-in-facebook,
+#social-iframe #navigation-social #social-media #navigation-sign-in-facebook {
     display: block;
     background-image: url("buttons.png");
     background-repeat: no-repeat;
     width: 210px;
     height: 35px; }
 
-#header #navigation-social #social-media #navigation-sign-in-twitter {
+#header #navigation-social #social-media #navigation-sign-in-twitter,
+#social-iframe #navigation-social #social-media #navigation-sign-in-twitter {
     background-position: 0 -163px; }
 
-#header #navigation-social #social-media #navigation-sign-in-facebook {
+#header #navigation-social #social-media #navigation-sign-in-facebook,
+#social-iframe #navigation-social #social-media #navigation-sign-in-facebook {
     background-position: -270px -163px; }
+
+#social-iframe #navigation-social #social-media #navigation-sign-in-twitter,
+#social-iframe #navigation-social #social-media #navigation-sign-in-facebook {
+    margin: 0 0 0 15px; }
+
 
 #header #navigation-social #h-navigation li:first-child {
     border: none; }
