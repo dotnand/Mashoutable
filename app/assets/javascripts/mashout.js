@@ -1,5 +1,3 @@
-//= require jquery.fancybox-1.3.4.pack.js
-
 $(function() {
     $('#mashout-target-container .ui-autocomplete-input').css('width','300px');
     $('#mashout-media-container .ui-autocomplete-input').css('width','300px');

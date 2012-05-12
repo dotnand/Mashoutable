@@ -1,4 +1,5 @@
 //= require jquery-1.6.1.min
+//= require jquery.fancybox-1.3.4.pack.js
 //= require jquery.tweet
 //= require global
 //= require_self
