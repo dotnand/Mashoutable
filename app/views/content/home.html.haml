@@ -1,3 +1,9 @@
+- content_for :optional_css do
+  = stylesheet_link_tag 'jquery.fancybox-1.3.4'
+  
+- content_for :optional_javascript do
+  = javascript_include_tag 'jquery.fancybox-1.3.4.pack.js'
+
 - content_for :body do
   #steps
     .create
