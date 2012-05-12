@@ -104,8 +104,8 @@ GEM
       rubyzip
       term-ansicolor (~> 1.0.5)
     hike (1.2.1)
-    hoe (3.0.4)
-      rake (~> 0.8)
+    hoe (2.8.0)
+      rake (>= 0.8.7)
     httparty (0.8.1)
       multi_json
       multi_xml
@@ -321,6 +321,7 @@ DEPENDENCIES
   foreman (~> 0.40.0)
   haml-rails
   heroku (~> 2.21.2)
+  hoe (~> 2.8.0)
   httparty (~> 0.8.1)
   jquery-rails
   launchy (~> 2.0.5)
@@ -337,7 +338,7 @@ DEPENDENCIES
   resque-scheduler (~> 1.9.9)
   rspec-rails (~> 2.8.0)
   ruby-debug19
-  ruport
+  ruport (~> 1.6.3)
   sass
   sass-rails (~> 3.1.0)
   shoulda (~> 3.0.0.beta)
