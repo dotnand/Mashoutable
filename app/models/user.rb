@@ -213,15 +213,17 @@ class User < ActiveRecord::Base
     interactions_on_page = interactions.paginate(:page => page, :per_page => per_page)
 
     twitter_users = self.twitter.users(interactions_on_page.map { |interaction| interaction[:screen_name].gsub('@', '') }) rescue []
-    twitter_users.each do |twitter_user|
-      # Find the interaction corresponding to the twitter user
-      user_interaction = interactions_on_page.select { |interaction| interaction[:screen_name].downcase == "@#{twitter_user.screen_name.downcase}" }.first
-      user_interaction[:screen_name] = "@#{twitter_user.screen_name}"
-      user_interaction[:profile_image_url] = twitter_user.profile_image_url
+
+    interactions_on_page.each do |interaction|
+      twitter_user = twitter_users.select { |user| "@#{user.screen_name.downcase}" == interaction[:screen_name].downcase }.first
+
+      if twitter_user
+        interaction[:screen_name] = "@#{twitter_user.screen_name}"
+        interaction[:profile_image_url] = twitter_user.profile_image_url
+      end
     end
 
-    return interactions_on_page if twitter_users
-    []
+    interactions_on_page
   end
 
   def twitter_ids(method, params = {}, limit = 1000)

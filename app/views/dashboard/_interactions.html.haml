@@ -13,7 +13,8 @@
               %td= interaction[:screen_name]
               %td= interaction[:count]
               %td
-                %img{:alt => "avatar", :width => 32, :height => 32, :src => interaction[:profile_image_url]}/
+                - if interaction[:profile_image_url].present?
+                  = image_tag interaction[:profile_image_url], :width => 32, :height => 32, :alt => 'avatar'
     - else
       %em You currently have no interactions
   = will_paginate @interactions, :previous_label => "Previous", :next_label => "Next", :inner_window => 0, :outer_window => -1

@@ -170,6 +170,9 @@
 #content-wrapper.span-all #interactions tbody tr:nth-child(even) td, tbody tr.even td {
     background: #dddddd; }
 
+#content-wrapper.span-all #interactions tbody tr {
+    height: 47px; }
+
 #content-wrapper #video-library object {
     padding-right: 10px;
     float: left; }
