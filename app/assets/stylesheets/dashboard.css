@@ -233,7 +233,7 @@
 
 #media-icons ul {
     margin: 0;
-    padding: 0; }
+    padding: 20px 0 0 0; }
 
 #media-icons ul li {
     list-style-type: none;
@@ -272,6 +272,11 @@
 
 #media-icons ul li.on .icon .overlay {
     display: none; }
+
+#more-media,
+#less-media {
+    cursor: pointer;
+    padding-right: 20px; }
 
 /*Large Dashboard Network Toggle*/
 .networks {

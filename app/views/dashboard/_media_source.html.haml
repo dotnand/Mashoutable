@@ -1,14 +1,25 @@
 #media-icons.span-15.left.clear
-  %ul
-    - media_sources.each do |media_source|
-      %li{:class => media_source[:name].downcase.gsub(' ', '-')}
-        %span.icon
-          %span.overlay
-          %img{:src => "#{asset_path('media-icons/' + media_source[:image])}", :alt => media_source[:name], :title => media_source[:name]}
-        = "@#{media_source[:name]}"
-        - media_checkbox_id = "mashout-media-#{sanitize_twitter_screen_name(media_source[:screen_name])}"
-        %input{:id => media_checkbox_id, :type => 'checkbox', :name => 'mashout-media[]', :value => "#{URI.encode(media_source[:screen_name])}"}
+  %h3
+    Influential Targets
+  %ul.left
+    = render :partial => 'media_source_icon', :collection => media_sources.take(4), :as => 'media_source'
+    %a{:id => 'more-media', :class => 'right'}
+      Show More
+    #hidden-media-icons.left.hidden
+      = render :partial => 'media_source_icon', :collection => media_sources[4...media_sources.count], :as => 'media_source', :locals => { :hidden => true }
+      %a{:id => 'less-media', :class => 'right clear'}
+        Show Less
   %input{:id => 'hidden-media', :type => 'hidden', :value => ''}
   :javascript
-    bindMediaIconToggle();
-
+    bindMediaIconToggle()
+    $(function() {
+      $('#more-media').click(function() {
+        $(this).hide()
+        $('#hidden-media-icons').slideDown(500)
+      })
+      $('#less-media').click(function() {
+        $('#hidden-media-icons').slideUp(500, function() {
+          $('#more-media').show()
+        })
+      })
+    })
