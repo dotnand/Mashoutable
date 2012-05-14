@@ -311,6 +311,11 @@ function bindMashoutClearPreviewClick() {
             $(this).prop("checked", false);
         });
 
+        // turn off all media icons
+        $('#media-icons li').each(function() {
+            $(this).removeClass('on');
+        })
+
         // clear the hidden checkbox fields
         $('#mashout-form #hidden-hashtags').val('');
         $('#mashout-form #hidden-trends').val('');
