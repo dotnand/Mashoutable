@@ -135,7 +135,11 @@ class User < ActiveRecord::Base
 
     return [] if following_me_ids.count < 1
 
-    twitter.users(following_me_ids[0..[following_me_ids.count, 15].min])
+    begin
+      twitter.users(following_me_ids.take(15))
+    rescue Twitter::Error::NotFound
+      []
+    end
   end
 
   def followed_by_i_follow
@@ -148,7 +152,11 @@ class User < ActiveRecord::Base
 
     return [] if following_me_ids.count < 1
 
-    twitter.users(following_me_ids[0..20])
+    begin
+      twitter.users(following_me_ids.take(20))
+    rescue Twitter::Error::NotFound
+      []
+    end
   end
 
   def i_follow
@@ -161,7 +169,11 @@ class User < ActiveRecord::Base
 
     return [] if i_follow_ids.count < 1
 
-    twitter.users(i_follow_ids[0..[i_follow_ids.count, 15].min])
+    begin
+      twitter.users(i_follow_ids.take(15))
+    rescue Twitter::Error::NotFound
+      []
+    end
   end
 
   def mentioned(date = Date.today)
