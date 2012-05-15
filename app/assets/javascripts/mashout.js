@@ -110,9 +110,9 @@ function generateDynamicOutPreview(outPreviewId) {
 
 function handleDynamicPreviewCheckboxChange(checkboxId, hiddenCheckboxId, outPreviewId) {
     var value     = unescape($(checkboxId).val());
-    var isChecked = $(checkboxId + ':checked').length;
+    var isChecked = $(checkboxId).prop('checked');
 
-    generateOutFragment(value, hiddenCheckboxId, isChecked == 1);
+    generateOutFragment(value, hiddenCheckboxId, isChecked);
     generateDynamicOutPreview(outPreviewId);
 }
 
@@ -347,7 +347,10 @@ function bindMashoutTargetToReply(targetId, replyId) {
 }
 
 function bindMashoutMasterTargetToChildTargets(masterTargetId) {
-    $("#" + masterTargetId).click(function() { $("." + masterTargetId).prop("checked", ($(this).prop("checked"))); $("." + masterTargetId).change(); });
+    $("#" + masterTargetId).change(function() {
+        $("." + masterTargetId).prop("checked", ($(this).prop("checked")));
+        $("." + masterTargetId).change();
+    });
 }
 
 function bindMashoutShowMoreTweets(sourceId, targetId) {

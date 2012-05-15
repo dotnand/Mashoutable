@@ -32,13 +32,18 @@
       - if not @targets.nil? and @targets.count > 0
         #mashout-target-checkboxes
           %br/
+          %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+          %label{:for => 'target-checkbox'}
+            All Targets
+          :javascript
+            $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
           - @targets.each do |key, statuses|
             - first_target = statuses.shift
-            .target-content
+            .target-content.clear
               - if not first_target.nil?
                 - sanitized_screen_name = sanitize_twitter_screen_name(first_target[:screen_name])
                 .append-bottom
-                  %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox'}
+                  %input{:id => "mashout-target-#{sanitized_screen_name}", :name => "mashout-target-#{sanitized_screen_name}", :type => 'checkbox', :class => 'target-checkbox'}
                   %label{:for => "mashout-target-#{sanitized_screen_name}"}= first_target[:screen_name]
                   %img{:src => first_target[:profile_image_url], :style => 'width:45px; height:45px;'}
                   :javascript
@@ -60,17 +65,22 @@
         - elsif not @profiles.nil? and @profiles.count > 0
           #mashout-target-checkboxes
             %br/
+            %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+            %label{:for => 'target-checkbox'}
+              All Targets
+            :javascript
+              $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
             - @profiles.each do |profile|
               - sanitized_screen_name = sanitize_twitter_screen_name(profile[:screen_name])
               - profile_container_id = "mashout-profile-#{sanitized_screen_name}-container"
-              .target-content{:id => profile_container_id}
+              .target-content.clear{:id => profile_container_id}
                 .append-bottom
                   - profile_id = "mashout-profile-#{sanitized_screen_name}"
                   %input{:id => profile_id, :name => "mashout-targets[]", :type => 'checkbox', :value => "#{profile[:screen_name]}", :class => "mashout-target-#{sanitized_screen_name} target-checkbox"}
                   %label{:for => profile_id}= profile[:screen_name]
                   %img{:src => profile[:profile_image_url], :style => 'width:45px; height:45px;'}
                   :javascript
-                    $(function() { bindDynamicPreviewCheckboxClick("##{profile_id}", '#hidden-targets', '#out-preview'); });
+                    $(function() { bindDynamicPreviewTargetChange("##{profile_id}", '#hidden-targets', '#out-preview', 'target-checkbox'); });
                 .span-6.prepend-1
                   %p
                     - if profile[:description].present?
@@ -109,6 +119,11 @@
         - elsif not @retweets.nil? and @retweets.count > 0
           #mashout-target-checkboxes
             %br/
+            %input{:type => 'checkbox', :id => 'target-checkbox', :class => 'left clear'}
+            %label{:for => 'target-checkbox'}
+              All Targets
+            :javascript
+              $(function() { bindMashoutMasterTargetToChildTargets('target-checkbox') })
             = render :partial => 'target_retweet', :collection => @retweets, :as => 'retweet'
         - elsif defined? @target and @target != 'NONE'
           %p Nothing was found

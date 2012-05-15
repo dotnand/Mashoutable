@@ -1,7 +1,7 @@
-.target-content
+.target-content.clear
   .append-bottom
     - retweet_parent = "mashout-retweet-#{retweet[:status_id]}"
-    %input.span-1{:id => "#{retweet_parent}", :name => "#{retweet_parent}", :type => 'checkbox'}
+    %input.span-1{:id => "#{retweet_parent}", :name => "#{retweet_parent}", :type => 'checkbox', :class => 'target-checkbox'}
     :javascript
       $(function() { bindMashoutMasterTargetToChildTargets("#{retweet_parent}"); });
     %em
@@ -17,7 +17,9 @@
           %label{:for => retweeter_id}= user[:screen_name]
           %img.right{:src => user[:profile_image_url], :style => 'width:45px; height:45px;'}
           :javascript
-            $(function() { bindDynamicPreviewTargetChange("##{retweeter_id}", "#hidden-retweet-targets-#{retweet[:status_id]}", '#out-preview', "#{retweet_parent}"); });
+            $(function() {
+              bindDynamicPreviewTargetChange("##{retweeter_id}", "#hidden-retweet-targets-#{retweet[:status_id]}", '#out-preview', "#{retweet_parent}");
+              bindDynamicPreviewTargetChange("##{retweeter_id}", "#hidden-retweet-targets-#{retweet[:status_id]}", '#out-preview', 'target-checkbox');
+            });
       - else
         You have already replied to everyone who retweeted this tweet.
-
