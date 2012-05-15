@@ -75,6 +75,7 @@ describe DashboardController do
       it 'should POST a new bestie' do
         bestie = mock('bestie')
 
+        # twitter.should_receive(:user?).with('bestie2').and_return(true)
         bestie.should_receive(:save).and_return(true)
         besties.should_receive(:create).with(:screen_name => '@bestie2').and_return(bestie)
 
@@ -87,6 +88,7 @@ describe DashboardController do
       it 'should not POST a new bestie if bestie exists ' do
         bestie = mock('bestie')
 
+        # twitter.should_receive(:user?).with('bestie2').and_return(true)
         bestie.should_receive(:save).and_return(false)
         besties.should_receive(:create).with(:screen_name => '@bestie2').and_return(bestie)
 

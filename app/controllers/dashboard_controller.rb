@@ -150,6 +150,17 @@ class DashboardController < ApplicationController
     bestie_screen_name = params['bestie']
     bestie_screen_name.insert(0, '@') if bestie_screen_name[0] != '@'
 
+    # TODO: Verify user exists
+=begin
+    if current_user.twitter.user?(bestie_screen_name.gsub('@', ''))
+      if current_user.besties.create(:screen_name => bestie_screen_name).save
+        @message = 'Bestie ' << bestie_screen_name << ' created'
+      end
+    end
+
+    @message ||= 'Unable to create ' << bestie_screen_name
+=end
+
     if current_user.besties.create(:screen_name => bestie_screen_name).save
       @message = 'Bestie ' << bestie_screen_name << ' created'
     else
@@ -308,8 +319,8 @@ class DashboardController < ApplicationController
     end
 
     def get_interactions
-      local_interactions = current_user.grouped_augmented_interactions(:group => 'lower(target)',
-                                                                       :page => page,
+      local_interactions = current_user.grouped_augmented_interactions(:group    => 'lower(target)',
+                                                                       :page     => page,
                                                                        :per_page => per_page(8))
 
       # Make sure we return a paginated array so will_paginate doesn't fail

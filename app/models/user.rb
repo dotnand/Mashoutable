@@ -197,19 +197,30 @@ class User < ActiveRecord::Base
   def verified
     tweep_ids = self.local_friend_ids + self.local_follower_ids
 
-    return [] if tweep_ids.count < 1
+    return [] if tweep_ids.empty?
 
     verified_ids    = VerifiedTwitterUser.select(:user_id).map(&:user_id)
     user_verified   = tweep_ids & verified_ids
-    verified_users  = user_verified.any? ? twitter.users(user_verified.shuffle[0..20]) : []
 
-    verified_users
+    return [] if user_verified.empty?
+
+    begin
+      twitter.users(user_verified.shuffle.take(20))
+    rescue Twitter::Error::NotFound
+      []
+    end
   end
 
   def twitter_besties
     local_besties = self.besties
-    return self.twitter.users(local_besties.map { |bestie| bestie.screen_name.gsub('@', '') }) if local_besties.count > 0
-    []
+
+    return [] if local_besties.empty?
+
+    begin
+      self.twitter.users(local_besties.map { |bestie| bestie.screen_name.gsub('@', '') })
+    rescue Twitter::Error::NotFound
+      []
+    end
   end
 
   def grouped_augmented_interactions(params)
@@ -226,12 +237,14 @@ class User < ActiveRecord::Base
 
     twitter_users = self.twitter.users(interactions_on_page.map { |interaction| interaction[:screen_name].gsub('@', '') }) rescue []
 
-    interactions_on_page.each do |interaction|
-      twitter_user = twitter_users.select { |user| "@#{user.screen_name.downcase}" == interaction[:screen_name].downcase }.first
+    if twitter_users.any?
+      interactions_on_page.each do |interaction|
+        twitter_user = twitter_users.select { |user| "@#{user.screen_name.downcase}" == interaction[:screen_name].downcase }.first
 
-      if twitter_user
-        interaction[:screen_name] = "@#{twitter_user.screen_name}"
-        interaction[:profile_image_url] = twitter_user.profile_image_url
+        if twitter_user
+          interaction[:screen_name]       = "@#{twitter_user.screen_name}"
+          interaction[:profile_image_url] = twitter_user.profile_image_url
+        end
       end
     end
 
