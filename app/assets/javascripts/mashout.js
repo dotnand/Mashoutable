@@ -465,6 +465,7 @@ function inlineEdit(hashtagId, editPath) {
         makeHashtagFixed(hashtagId)
     })
     $(hashtagId + '-delete').click(function(e) {
+        var hashtag = $(hashtagId).val()
         e.preventDefault()
         $.ajax({
             url: $(this).attr('href'),
@@ -472,7 +473,7 @@ function inlineEdit(hashtagId, editPath) {
             success: function(data) {
                 $(hashtagId + '-container').fadeOut('slow', function() {
                     $(this).remove()
-                    generateOutFragment(data.tag, '#hidden-hashtags', false)
+                    generateOutFragment(hashtag, '#hidden-hashtags', false)
                     generateDynamicOutPreview('#out-preview')
                 })
             }
@@ -517,7 +518,7 @@ function initializeNewHashtagListeners(newHashtagPath) {
     })
     $('#new-mashout-hashtag-confirm').live('click', function() {
         $.ajax({
-            url: "#{user_hashtags_url}",
+            url: newHashtagPath,
             type: "POST",
             dataType: 'html',
             data: { user_hashtag: { tag: $('#new-mashout-hashtag-text').val() } },
@@ -539,14 +540,23 @@ function initializeNewHashtagListeners(newHashtagPath) {
         var hashtagLists = $('#mashout-hashtag-checkboxes > .left.span-6').map(function() { return $(this) })
         var leftList     = hashtagLists[0]
         var rightList    = hashtagLists[1]
-        var leftCount    = leftList.find('div').length
-        var rightCount   = rightList.find('div').length
+        var newHashtag   = generateNewHashtagForm()
 
-        if (leftCount > rightCount) {
-            rightList.append(generateNewHashtagForm())
+        if (rightList != undefined) {
+            var leftCount    = leftList.find('div').length
+            var rightCount   = rightList.find('div').length
+
+            if (leftCount > rightCount) {
+                rightList.append(newHashtag)
+            }
+            else {
+                leftList.append(newHashtag)
+            }
         }
         else {
-            leftList.append(generateNewHashtagForm())
+            var rightList = $('<div/>', { 'class': 'left span-6' })
+            rightList.append(newHashtag)
+            $('#mashout-hashtag-checkboxes > .left.span-6').after(rightList)
         }
     })
 }
