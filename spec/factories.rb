@@ -96,5 +96,10 @@ FactoryGirl.define do
     advertisement
     sequence(:email) { |n| "user#{n}@example.com" }
   end
+
+  factory :user_hashtag do
+    user
+    sequence(:tag) { |n| "#hashtag#{n}"}
+  end
 end
 

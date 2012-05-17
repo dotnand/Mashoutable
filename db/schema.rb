@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511133132) do
+ActiveRecord::Schema.define(:version => 20120515181144) do
 
   create_table "advertisement_emails", :force => true do |t|
     t.integer  "advertisement_id"
@@ -202,6 +202,15 @@ ActiveRecord::Schema.define(:version => 20120511133132) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_hashtags", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_hashtags", ["user_id"], :name => "index_user_hashtags_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

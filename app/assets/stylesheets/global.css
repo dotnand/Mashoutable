@@ -118,6 +118,10 @@ input[type="submit"]:hover,
     clear: both;
     display: block; }
 
+#content-wrapper input.hidden {
+    display: none;
+}
+
 /*social media icons*/
 .twitter .icon,
 .facebook .icon,

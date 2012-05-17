@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   before_filter :current_tool
   before_filter :auth_required, :except => :video_playback
   before_filter :available_networks, :if => :signed_in?
+  before_filter :load_hashtags, :only => [:blastout, :mashout, :shoutout]
 
   # TODO: refactor into separate controllers
 
@@ -326,6 +327,15 @@ class DashboardController < ApplicationController
       # Make sure we return a paginated array so will_paginate doesn't fail
       return local_interactions if local_interactions.respond_to?(:total_pages)
       local_interactions.paginate(:page => page, :per_page => per_page(8))
+    end
+
+    def load_hashtags
+      @hashtags = current_user.hashtags
+
+      if @hashtags.empty?
+        current_user.hashtags = User::DEFAULT_HASHTAGS.map{|hashtag| UserHashtag.new(:tag => hashtag) }
+        @hashtags = current_user.hashtags
+      end
     end
 end
 

@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :video_blastouts,     :class_name => 'Out', :conditions => { :type => Blastout }
   has_many :friends, :dependent => :destroy
   has_many :followers
+  has_many :hashtags, :class_name => 'UserHashtag'
+  DEFAULT_HASHTAGS = %w(#Shoutout #ff #TFB #TeamFollowBack #F4F #FollowForFollow #Gratitude #S/O #ThankYou #Tweeps).freeze
 
   def self.create_from_hash!(hash)
     create(:name => hash['info']['name'])

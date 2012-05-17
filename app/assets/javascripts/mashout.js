@@ -434,3 +434,132 @@ function bindTrendSpottrSearchButton(buttonId, targetId, path) {
     })
 }
 
+function hideElements($elements) {
+    $.map($elements, function(element) {
+        element.hide()
+    })
+}
+
+function showElements($elements) {
+    $.map($elements, function(element) {
+        element.show()
+    })
+}
+
+function makeHashtagEditable(hashtagId) {
+    hideElements([$(hashtagId + '-label'), $(hashtagId + '-edit')])
+    showElements([$(hashtagId + '-text'), $(hashtagId + '-confirm'), $(hashtagId + '-cancel')])
+}
+
+function makeHashtagFixed(hashtagId) {
+    hideElements([$(hashtagId + '-cancel'), $(hashtagId + '-text'), $(hashtagId + '-confirm')])
+    showElements([$(hashtagId + '-label'), $(hashtagId + '-edit')])
+}
+
+function inlineEdit(hashtagId, editPath) {
+    $(hashtagId + '-edit').click(function() {
+        makeHashtagEditable(hashtagId)
+    })
+    $(hashtagId + '-cancel').click(function() {
+        $(hashtagId + '-text').val($(hashtagId).val())
+        makeHashtagFixed(hashtagId)
+    })
+    $(hashtagId + '-delete').click(function(e) {
+        e.preventDefault()
+        $.ajax({
+            url: $(this).attr('href'),
+            type: "DELETE",
+            success: function(data) {
+                $(hashtagId + '-container').fadeOut('slow', function() {
+                    $(this).remove()
+                    generateOutFragment(data.tag, '#hidden-hashtags', false)
+                    generateDynamicOutPreview('#out-preview')
+                })
+            }
+        })
+    })
+    $(hashtagId + '-confirm').click(function(e) {
+        var oldHashtag   = $(hashtagId).val()
+        var newHashtag   = $(hashtagId + '-text').val()
+        var newHashtagId = '#mashout-' + newHashtag.replace('#', '').replace(/[^\w]/, '') + '-hashtag'
+        var wasChecked   = $(hashtagId).prop('checked')
+
+        if ($.trim(oldHashtag) == $.trim(newHashtag)) {
+            $(hashtagId + '-cancel').click()
+            return false
+        }
+
+        $.ajax({
+            url: editPath,
+            type: "PUT",
+            data: {user_hashtag: {tag: $(hashtagId + '-text').val() }, checked: wasChecked},
+            dataType: 'html',
+            success: function(data) {
+                if(wasChecked)
+                {
+                    generateOutFragment(oldHashtag, '#hidden-hashtags', false)
+                }
+                $(hashtagId + '-container').replaceWith(data)
+            },
+        })
+    })
+    $(hashtagId + '-text').keypress(function(e) {
+        if(e.which == 13)
+        {
+            $(hashtagId + '-confirm').click()
+        }
+    })
+}
+
+function initializeNewHashtagListeners(newHashtagPath) {
+    $('#new-mashout-hashtag-cancel').live('click', function() {
+        $('#new-mashout-hashtag-container').remove()
+    })
+    $('#new-mashout-hashtag-confirm').live('click', function() {
+        $.ajax({
+            url: "#{user_hashtags_url}",
+            type: "POST",
+            dataType: 'html',
+            data: { user_hashtag: { tag: $('#new-mashout-hashtag-text').val() } },
+            success: function(data) {
+                $('#new-mashout-hashtag-container').replaceWith(data)
+            }
+        })
+    })
+    $('#new-mashout-hashtag-text').live('keypress', function(e) {
+        if(e.which == 13) {
+            $('#new-mashout-hashtag-confirm').click()
+        }
+    })
+    $('#new-hashtag').click(function() {
+        if($('#new-mashout-hashtag-container').length > 0) {
+            return false
+        }
+
+        var hashtagLists = $('#mashout-hashtag-checkboxes > .left.span-6').map(function() { return $(this) })
+        var leftList     = hashtagLists[0]
+        var rightList    = hashtagLists[1]
+        var leftCount    = leftList.find('div').length
+        var rightCount   = rightList.find('div').length
+
+        if (leftCount > rightCount) {
+            rightList.append(generateNewHashtagForm())
+        }
+        else {
+            leftList.append(generateNewHashtagForm())
+        }
+    })
+}
+
+function generateNewHashtagForm() {
+    var hashtagContainer = $('<div/>', {id: 'new-mashout-hashtag-container', class: 'left'})
+    var inputField       = $('<input/>', {id:'new-mashout-hashtag-text', class: 'left', type:'text', placeholder: '#HashTag'})
+    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', class: 'left', text: 'Confirm'})
+    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', class: 'left', text: 'Cancel'})
+
+    hashtagContainer.append(inputField)
+    hashtagContainer.append(confirmLink)
+    hashtagContainer.append(cancelLink)
+
+    return hashtagContainer
+}

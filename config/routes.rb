@@ -57,6 +57,7 @@ Mashoutable::Application.routes.draw do
   # Friends of current_user
   scope "user", :as => "user" do
     resources :friends, :only => [:create, :destroy]
+    resources :user_hashtags, :path => '/hashtags', :as => 'hashtags', :only => [:create, :update, :destroy]
   end
 
   resources :advertisements, :only => [:show]
