@@ -230,6 +230,45 @@
     float: left;
     min-width: 280px; }
 
+/*Add a Hashtags*/
+#mashout-hashtag a#new-hashtag {
+    margin: 10px 5px 0 5px; }
+
+#mashout-hashtag ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 2.5em; }
+
+#mashout-hashtag ul:nth-child(even) {
+    background: #fafafa; }
+
+#mashout-hashtag ul li {
+    list-style-type: none;
+    float: left;
+    margin-left: 10px;
+    height: 30px; }
+
+#mashout-hashtag ul li:nth-child(1),
+#mashout-hashtag ul li:nth-child(2) {
+    margin-left: 0; }
+
+#mashout-hashtag ul li.actions {
+    float: right;
+    margin-right: 5px; }
+
+#mashout-hashtag ul li.actions a {
+    margin-left: 5px; }
+
+#mashout-hashtag ul label {
+    line-height: 2.5em; }
+
+#mashout-hashtag input[type="text"] {
+    margin-top: 1px; }
+
+#mashout-hashtag input[type="checkbox"] {
+    margin: 8px 3px; }
+
 /*Targeted tweet media icons*/
 #media-icons {
    margin-top: 10px; }

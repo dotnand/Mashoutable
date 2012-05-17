@@ -1106,22 +1106,21 @@ h4 span.counter {
 
 #content-wrapper #sidebar #ready-to-mashout .negative-char-count {
     font-weight:bold;
-    color:#f00;
-}
+    color:#f00; }
 
 
 /*Videos partial*/
 #content-wrapper.span-all #video-library {
     min-height: 410px;
-    padding: 0;}
+    padding: 0; }
 
 #content-wrapper #video-library object {
-    padding-right: 10px;}
+    padding-right: 10px; }
 
 #content-wrapper.span-all #video-library #videos {
     min-height: 350px;
     margin: 0;
-    padding: 0;}
+    padding: 0; }
 
 #content-wrapper #video-library #videos ul {
     padding-left:0;

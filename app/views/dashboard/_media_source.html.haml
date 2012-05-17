@@ -3,11 +3,11 @@
     Influential Targets
   %ul.left
     = render :partial => 'media_source_icon', :collection => media_sources.take(4), :as => 'media_source'
-    %a{:id => 'more-media', :class => 'right'}
+    %a{:id => 'more-media', :href => '#', :onclick => 'return false;', :class => 'right'}
       Show More
     #hidden-media-icons.left.hidden
       = render :partial => 'media_source_icon', :collection => media_sources[4...media_sources.count], :as => 'media_source', :locals => { :hidden => true }
-      %a{:id => 'less-media', :class => 'right clear'}
+      %a{:id => 'less-media', :href => '#', :onclick => 'return false;', :class => 'right clear'}
         Show Less
   %input{:id => 'hidden-media', :type => 'hidden', :value => ''}
   :javascript
@@ -23,3 +23,4 @@
         })
       })
     })
+

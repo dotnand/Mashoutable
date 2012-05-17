@@ -1,20 +1,22 @@
 - if hashtag.persisted?
   - hashtag_text = hashtag.tag.gsub('#', '').gsub(/[^\w]/, '').downcase
-  %div{:id => "mashout-#{hashtag_text}-hashtag-container", :class => 'left'}
-    %input{:id => "mashout-#{hashtag_text}-hashtag", :name => "mashout-hashtag[]", :type => "checkbox", :value => hashtag.tag, :checked => (defined?(checked) and checked) ? 'checked' : nil}
-    %label{:id => "mashout-#{hashtag_text}-hashtag-label", :for => "mashout-#{hashtag_text}-hashtag"}
-      = hashtag.tag
-    %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
-    %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :class => 'left'}
-      Edit
-    %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :class => 'left hidden'}
-      Confirm
-    %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :class => 'left hidden'}
-      Cancel
+  %ul{:id => "mashout-#{hashtag_text}-hashtag-container", :class => 'left'}
+    %li
+      %input{:id => "mashout-#{hashtag_text}-hashtag", :name => "mashout-hashtag[]", :type => "checkbox", :value => hashtag.tag, :checked => (defined?(checked) and checked) ? 'checked' : nil}
+      %label{:id => "mashout-#{hashtag_text}-hashtag-label", :for => "mashout-#{hashtag_text}-hashtag"}
+        = hashtag.tag
+      %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
+    %li.actions
+      %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :onclick => 'return false;', :class => 'left'}
+        Edit
+      %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
+        Confirm
+      %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
+        Cancel
+      = link_to 'Delete', user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left'
     - if hashtag.errors.any?
       %p.left.clear
         = hashtag.errors.full_messages.to_sentence
-    = link_to 'Delete', user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left'
     :javascript
       $(function() {
         var hashtagId = "#mashout-#{hashtag_text}-hashtag"
@@ -33,11 +35,14 @@
           generateDynamicOutPreview('#out-preview')
         })
 - else
-  #new-mashout-hashtag-container
-    %input#new-mashout-hashtag-text.left{:type => 'text', :value => hashtag.tag}
-    %a#new-mashout-hashtag-confirm.left
-      Confirm
-    %a#new-mashout-hashtag-cancel.left
-      Cancel
-    %p.left
-      = hashtag.errors.full_messages.to_sentence
+  %ul#new-mashout-hashtag-container.left
+    %li
+      %input#new-mashout-hashtag-text.left{:type => 'text', :value => hashtag.tag}
+    %li.actions
+      %a#new-mashout-hashtag-confirm.left
+        Confirm
+      %a#new-mashout-hashtag-cancel.left
+        Cancel
+  %p.left
+    = hashtag.errors.full_messages.to_sentence
+
