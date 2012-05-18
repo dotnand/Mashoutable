@@ -6,13 +6,13 @@
       = hashtag.tag
     %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
   %li.actions
-    %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :alt => 'Edit', :title => 'Edit', :onclick => 'return false;', :class => 'left edit'}
+    %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :title => 'Edit', :onclick => 'return false;', :class => 'left edit'}
       %span.icon
-    %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :alt => 'Confirm', :title => 'Confirm', :onclick => 'return false;', :class => 'left hidden confirm'}
+    %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :title => 'Confirm', :onclick => 'return false;', :class => 'left hidden confirm'}
       %span.icon
-    %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :alt => 'Cancel', :title => 'Cancel', :onclick => 'return false;', :class => 'left hidden cancel'}
+    %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :title => 'Cancel', :onclick => 'return false;', :class => 'left hidden cancel'}
       %span.icon
-    = link_to user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left delete', :alt => 'Delete', :title => 'Delete' do
+    = link_to user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left delete', :title => 'Delete' do
       %span.icon
   - if hashtag.errors.any?
     %p.left.clear
