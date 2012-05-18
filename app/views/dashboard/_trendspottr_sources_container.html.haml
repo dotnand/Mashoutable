@@ -1,4 +1,3 @@
 = render :partial => 'trendspottr_header', :locals => { :trend_type => 'Sources' }
-- trends.in_groups_of((trends.count.to_f / 2.to_f).round, false).each_with_index do |trend_group, trend_group_index|
-  .span-6.left
-    = render :partial => 'trendspottr_source', :collection => trend_group, :as => 'trend'
+.left
+  = render :partial => 'trendspottr_source', :collection => trends, :as => 'trend'
