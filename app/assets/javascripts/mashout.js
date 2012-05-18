@@ -524,7 +524,7 @@ function inlineEdit(hashtagId, editPath) {
     })
 }
 
-function initializeNewHashtagListeners(newHashtagPath) {
+function initializeNewHashtagListeners(newHashtagPath, createHashtagPath) {
     $('#new-mashout-hashtag-cancel').live('click', function(e) {
         e.preventDefault()
         $('#new-mashout-hashtag-container').remove()
@@ -532,7 +532,7 @@ function initializeNewHashtagListeners(newHashtagPath) {
     $('#new-mashout-hashtag-confirm').live('click', function(e) {
         e.preventDefault()
         $.ajax({
-            url: newHashtagPath,
+            url: createHashtagPath,
             type: "POST",
             dataType: 'html',
             data: { user_hashtag: { tag: $('#new-mashout-hashtag-text').val() } },
@@ -548,31 +548,19 @@ function initializeNewHashtagListeners(newHashtagPath) {
     })
     $('#new-hashtag').click(function(e) {
         e.preventDefault()
+
         if($('#new-mashout-hashtag-container').length > 0) {
             return false
         }
 
-        var newHashtag   = generateNewHashtagForm()
-
         // Add the new hashtag above the new hashtag link
-        $('#new-hashtag').before(newHashtag)
+        $.ajax({
+            url: newHashtagPath,
+            type: 'GET',
+            dataType: 'html',
+            success: function(data) {
+                $('#new-hashtag').before(data)
+            }
+        })
     })
 }
-
-function generateNewHashtagForm() {
-    var hashtagContainer = $('<ul/>', {id: 'new-mashout-hashtag-container', 'class': 'left'})
-    var inputField       = $('<input/>', {id:'new-mashout-hashtag-text', 'class': 'left', type:'text', placeholder: '#HashTag'})
-    var inputList        = $('<li/>')
-    var actionsList      = $('<li/>', { 'class': 'actions' })
-    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', 'class': 'left confirm', href: '#', html: '<span class="icon"></span>'})
-    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', 'class': 'left cancel', href: '#', html: '<span class="icon"></span>'})
-
-    inputList.append(inputField)
-    actionsList.append(confirmLink)
-    actionsList.append(cancelLink)
-    hashtagContainer.append(inputList)
-    hashtagContainer.append(actionsList)
-
-    return hashtagContainer
-}
-
