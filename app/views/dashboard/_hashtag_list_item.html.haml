@@ -16,7 +16,7 @@
     #mashout-hashtag-checkboxes.span-13.left
       %input{:type => 'hidden', :id => 'hidden-hashtags', :name => 'hidden-hashtags'}
         = render :partial => 'hashtag', :collection => hashtags, :as => 'hashtag'
-      %a{:id => 'new-hashtag', :href => '#', :onclick => 'return false;', :class => 'clear right'}
+      %a{:id => 'new-hashtag', :href => '#', :class => 'clear right'}
         Add Hashtag
       :javascript
         $(function() {

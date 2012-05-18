@@ -7,11 +7,11 @@
         = hashtag.tag
       %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
     %li.actions
-      %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :onclick => 'return false;', :class => 'left'}
+      %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :class => 'left'}
         Edit
-      %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
+      %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :class => 'left hidden'}
         Confirm
-      %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
+      %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :class => 'left hidden'}
         Cancel
       = link_to 'Delete', user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left'
     - if hashtag.errors.any?
@@ -39,10 +39,10 @@
     %li
       %input#new-mashout-hashtag-text.left{:type => 'text', :value => hashtag.tag}
     %li.actions
-      %a#new-mashout-hashtag-confirm.left
+      %a#new-mashout-hashtag-confirm.left{:href => '#', :class => 'left'}
         Confirm
-      %a#new-mashout-hashtag-cancel.left
+      %a#new-mashout-hashtag-cancel.left{:href => '#', :class => 'left'}
         Cancel
-  %p.left
-    = hashtag.errors.full_messages.to_sentence
+    %p.left
+      = hashtag.errors.full_messages.to_sentence
 

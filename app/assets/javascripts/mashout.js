@@ -452,21 +452,31 @@ function makeHashtagEditable(hashtagId) {
 }
 
 function makeHashtagFixed(hashtagId) {
+    var error = $(hashtagId + '-container > p')
+
+    if(error) {
+        error.remove()
+    }
+
     hideElements([$(hashtagId + '-cancel'), $(hashtagId + '-text'), $(hashtagId + '-confirm')])
     showElements([$(hashtagId + '-label'), $(hashtagId + '-edit')])
 }
 
 function inlineEdit(hashtagId, editPath) {
-    $(hashtagId + '-edit').click(function() {
+    $(hashtagId + '-edit').click(function(e) {
+        e.preventDefault()
         makeHashtagEditable(hashtagId)
     })
-    $(hashtagId + '-cancel').click(function() {
+    $(hashtagId + '-cancel').click(function(e) {
+        e.preventDefault()
         $(hashtagId + '-text').val($(hashtagId).val())
         makeHashtagFixed(hashtagId)
     })
     $(hashtagId + '-delete').click(function(e) {
-        var hashtag = $(hashtagId).val()
         e.preventDefault()
+
+        var hashtag = $(hashtagId).val()
+
         $.ajax({
             url: $(this).attr('href'),
             type: "DELETE",
@@ -480,6 +490,8 @@ function inlineEdit(hashtagId, editPath) {
         })
     })
     $(hashtagId + '-confirm').click(function(e) {
+        e.preventDefault();
+
         var oldHashtag   = $(hashtagId).val()
         var newHashtag   = $(hashtagId + '-text').val()
         var newHashtagId = '#mashout-' + newHashtag.replace('#', '').replace(/[^\w]/, '') + '-hashtag'
@@ -513,10 +525,12 @@ function inlineEdit(hashtagId, editPath) {
 }
 
 function initializeNewHashtagListeners(newHashtagPath) {
-    $('#new-mashout-hashtag-cancel').live('click', function() {
+    $('#new-mashout-hashtag-cancel').live('click', function(e) {
+        e.preventDefault()
         $('#new-mashout-hashtag-container').remove()
     })
-    $('#new-mashout-hashtag-confirm').live('click', function() {
+    $('#new-mashout-hashtag-confirm').live('click', function(e) {
+        e.preventDefault()
         $.ajax({
             url: newHashtagPath,
             type: "POST",
@@ -532,44 +546,32 @@ function initializeNewHashtagListeners(newHashtagPath) {
             $('#new-mashout-hashtag-confirm').click()
         }
     })
-    $('#new-hashtag').click(function() {
+    $('#new-hashtag').click(function(e) {
+        e.preventDefault()
         if($('#new-mashout-hashtag-container').length > 0) {
             return false
         }
 
-        var hashtagLists = $('#mashout-hashtag-checkboxes > .left.span-6').map(function() { return $(this) })
-        var leftList     = hashtagLists[0]
-        var rightList    = hashtagLists[1]
         var newHashtag   = generateNewHashtagForm()
 
-        if (rightList != undefined) {
-            var leftCount    = leftList.find('div').length
-            var rightCount   = rightList.find('div').length
-
-            if (leftCount > rightCount) {
-                rightList.append(newHashtag)
-            }
-            else {
-                leftList.append(newHashtag)
-            }
-        }
-        else {
-            var rightList = $('<div/>', { 'class': 'left span-6' })
-            rightList.append(newHashtag)
-            $('#mashout-hashtag-checkboxes > .left.span-6').after(rightList)
-        }
+        // Add the new hashtag above the new hashtag link
+        $('#new-hashtag').before(newHashtag)
     })
 }
 
 function generateNewHashtagForm() {
-    var hashtagContainer = $('<div/>', {id: 'new-mashout-hashtag-container', class: 'left'})
-    var inputField       = $('<input/>', {id:'new-mashout-hashtag-text', class: 'left', type:'text', placeholder: '#HashTag'})
-    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', class: 'left', text: 'Confirm'})
-    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', class: 'left', text: 'Cancel'})
+    var hashtagContainer = $('<ul/>', {id: 'new-mashout-hashtag-container', 'class': 'left'})
+    var inputField       = $('<input/>', {id:'new-mashout-hashtag-text', 'class': 'left', type:'text', placeholder: '#HashTag'})
+    var inputList        = $('<li/>')
+    var actionsList      = $('<li/>', { 'class': 'actions' })
+    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', 'class': 'left', text: 'Confirm', href: '#'})
+    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', 'class': 'left', text: 'Cancel', href: '#'})
 
-    hashtagContainer.append(inputField)
-    hashtagContainer.append(confirmLink)
-    hashtagContainer.append(cancelLink)
+    inputList.append(inputField)
+    actionsList.append(confirmLink)
+    actionsList.append(cancelLink)
+    hashtagContainer.append(inputList)
+    hashtagContainer.append(actionsList)
 
     return hashtagContainer
 }
