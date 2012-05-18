@@ -260,6 +260,30 @@ input[type="submit"]:hover,
 .help:hover .message {
     display: block; }
 
+/*action icons*/
+.edit .icon,
+.confirm .icon,
+.delete .icon,
+.cancel .icon {
+    background: url('action-icons.png');
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    margin: 7px 0; }
+
+.edit .icon {
+    background-position: 0 0; }
+
+.confirm .icon {
+    background-position: 0 -21px; }
+
+.cancel .icon {
+    background-position: 0 -39px; }
+
+.delete .icon {
+    background-position: 0 -60px; }
+
 /*Spinner*/
 .spinner {
     margin: 8px; }

@@ -7,13 +7,14 @@
         = hashtag.tag
       %input{:id => "mashout-#{hashtag_text}-hashtag-text", :type => 'text', :value => defined?(new_tag) ? new_tag : hashtag.tag, :class => 'left hidden'}
     %li.actions
-      %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :onclick => 'return false;', :class => 'left'}
-        Edit
-      %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
-        Confirm
-      %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :onclick => 'return false;', :class => 'left hidden'}
-        Cancel
-      = link_to 'Delete', user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left'
+      %a{:id => "mashout-#{hashtag_text}-hashtag-edit", :href => '#', :alt => 'Edit', :title => 'Edit', :onclick => 'return false;', :class => 'left edit'}
+        %span.icon
+      %a{:id => "mashout-#{hashtag_text}-hashtag-confirm", :href => '#', :alt => 'Confirm', :title => 'Confirm', :onclick => 'return false;', :class => 'left hidden confirm'}
+        %span.icon
+      %a{:id => "mashout-#{hashtag_text}-hashtag-cancel", :href => '#', :alt => 'Cancel', :title => 'Cancel', :onclick => 'return false;', :class => 'left hidden cancel'}
+        %span.icon
+      = link_to user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left delete', :alt => 'Delete', :title => 'Delete' do
+        %span.icon
     - if hashtag.errors.any?
       %p.left.clear
         = hashtag.errors.full_messages.to_sentence
@@ -39,10 +40,10 @@
     %li
       %input#new-mashout-hashtag-text.left{:type => 'text', :value => hashtag.tag}
     %li.actions
-      %a#new-mashout-hashtag-confirm.left
-        Confirm
-      %a#new-mashout-hashtag-cancel.left
-        Cancel
+      %a#new-mashout-hashtag-confirm.left.confirm
+        %span.icon
+      %a#new-mashout-hashtag-cancel.left.cancel
+        %span.icon
   %p.left
     = hashtag.errors.full_messages.to_sentence
 

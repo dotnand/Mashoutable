@@ -9,22 +9,21 @@
     %strong
       %em= trend_type.titleize << ':'
     %hr.space
-    - trends.in_groups_of(10, false).each_with_index do |trend_group, trend_group_index|
-      .span-6.left
-        - trend_group.each_with_index do |trend, trend_index|
-          - id = "mashout-trend-#{trend_type}-#{trend_group_index * 10 + trend_index}"
-          %input{:id => id, :name => trend[:type] == 'sources' ? 'mashout-trendspottr-targets[]' : "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-          %label{:for => id}
-            - if trend[:type] == 'links'
-              = link_to(trend[:name], trend[:name], :class => 'fancybox iframe') << ' (%.2f)' % trend[:weight]
-            - else
-              = trend[:name] << ' (%.2f)' % trend[:weight]
-          - if %w(links hashtags phrases).include?(trend[:type])
-            :javascript
-              $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
+    .left
+      - trends.each_with_index do |trend, trend_index|
+        - id = "mashout-trend-#{trend_type}-#{trend_index}"
+        %input{:id => id, :name => trend[:type] == 'sources' ? 'mashout-trendspottr-targets[]' : "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+        %label{:for => id}
+          - if trend[:type] == 'links'
+            = link_to(trend[:name], trend[:name], :class => 'fancybox iframe') << ' (%.2f)' % trend[:weight]
           - else
-            :javascript
-              $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
+            = trend[:name] << ' (%.2f)' % trend[:weight]
+        - if %w(links hashtags phrases).include?(trend[:type])
+          :javascript
+            $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
+        - else
+          :javascript
+            $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
     - if @trends.select{|trend| trend[:type] == 'links'}.any?
       :javascript
         $(function() { $('.fancybox').fancybox({width: 1024, height: 768 }) })
