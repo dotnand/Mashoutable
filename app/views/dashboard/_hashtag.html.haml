@@ -14,24 +14,25 @@
       %span.icon
     = link_to user_hashtag_url(hashtag), :id => "mashout-#{hashtag_text}-hashtag-delete", :class => 'left delete', :title => 'Delete' do
       %span.icon
+    :javascript
+      $(function() {
+        var hashtagId = "#mashout-#{hashtag_text}-hashtag"
+        bindDynamicPreviewCheckboxClick(hashtagId, '#hidden-hashtags', '#out-preview');
+        inlineEdit(hashtagId, "#{user_hashtag_url(hashtag)}")
+      })
+    - if hashtag.errors.any?
+      :javascript
+        $(function() {
+          makeHashtagEditable("#mashout-#{hashtag_text}-hashtag")
+        })
+    - if defined?(checked) and checked
+      :javascript
+        $(function() {
+          generateOutFragment("#{hashtag.tag}", '#hidden-hashtags', '#out-preview')
+          generateDynamicOutPreview('#out-preview')
+        })
   - if hashtag.errors.any?
     %p.left.clear
       = hashtag.errors.full_messages.to_sentence
-  :javascript
-    $(function() {
-      var hashtagId = "#mashout-#{hashtag_text}-hashtag"
-      bindDynamicPreviewCheckboxClick(hashtagId, '#hidden-hashtags', '#out-preview');
-      inlineEdit(hashtagId, "#{user_hashtag_url(hashtag)}")
-    })
-  - if hashtag.errors.any?
-    :javascript
-      $(function() {
-        makeHashtagEditable("#mashout-#{hashtag_text}-hashtag")
-      })
-  - if defined?(checked) and checked
-    :javascript
-      $(function() {
-        generateOutFragment("#{hashtag.tag}", '#hidden-hashtags', '#out-preview')
-        generateDynamicOutPreview('#out-preview')
-      })
+
 
