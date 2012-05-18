@@ -319,6 +319,8 @@ function bindMashoutClearPreviewClick() {
         // clear the hidden checkbox fields
         $('#mashout-form #hidden-hashtags').val('');
         $('#mashout-form #hidden-trends').val('');
+        $('#mashout-form #hidden-trendspottr-trends').val('');
+        $('#mashout-form #hidden-trendspottr-targets').val('');
 
         // clear the drop-downs, except target orientated ones
         selectAutocomplete('#mashout-comment-container', '#mashout-comment', 'NONE');
