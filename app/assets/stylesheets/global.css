@@ -1068,7 +1068,7 @@ h4 span.counter {
     left: 0;
     width: 307px;
     padding: 5px;
-    z-index: 1337; }
+    z-index: 50; }
 
 #content-wrapper #sidebar #ready-to-mashout .button {
     padding: 5px 3px; }
@@ -1174,6 +1174,9 @@ h4 span.counter {
 #content-wrapper #video-library #videos .edit-video-container input[type='text'] {
     width: 100px; }
 
+/*fancy box*/
+#fancybox-overlay {
+    background: #000000 !important; }
 
 /*Forms*/
 label {

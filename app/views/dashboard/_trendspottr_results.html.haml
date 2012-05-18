@@ -26,7 +26,7 @@
             $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
     - if @trends.select{|trend| trend[:type] == 'links'}.any?
       :javascript
-        $(function() { $('.fancybox').fancybox({width: 1024, height: 768 }) })
+        $(function() { $('.fancybox').fancybox({width: 1036, height: 768 }) })
     - if trend_type != 'sources'
       %hr.space
 - else
