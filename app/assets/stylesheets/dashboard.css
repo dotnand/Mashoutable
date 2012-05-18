@@ -232,7 +232,9 @@
 
 /*Add a Hashtags*/
 #mashout-hashtag a#new-hashtag {
-    margin: 10px 5px 0 5px; }
+    margin: 10px 5px 0 5px;
+    text-align: right;
+    width: 98%; }
 
 #mashout-hashtag ul {
     width: 100%;
@@ -409,3 +411,4 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
+
