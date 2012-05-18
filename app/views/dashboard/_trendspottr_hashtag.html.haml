@@ -1,0 +1,6 @@
+- id = "mashout-trend-hashtag-#{trend[:name].gsub('#', '')}"
+%input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+%label{:for => id}
+  = trend[:name] << ' (%.2f)' % trend[:weight]
+:javascript
+  $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
