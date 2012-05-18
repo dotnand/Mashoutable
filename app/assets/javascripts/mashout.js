@@ -513,7 +513,7 @@ function inlineEdit(hashtagId, editPath) {
                     generateOutFragment(oldHashtag, '#hidden-hashtags', false)
                 }
                 $(hashtagId + '-container').replaceWith(data)
-            },
+            }
         })
     })
     $(hashtagId + '-text').keypress(function(e) {
@@ -577,3 +577,4 @@ function bindTrendspottrLinkToTarget(linkClass, targetId) {
         $('#' + targetId).html(iframe)
     })
 }
+
