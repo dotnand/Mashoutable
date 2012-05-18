@@ -4,14 +4,14 @@ class ApplicationController < ActionController::Base
   layout 'inner'
   protect_from_forgery
 
-  #protected
-  #  def default_url_options
-  #    if Rails.env.development? or Rails.env.test?
-  #      { :host => "localhost", :port => 3000}
-  #    else
-  #      {}
-  #    end
-  #  end
+  protected
+    def default_url_options
+      if Rails.env.development? or Rails.env.test?
+        { :host => "localhost", :port => 3000}
+      else
+        {}
+      end
+    end
 
     def current_user
       @current_user ||= User.find_by_id(session[:user_id])
