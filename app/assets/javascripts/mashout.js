@@ -564,8 +564,8 @@ function generateNewHashtagForm() {
     var inputField       = $('<input/>', {id:'new-mashout-hashtag-text', 'class': 'left', type:'text', placeholder: '#HashTag'})
     var inputList        = $('<li/>')
     var actionsList      = $('<li/>', { 'class': 'actions' })
-    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', 'class': 'left', text: 'Confirm', href: '#'})
-    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', 'class': 'left', text: 'Cancel', href: '#'})
+    var confirmLink      = $('<a/>', {id: 'new-mashout-hashtag-confirm', 'class': 'left confirm', href: '#', html: '<span class="icon"></span>'})
+    var cancelLink       = $('<a/>', {id: 'new-mashout-hashtag-cancel', 'class': 'left cancel', href: '#', html: '<span class="icon"></span>'})
 
     inputList.append(inputField)
     actionsList.append(confirmLink)
@@ -575,3 +575,4 @@ function generateNewHashtagForm() {
 
     return hashtagContainer
 }
+
