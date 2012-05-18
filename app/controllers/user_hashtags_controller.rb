@@ -2,14 +2,21 @@ class UserHashtagsController < ApplicationController
   before_filter :auth_required
   before_filter :load_hashtag, :only => [:update, :destroy]
 
+  def new
+    @hashtag = UserHashtag.new
+
+    render :partial => 'dashboard/new_hashtag', :object => @hashtag
+  end
+
   def create
     @hashtag = current_user.hashtags.new(params[:user_hashtag])
 
     if @hashtag.valid?
       @hashtag.save
+      render :partial => 'dashboard/hashtag', :object => @hashtag and return
     end
 
-    render :partial => 'dashboard/hashtag', :object => @hashtag
+    render :partial => 'dashboard/new_hashtag', :object => @hashtag
   end
 
   def update
