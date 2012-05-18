@@ -7,7 +7,7 @@
     = render :partial => 'media_source_icon', :collection => media_sources[4...media_sources.count], :as => 'media_source', :locals => { :hidden => true }
   %a{:id => 'more-media', :href => '#', :onclick => 'return false;', :class => 'right'}
     Show More
-  %a{:id => 'less-media', :href => '#', :onclick => 'return false;', :class => 'right clear'}
+  %a{:id => 'less-media', :href => '#', :onclick => 'return false;', :class => 'hidden right clear'}
     Show Less
   %input{:id => 'hidden-media', :type => 'hidden', :value => ''}/
   :javascript
@@ -15,10 +15,13 @@
     $(function() {
       $('#more-media').click(function() {
         $(this).hide()
-        $('#hidden-media-icons').slideDown(500)
+        $('#hidden-media-icons').slideDown(500, function() {
+          $('#less-media').show()
+        })
       })
       $('#less-media').click(function() {
         $('#hidden-media-icons').slideUp(500, function() {
+          $('#less-media').hide()
           $('#more-media').show()
         })
       })
