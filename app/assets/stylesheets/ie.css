@@ -4,15 +4,18 @@ input.button {
     padding-bottom: 4px !important; }
 
 #header #social-media {
-    margin-right: -5px;}
+    margin-right: -5px; }
 
 .ui-button {
     margin-top: 0; }
 
 #footer #back-to-top {
     margin-top: 15px;
-    padding: 0;}
+    padding: 0; }
 
 #content-wrapper.span-all #video-library #videos ul {
     min-height: 413px; }
+
+label {
+    top: 0.2em !important; }
 

@@ -14,9 +14,9 @@
       %span.icon
       %p.message We make it easy to get out to more people. Choose as many tags as you like!
     #mashout-hashtag-checkboxes.span-13.left
-      %input{:type => 'hidden', :id => 'hidden-hashtags', :name => 'hidden-hashtags'}
-        = render :partial => 'hashtag', :collection => hashtags, :as => 'hashtag'
-      %a{:id => 'new-hashtag', :href => '#', :class => 'clear right'}
+      %input{:type => 'hidden', :id => 'hidden-hashtags', :name => 'hidden-hashtags'}/
+      = render :partial => 'hashtag', :collection => hashtags, :as => 'hashtag'
+      %a{:id => 'new-hashtag', :href => '#', :class => 'clear left'}
         Add Hashtag
       :javascript
         $(function() {
