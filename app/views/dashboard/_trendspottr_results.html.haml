@@ -6,29 +6,17 @@
   %input{:id => 'hidden-trendspottr-trends', :type => :hidden}
   %input{:id => 'hidden-trendspottr-targets', :type => :hidden}
   - @trends.group_by { |trend| trend[:type] }.each do |trend_type, trends|
-    %strong
-      %em= trend_type.titleize << ':'
-    %hr.space
-    .left
-      - trends.each_with_index do |trend, trend_index|
-        - id = "mashout-trend-#{trend_type}-#{trend_index}"
-        %input{:id => id, :name => trend[:type] == 'sources' ? 'mashout-trendspottr-targets[]' : "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-        %label{:for => id}
-          - if trend[:type] == 'links'
-            = link_to(trend[:name], trend[:name], :class => 'fancybox iframe') << ' (%.2f)' % trend[:weight]
-          - else
-            = trend[:name] << ' (%.2f)' % trend[:weight]
-        - if %w(links hashtags phrases).include?(trend[:type])
-          :javascript
-            $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); });
-        - else
-          :javascript
-            $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
+    - if trend_type == 'links'
+      = render :partial => 'trendspottr_links_container', :locals => { :trends => trends }
+    - elsif trend_type == 'phrases'
+      = render :partial => 'trendspottr_phrases_container', :locals => { :trends => trends }
+    - elsif trend_type == 'sources'
+      = render :partial => 'trendspottr_sources_container', :locals => { :trends => trends }
+    - else
+      = render :partial => 'trendspottr_hashtags_container', :locals => { :trends => trends }
     - if @trends.select{|trend| trend[:type] == 'links'}.any?
       :javascript
         $(function() { $('.fancybox').fancybox({width: 1036, height: 768 }) })
-    - if trend_type != 'sources'
-      %hr.space
 - else
   No results.
 

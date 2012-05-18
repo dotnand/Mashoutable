@@ -1,0 +1,5 @@
+= render :partial => 'trendspottr_header', :locals => { :trend_type => 'Hashtags' }
+- trends.in_groups_of((trends.count.to_f / 2.to_f).round, false).each do |trend_group|
+  .span-6.left
+    = render :partial => 'trendspottr_hashtag', :collection => trend_group, :as => 'trend'
+%hr.space

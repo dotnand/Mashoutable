@@ -564,3 +564,16 @@ function initializeNewHashtagListeners(newHashtagPath, createHashtagPath) {
         })
     })
 }
+
+function pagePeekerImageURL(src) {
+    return 'http://pagepeeker.com/thumbs.php?size=l&url=' + src
+}
+
+function bindTrendspottrLinkToTarget(linkClass, targetId) {
+    $('.' + linkClass).click(function(e) {
+        e.preventDefault()
+        var src    = pagePeekerImageURL($(this).attr('href'))
+        var iframe = $('<iframe/>', { id: targetId + '-iframe', src: src})
+        $('#' + targetId).html(iframe)
+    })
+}
