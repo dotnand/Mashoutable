@@ -5,6 +5,7 @@ class DashboardController < ApplicationController
   before_filter :auth_required, :except => :video_playback
   before_filter :available_networks, :if => :signed_in?
   before_filter :load_hashtags, :only => [:blastout, :mashout, :shoutout]
+  before_filter :load_tool, :only => [:videos, :update_video, :delete_video]
 
   # TODO: refactor into separate controllers
 
@@ -161,7 +162,6 @@ class DashboardController < ApplicationController
   end
 
   def videos
-    @tool = params['source']
     render_videos
   end
 
@@ -180,7 +180,6 @@ class DashboardController < ApplicationController
   end
 
   def update_video
-    @tool   = params['source']
     guid    = params['guid']
     name    = params['name']
     message = nil
@@ -201,7 +200,6 @@ class DashboardController < ApplicationController
   end
 
   def delete_video
-    @tool = params['source']
     video = current_user.videos.find_by_guid(params['guid'])
 
     video.destroy if video.present?
@@ -318,6 +316,10 @@ class DashboardController < ApplicationController
         current_user.hashtags = User::DEFAULT_HASHTAGS.map{|hashtag| UserHashtag.new(:tag => hashtag) }
         @hashtags = current_user.hashtags
       end
+    end
+
+    def load_tool
+      @tool = params['source']
     end
 end
 
