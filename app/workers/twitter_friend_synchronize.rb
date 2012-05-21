@@ -3,6 +3,11 @@ class TwitterFriendSynchronize
 
   def self.perform(user_id)
     user                = User.find(user_id)
+
+    unless user.twitter.present?
+      return
+    end
+
     local_friend_ids    = user.local_friend_ids
     twitter_friend_ids  = user.twitter_ids(:friend_ids, {}, nil)
 
