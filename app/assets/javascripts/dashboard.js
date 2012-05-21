@@ -158,6 +158,10 @@ function ajaxifyPagination(targetId, path, src) {
 function updateTweetTargetList()
 {
     if ($('#target-tweet-list').find('.target-content').length == 0) {
+        if(allTargetsCheckbox = $('#target-checkbox')) {
+            allTargetsCheckbox.remove();
+            $('label[for="target-checkbox"]').remove();
+        }
         $('#target-tweet-list').append('<p>Nothing was found.</p>');
     }
 }

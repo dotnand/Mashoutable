@@ -1,6 +1,5 @@
 class FriendsController < ApplicationController
   before_filter :auth_required
-  #before_filter :verify_user
 
   def create
     friend  = Friend.new(params['friend'])
@@ -41,14 +40,6 @@ class FriendsController < ApplicationController
   protected
     def json_response(success = true, message = '')
       { data: { success: success, message: message } }
-    end
-
-    def verify_user
-      user_id = params['user_id'].to_i
-
-      if user_id != current_user.id
-        render json: json_response(false, 'Not authorized.') and return
-      end
     end
 end
 
