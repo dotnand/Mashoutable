@@ -4,7 +4,7 @@ body {
     font-family: Verdana;
     color: #333333;
     font-size: 12px;
-    line-height: 1.5em;}
+    line-height: 1.5em; }
 
 
 /*Links*/
@@ -13,7 +13,7 @@ a:link, a:visited, a:active {
     text-decoration: underline; }
 
 a:hover {
-    color:#3eb7df;}
+    color:#3eb7df; }
 
 
 /*h tags*/
