@@ -2,7 +2,7 @@
 %li
   %input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
   %label{:for => id}
-    = link_to(trend[:name], trend[:name], :class => 'fancybox iframe trendspottr-link', 'data-preview' => true)
+    = link_to(trend[:name], trend[:name], :class => 'fancybox iframe trendspottr-link', 'data-preview' => true) << sprintf(" (%.2f)",trend[:weight])
   :javascript
     $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); })
 
