@@ -338,6 +338,12 @@ function bindMashoutClearPreviewClick() {
             $('#mashout-form #hidden-video').val('');
         }
 
+        // clear the data field from the Trendspottr search box
+        if($('#trendspottr-query') && $('#trendspottr-query').data('searchList')) {
+            $('#trendspottr-query').data('searchList', [])
+            updateDynamicTrendspottrSearch('#trendspottr-query')
+        }
+
         $('#out-preview').val('');
         calculateCharsLeft();
         return false;
