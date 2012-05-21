@@ -151,17 +151,6 @@ class DashboardController < ApplicationController
     bestie_screen_name = params['bestie']
     bestie_screen_name.insert(0, '@') if bestie_screen_name[0] != '@'
 
-    # TODO: Verify user exists
-=begin
-    if current_user.twitter.user?(bestie_screen_name.gsub('@', ''))
-      if current_user.besties.create(:screen_name => bestie_screen_name).save
-        @message = 'Bestie ' << bestie_screen_name << ' created'
-      end
-    end
-
-    @message ||= 'Unable to create ' << bestie_screen_name
-=end
-
     if current_user.besties.create(:screen_name => bestie_screen_name).save
       @message = 'Bestie ' << bestie_screen_name << ' created'
     else
@@ -181,17 +170,10 @@ class DashboardController < ApplicationController
     guid  = params['guid']
     video = Video.new(:guid => guid, :name => name, :user => current_user)
 
-    # TODO: refactor into video model
-    if guid.blank?
-      message = 'Video was not supplied'
-    elsif name.blank?
-      message = 'Please supply a video name'
-    elsif video.save
+    if video.save
       message = nil
-    elsif video.errors['guid'].count > 0
-      message = 'Video has already been saved'
-    elsif video.errors['name'].count > 0
-      message = 'Video name already has been taken'
+    else
+      message = video.errors.full_messages.first
     end
 
     render :text => message

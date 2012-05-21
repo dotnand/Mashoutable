@@ -492,7 +492,7 @@ describe DashboardController do
     it 'should fail given guid and no name' do
       post :create_video, {'guid' => '1234'}
       response.should be_success
-      response.body.should eq('Please supply a video name')
+      response.body.should eq('Video name was not supplied')
     end
 
     it 'should fail if video guid has been already taken' do
@@ -506,7 +506,7 @@ describe DashboardController do
       FactoryGirl.create(:video, :guid => '1234', :name => 'my video', :user => current_user)
       post :create_video, {'guid' => '9999', 'name' => 'my video'}
       response.should be_success
-      response.body.should eq('Video name already has been taken')
+      response.body.should eq('Video name has already been taken')
     end
   end
 
