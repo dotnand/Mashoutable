@@ -97,8 +97,8 @@
     .help.clear
       %span.icon
       %p.message Pick a Google Trend
-    %ul#mashout-google-container.span-13.left
-      #mashout-trend-checkboxes.left
+    #mashout-google-container.span-13.left
+      %ul#mashout-trend-checkboxes.left
         - count = 0
         - @trends.each do |trend|
           - id = "mashout-trend-#{count += 1}"
