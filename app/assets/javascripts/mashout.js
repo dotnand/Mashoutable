@@ -381,7 +381,7 @@ function updateDynamicTrendspottrSearch(queryTargetId) {
 function bindDynamicTrendSpottrCheckboxClick(checkboxName, targetId) {
     $('input[name="' + checkboxName + '"]').click(function() {
         var value     = $(this).val()
-        var isChecked = $(this).attr('checked') == 'checked'
+        var isChecked = $(this).prop('checked')
 
         if (!$(targetId).data('searchList')) {
             $(targetId).data('searchList', [])
@@ -405,7 +405,17 @@ function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
     var params = {}
 
     params.trend_location = $('#mashout-trendspottr-selection').val()
-    params.trend_search = $('#trendspottr-query').val()
+    params.trend_search   = $('#trendspottr-query').val()
+
+    if ($(window).scrollTop() > $('#trendspottr-query').offset().top) {
+        $('html, body').animate({
+             scrollTop: $("#trendspottr-query").offset().top
+         }, 400, function() { $(targetId).hide() })
+    }
+    else
+    {
+        $(targetId).hide()
+    }
 
     $.ajax({url: path,
             data: params,
@@ -416,9 +426,12 @@ function handleTrendSpottrSearchSubmission(buttonId, targetId, path) {
                 $(targetId).html('<hr class="space" /><strong><em>Search Results</em></strong><hr class="space" />No results.')
             },
             complete: function() {
-                $(targetId).removeClass('hidden')
+                $(targetId).show()
                 $('#mashout-trendspottr-container img.spinner').remove()
                 $(buttonId).prop('disabled', false)
+                $('html, body').animate({
+                    scrollTop: $(targetId).offset().top
+                }, 400)
             },
             timeout: 15000
     })
@@ -586,3 +599,33 @@ function bindTrendspottrLinkToTarget(linkClass, targetId) {
     })
 }
 
+function bindTrendSpotButtonForCheckbox(checkboxId) {
+    $(checkboxId + '-submit').click(function(e) {
+        e.preventDefault();
+
+        var checkbox        = $(checkboxId);
+        var checkboxName    = checkbox.attr('name');
+        var search          = $('#trendspottr-query');
+        var checkedTopics   = $('input[name="mashout-trendspottr-topics[]"]:checked');
+        var checkedSearches = $('input[name="mashout-trendspottr-searches[]"]:checked');
+
+        $.each([checkedTopics, checkedSearches], function(index, checkboxes) {
+            checkboxes.each(function(idx) {
+                $(this).prop('checked', false);
+            });
+        });
+
+        if(checkboxName.match(/topics/) || checkboxName.match(/searches/)) {
+            checkbox.prop('checked', true);
+            search.data('searchList', [unescape(checkbox.val())])
+        }
+        else
+        {
+            search.data('searchList', []);
+        }
+
+        search.val(unescape(checkbox.val()));
+
+        $('#trendspottr-search').click();
+    });
+}
