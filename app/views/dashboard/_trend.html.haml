@@ -83,29 +83,31 @@
         %span.icon
         %p.message Pick a Twitter Trend
       #mashout-twitter-container.span-13.left
-        #mashout-trend-checkboxes.left
+        %ul#mashout-trend-checkboxes.left
           - count = 0
           - @trends.each do |trend|
             - id = "mashout-trend-#{count += 1}"
+            %li
+              %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+              %label{:for => id}= trend[:name]
+              %br/
+              :javascript
+                $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
+  - if defined? @trend_source and @trend_source == 'Google'
+    .help.clear
+      %span.icon
+      %p.message Pick a Google Trend
+    %ul#mashout-google-container.span-13.left
+      #mashout-trend-checkboxes.left
+        - count = 0
+        - @trends.each do |trend|
+          - id = "mashout-trend-#{count += 1}"
+          %li
             %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
             %label{:for => id}= trend[:name]
             %br/
             :javascript
               $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
-  - if defined? @trend_source and @trend_source == 'Google'
-    .help.clear
-      %span.icon
-      %p.message Pick a Google Trend
-    #mashout-google-container.span-13.left
-      #mashout-trend-checkboxes.left
-        - count = 0
-        - @trends.each do |trend|
-          - id = "mashout-trend-#{count += 1}"
-          %input{:id => id, :name => "mashout-trend[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-          %label{:for => id}= trend[:name]
-          %br/
-          :javascript
-            $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trends', '#out-preview'); });
   %input{:id => 'hidden-trends', :type => 'hidden', :value => ''}
   :javascript
     $(function() { bindTrendAutoCompleteSelectAndHandle('#mashout-trend-container', '#mashout-trend-selection', "#{trend_source_path}"); });
