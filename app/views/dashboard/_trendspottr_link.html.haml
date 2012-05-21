@@ -1,7 +1,8 @@
 - id = "mashout-trend-links-#{trend_counter}"
-%input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-%label{:for => id}
-  = link_to(trend[:name], trend[:name], :class => 'fancybox iframe trendspottr-link', 'data-preview' => true)
-:javascript
-  $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); })
+%li
+  %input{:id => id, :name => "mashout-trendspottr-trends[]", :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+  %label{:for => id}
+    = link_to(trend[:name], trend[:name], :class => 'fancybox iframe trendspottr-link', 'data-preview' => true)
+  :javascript
+    $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-trends', '#out-preview'); })
 

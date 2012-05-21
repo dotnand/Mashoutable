@@ -230,7 +230,7 @@
     float: left;
     min-width: 280px; }
 
-/*Add a Hashtags*/
+/*Add a Hashtag*/
 #mashout-hashtag a#new-hashtag {
     margin: 10px 5px 0 5px;
     text-align: right;
@@ -270,6 +270,14 @@
 
 #mashout-hashtag input[type="checkbox"] {
     margin: 8px 3px; }
+
+/*Trends*/
+#mashout-trend-checkboxes,
+#mashout-trendspottr-trends ul {
+    margin-left: 0;
+    padding-left: 0;
+    width: 100%;
+    list-style-type: none; }
 
 /*Targeted tweet media icons*/
 #media-icons {

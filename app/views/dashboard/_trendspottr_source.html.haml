@@ -1,6 +1,8 @@
 - id = "mashout-trend-source-#{trend[:name].gsub(/[^\w]/, '')}"
-%input{:id => id, :name => 'mashout-trendspottr-targets[]', :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
-%label{:for => id}
-  = trend[:name] << ' (%.2f)' % trend[:weight]
-:javascript
-  $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
+%li
+  %input{:id => id, :name => 'mashout-trendspottr-targets[]', :type => "checkbox", :value => "#{URI.encode(trend[:value])}"}
+  %label{:for => id}
+    = trend[:name] << ' (%.2f)' % trend[:weight]
+  :javascript
+    $(function() { bindDynamicPreviewCheckboxClick("##{id}", '#hidden-trendspottr-targets', '#out-preview'); });
+
