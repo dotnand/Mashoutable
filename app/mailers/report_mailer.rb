@@ -3,7 +3,7 @@ class ReportMailer < ActionMailer::Base
           :to => "mhhenterprises@aim.com",
           :cc => "nicholaspapillon@gmail.com"
 
-  def report_email(reports)
+  def report_email(reports, subject = "Reports for #{Date.today}")
     @reports = reports
 
     unless @reports.is_a?(Array)
@@ -11,11 +11,9 @@ class ReportMailer < ActionMailer::Base
     end
 
     @reports.each do |report|
-      if report[:filename]
-        attachments[report[:filename]] = report[:table].to_csv
-      end
+      attachments[report.csv_filename] = report.to_csv
     end
-    mail(:subject => "Report for #{Date.yesterday}")
+    mail(:subject => subject)
   end
 end
 

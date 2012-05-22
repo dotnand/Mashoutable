@@ -21,7 +21,7 @@ module Mashoutable
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += %W(#{config.root}/lib/modules)
-    
+
     # Add the vendor images asset path
     config.assets.paths += %W("#{Rails.root}/app/assets/images")
 
@@ -51,20 +51,23 @@ module Mashoutable
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    
+
     config.generators do |g|
       g.template_engine :haml
       g.test_framework :rspec
       g.helpers false
     end
-    
+
     # Spork
     if Rails.env.test?
       initializer :after => :initialize_dependency_mechanism do
       ActiveSupport::Dependencies.mechanism = :load
       end
     end
-    
-    config.autoload_paths += %W(#{ config.root }/lib/middleware)    
+
+    config.autoload_paths += %W(#{ config.root }/lib/middleware)
+
+    # Custom reports
+    config.autoload_paths += %W(#{ config.root }/app/reports)
   end
 end

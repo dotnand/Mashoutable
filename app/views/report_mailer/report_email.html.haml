@@ -37,8 +37,8 @@
   %body
   - @reports.each do |report|
     %h2
-      = report[:name]
-    = report[:table].to_html.html_safe
+      = report.header
+    = report.to_html.html_safe
     - unless report == @reports.last
       %br/
 

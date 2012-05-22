@@ -1,5 +1,5 @@
 <% @reports.each do |report| %>
-  <%= "#{report[:name]}\n" %>
-  <%= report[:table].to_s %>
+  <%= "#{report.header}\n" %>
+  <%= report.to_s %>
 <% end %>
 

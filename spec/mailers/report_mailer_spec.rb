@@ -6,9 +6,7 @@ describe ReportMailer do
       @user = FactoryGirl.create(:user)
       @user.authorizations << FactoryGirl.create(:authorization, :provider => 'twitter')
       @user.outs << FactoryGirl.create(:out)
-      @report = {:filname => 'test_report.csv',
-                 :name => 'Test Report',
-                 :table => GenerateReports.build_providers_report }
+      @report = ProvidersReport.new
     end
 
     it 'should render successfully' do

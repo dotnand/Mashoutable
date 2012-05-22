@@ -8,8 +8,17 @@ cache_trendspottr_trends:
   class: CacheTrendspottrPopularTrends
   description: 'Fetch and store Trendspottr popular topics and searches'
 
-generate_reports:
+generate_daily_reports:
   cron: '0 0 * * * America/New_York'
-  class: GenerateReports
-  description: 'Generate provider / out reports and email them.'
+  class: GenerateDailyReports
+  description: 'Generate provider / out reports for yesterday and email them.'
 
+generate_weekly_reports:
+  cron: '0 0 * * Mon America/New_York'
+  class: GenerateWeeklyReports
+  description: 'Generate reports for the past week and email them.'
+
+generate_monthly_reports:
+  cron: '0 0 1 * * America/New_York'
+  class: GenerateMonthlyReports
+  description: 'Generate reports for the past month and email them.'
