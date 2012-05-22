@@ -14,9 +14,6 @@
       = render :partial => 'trendspottr_sources_container', :locals => { :trends => trends }
     - else
       = render :partial => 'trendspottr_hashtags_container', :locals => { :trends => trends }
-    - if @trends.select{|trend| trend[:type] == 'links'}.any?
-      :javascript
-        $(function() { $('.fancybox').fancybox({width: 1036, height: 768 }) })
 - else
   No results.
 
