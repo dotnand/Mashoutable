@@ -26,7 +26,7 @@ class TweetEmitter
 
   def validate!
     errors[:OUT] = 'can not be empty' if @out.content.empty?
-    errors[:Network] = 'must be choosen' if not (@out.twitter? or @out.facebook?)
+    errors[:Network] = 'must be chosen' if not (@out.twitter? or @out.facebook?)
   end
 
   def send_content(params = {})

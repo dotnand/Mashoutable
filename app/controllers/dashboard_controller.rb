@@ -91,17 +91,17 @@ class DashboardController < ApplicationController
 
   def create_mashout
     create_out(params.merge('mashout-type' => 'Mashout'))
-    redirect_to dashboard_mashout_path
+    handle_out_creation(dashboard_mashout_path)
   end
 
   def create_shoutout
     create_out(params.merge('mashout-type' => 'Shoutout'))
-    redirect_to dashboard_shoutout_path
+    handle_out_creation(dashboard_shoutout_path)
   end
 
   def create_blastout
     create_out(params.merge('mashout-type' => 'Blastout'))
-    redirect_to dashboard_blastout_path
+    handle_out_creation(dashboard_blastout_path)
   end
 
   def blastout
@@ -275,7 +275,7 @@ class DashboardController < ApplicationController
           flash[:success] = 'Created your OUT!'
         end
       rescue Exception => ex
-        flash[:error] = 'Unable to your send your OUT.  ' << ex.message
+        flash[:error] = 'Unable to send your OUT.  ' << ex.message
       end
 
       flash[:success].present?
@@ -320,6 +320,23 @@ class DashboardController < ApplicationController
 
     def load_tool
       @tool = params['source']
+    end
+
+    def handle_out_creation(redirect_url)
+      if request.xhr?
+        if flash[:success].present?
+          css_class = 'success'
+          message = flash[:success]
+        else
+          css_class = 'error'
+          message = flash[:error]
+        end
+        flash.discard
+
+        render :partial => 'shared/flash_message', :locals => { :css_class => css_class, :message => message }
+      else
+        redirect_to redirect_url
+      end
     end
 end
 

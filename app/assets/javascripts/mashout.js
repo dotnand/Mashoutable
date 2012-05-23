@@ -340,9 +340,12 @@ function bindMashoutClearPreviewClick() {
 
         // clear the data field from the Trendspottr search box
         if($('#trendspottr-query') && $('#trendspottr-query').data('searchList')) {
-            $('#trendspottr-query').data('searchList', [])
-            updateDynamicTrendspottrSearch('#trendspottr-query')
+            $('#trendspottr-query').data('searchList', []);
+            updateDynamicTrendspottrSearch('#trendspottr-query');
         }
+
+        // clear any flash messages on the page from building outs
+        clearFlashMessages();
 
         $('#out-preview').val('');
         calculateCharsLeft();
@@ -628,4 +631,39 @@ function bindTrendSpotButtonForCheckbox(checkboxId) {
 
         $('#trendspottr-search').click();
     });
+}
+
+function bindAjaxSubmitAndFlash(formId, targetId) {
+    var form = $(formId);
+
+    form.submit(function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(data) {
+                clearFlashMessages();
+                $(targetId).before(data);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                clearFlashMessages();
+                $(targetId).before($('<p/>', { class: 'error', text: errorThrown + '. Please try again later.' }));
+            }
+        });
+    });
+}
+
+function clearFlashMessages() {
+    var errorFlashes   = $('p.error');
+    var successFlashes = $('p.success');
+
+    if(errorFlashes) {
+        errorFlashes.remove();
+    }
+
+    if(successFlashes) {
+        successFlashes.remove();
+    }
 }
