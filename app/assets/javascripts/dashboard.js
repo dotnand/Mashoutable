@@ -29,10 +29,11 @@ function bindEditNetworkPreferencesClick(buttonId, path) {
 }
 
 function bindSendButtonClick(buttonId, outId, outTargetId, formId) {
-    $(buttonId).click(function() {
+    $(buttonId).click(function(e) {
         var out       = $(outId);
         var outTarget = $(outTargetId);
 
+        e.preventDefault();
         outTarget.val(out.val());
         $(formId).submit();
 

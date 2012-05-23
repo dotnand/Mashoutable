@@ -227,7 +227,7 @@ describe DashboardController do
         Out.should_receive(:new).and_return(out)
         TweetEmitter.should_receive(:new).with(current_user, out) { raise Exception.new('test failure') }
         post action, params.merge!({'mashout-network-twitter'  => 'true'})
-        flash[:error].should eq('Unable to your send your OUT.  test failure')
+        flash[:error].should eq('Unable to send your OUT.  test failure')
       end
     end
 

@@ -1119,6 +1119,10 @@ h4 span.counter {
     padding: 0;
     margin: 0; }
 
+#content-wrapper #sidebar #ready-to-mashout #quote .body p.error,
+#content-wrapper #sidebar #ready-to-mashout #quote .body p.success {
+    padding: 0.4em; }
+
 #content-wrapper #sidebar #ready-to-mashout #quote .quoted-by {
     text-align: right;
     margin-top: -10px;

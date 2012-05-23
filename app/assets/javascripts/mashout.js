@@ -633,15 +633,19 @@ function bindTrendSpotButtonForCheckbox(checkboxId) {
     });
 }
 
-function bindAjaxSubmitAndFlash(formId, targetId) {
-    var form = $(formId);
+function bindAjaxSubmitAndFlash(formId, buttonId, targetId) {
+    var form      = $(formId);
+    var spinnerId = form.attr('id') + '-spinner'
 
     form.submit(function(e) {
         e.preventDefault();
 
+        $(buttonId).before($('<img/>', { id: spinnerId, src: '/assets/spinner.gif'}));
+        $(buttonId).prop('disabled', true);
+
         $.ajax({
             url: form.attr('action'),
-            type: 'POST',
+            type: form.attr('method'),
             data: form.serialize(),
             success: function(data) {
                 clearFlashMessages();
@@ -649,21 +653,16 @@ function bindAjaxSubmitAndFlash(formId, targetId) {
             },
             error: function(xhr, textStatus, errorThrown) {
                 clearFlashMessages();
-                $(targetId).before($('<p/>', { class: 'error', text: errorThrown + '. Please try again later.' }));
+                $(targetId).before($('<p/>', { 'class': 'error', text: errorThrown + '. Please try again later.' }));
+            },
+            complete: function() {
+                $('#' + spinnerId).remove();
+                $(buttonId).prop('disabled', false);
             }
         });
     });
 }
 
 function clearFlashMessages() {
-    var errorFlashes   = $('p.error');
-    var successFlashes = $('p.success');
-
-    if(errorFlashes) {
-        errorFlashes.remove();
-    }
-
-    if(successFlashes) {
-        successFlashes.remove();
-    }
+    $('p.error, p.success').remove();
 }
