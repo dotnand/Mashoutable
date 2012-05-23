@@ -236,16 +236,19 @@
     text-align: right;
     width: 98%; }
 
-#mashout-hashtag ul {
+#mashout-hashtag ul,
+#mashout-trendspottr-trends ul li {
     width: 100%;
     margin: 0;
     padding: 0;
     line-height: 2.5em; }
 
-#mashout-hashtag ul:nth-child(even) {
+#mashout-hashtag ul:nth-child(even),
+#mashout-trendspottr-trends ul li:nth-child(even) {
     background: #fafafa; }
 
-#mashout-hashtag ul li {
+#mashout-hashtag ul li,
+#mashout-trendspottr-trends ul li {
     list-style-type: none;
     float: left;
     margin-left: 10px;
@@ -255,20 +258,27 @@
 #mashout-hashtag ul li:nth-child(2) {
     margin-left: 0; }
 
-#mashout-hashtag ul li.actions {
+#mashout-hashtag ul li.actions,
+#mashout-trendspottr-trends ul li .search {
     float: right;
     margin-right: 5px; }
 
-#mashout-hashtag ul li.actions a {
+#mashout-trendspottr-trends ul li .search {
+    margin: 7px 5px; }
+
+#mashout-hashtag ul li.actions a,
+#mashout-trendspottr-trends ul li.actions a {
     margin-left: 5px; }
 
-#mashout-hashtag ul label {
+#mashout-hashtag ul label,
+#mashout-trendspottr-trends ul label {
     line-height: 2.5em; }
 
 #mashout-hashtag input[type="text"] {
     margin-top: 1px; }
 
-#mashout-hashtag input[type="checkbox"] {
+#mashout-hashtag input[type="checkbox"],
+#mashout-trendspottr-trends input[type="checkbox"] {
     margin: 8px 3px; }
 
 /*Trends*/
