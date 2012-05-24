@@ -3,6 +3,7 @@ require 'spork'
 require 'hashie'
 require 'httparty'
 require 'capybara/rails'
+require 'capybara/poltergeist'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -53,7 +54,7 @@ Spork.prefork do
       DatabaseCleaner.clean
     end
 
-    Capybara.javascript_driver = :webkit
+    Capybara.javascript_driver = :poltergeist
   end
 end
 

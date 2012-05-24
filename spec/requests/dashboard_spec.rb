@@ -223,6 +223,7 @@ describe "Dashboard" do
         end
 
         it "should tear down edit environment when cancel is clicked" do
+          find(@edit).click
           find(@cancel).click
           selectors = { @text    => false,
                         @confirm => false,
