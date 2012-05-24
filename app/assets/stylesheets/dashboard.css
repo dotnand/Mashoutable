@@ -254,6 +254,11 @@
     margin-left: 10px;
     height: 30px; }
 
+#mashout-trendspottr-trends ul li.trendspottr-link {
+    height: auto;
+    width: auto;
+    margin-right: 5px; }
+
 #mashout-hashtag ul li:nth-child(1),
 #mashout-hashtag ul li:nth-child(2) {
     margin-left: 0; }
@@ -420,6 +425,14 @@
 #trendspottr-search {
     margin-left: 5px;
 }
+
+.trendspottr-thumbnail-container {
+    width: 240px;
+    height: 180px;
+    background-color: #fafafa;
+    background-image: url('spinner.gif');
+    background-position: 50% 50%;
+    background-repeat: no-repeat; }
 
 /* Trendspottr Page Previews */
 #thumbnail-iframe {
