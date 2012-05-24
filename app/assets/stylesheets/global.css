@@ -264,7 +264,8 @@ input[type="submit"]:hover,
 .edit .icon,
 .confirm .icon,
 .delete .icon,
-.cancel .icon {
+.cancel .icon,
+.search .icon {
     background: url('action-icons.png');
     width: 16px;
     height: 16px;
@@ -283,6 +284,9 @@ input[type="submit"]:hover,
 
 .delete .icon {
     background-position: 0 -60px; }
+
+.search .icon {
+    background-position: 0 -99px; }
 
 /*Spinner*/
 .spinner {
