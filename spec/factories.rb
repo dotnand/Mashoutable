@@ -38,6 +38,7 @@ FactoryGirl.define do
     user
     sequence(:name) {|n| "name#{n}"}
     sequence(:guid) {|n| "video#{n}"}
+    sequence(:bitly_uri) {|n| "http://out.am/#{n}"}
   end
 
   factory :interaction do

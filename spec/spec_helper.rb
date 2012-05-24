@@ -2,6 +2,7 @@ require 'rubygems'
 require 'spork'
 require 'hashie'
 require 'httparty'
+require 'capybara/rails'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
@@ -20,7 +21,7 @@ Spork.prefork do
 
   RSpec.configure do |config|
     config.include Rails.application.routes.url_helpers
-    
+
     Rails.application.routes.default_url_options = { :host => 'localhost:3000' }
     # == Mock Framework
     #
@@ -51,6 +52,8 @@ Spork.prefork do
     config.after(:each) do
       DatabaseCleaner.clean
     end
+
+    Capybara.javascript_driver = :webkit
   end
 end
 

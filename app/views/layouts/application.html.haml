@@ -155,5 +155,6 @@
                 %span.icon.left
               %span.rockmelt
                 %span.icon.left
-    = render 'shared/google_analytics'
+    - if Rails.env.production?
+      = render 'shared/google_analytics'
 

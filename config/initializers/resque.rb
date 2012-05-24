@@ -9,4 +9,8 @@ begin
 
   Dir["#{Rails.root}/app/workers/*.rb"].each { |file| require file }
 rescue URI::InvalidURIError
+  # Escalate the error if this is not asset precompilation
+  if ENV['RAILS_GROUPS'].nil? or ENV['RAILS_GROUPS'] != 'assets'
+    raise 'Could not parse ENV["REDIS_URL"]'
+  end
 end

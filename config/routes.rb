@@ -43,9 +43,9 @@ Mashoutable::Application.routes.draw do
   match 'dashboard/tool'               => 'dashboard#tool'
   match 'dashboard/besties'            => 'dashboard#besties'
   match 'dashboard/videos'             => 'dashboard#videos'
-  match 'dashboard/mashout'            => 'dashboard#mashout'
-  match 'dashboard/blastout'           => 'dashboard#blastout'
-  match 'dashboard/shoutout'           => 'dashboard#shoutout'
+  match 'dashboard/mashout'            => 'dashboard#mashout',  :as => :dashboard_mashout
+  match 'dashboard/blastout'           => 'dashboard#blastout', :as => :dashboard_blastout
+  match 'dashboard/shoutout'           => 'dashboard#shoutout', :as => :dashboard_shoutout
   # TODO: the following tool is temporarily unavailable
   # match 'dashboard/pickout'            => 'dashboard#pickout'
   match 'dashboard/interactions'       => 'dashboard#interactions'

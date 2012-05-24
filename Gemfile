@@ -40,6 +40,7 @@ group :test do
   gem 'rspec-rails',        '~> 2.8.0'
   gem 'cucumber-rails',     '~> 1.0.2', :require => false
   gem 'capybara',           '~> 1.0.1'
+  gem 'capybara-webkit'
   gem 'database_cleaner',   '~> 0.6.7'
   gem 'launchy',            '~> 2.0.5'
   gem 'shoulda',            '~> 3.0.0.beta'
