@@ -1,12 +1,16 @@
+require 'shared_context/capybara_url_options'
 require 'spec_helper'
 
 describe "Dashboard" do
+  include_context 'capybara url options'
   before(:all) do
     @user = FactoryGirl.create(:user)
   end
 
   before(:each) do
+    @user.reload
     DashboardController.any_instance.stub(:current_user).and_return(@user)
+    UserHashtagsController.any_instance.stub(:current_user).and_return(@user)
   end
 
   def underlying_checkbox(element)
@@ -238,6 +242,7 @@ describe "Dashboard" do
           find(@edit).click
           fill_in(@text[1..-1], :with => '#newhash')
           find(@confirm).click
+          wait_until { page.find('#mashout-newhash-hashtag') }
           find('#mashout-newhash-hashtag').value.should == '#newhash'
         end
 
@@ -245,6 +250,7 @@ describe "Dashboard" do
           find(@edit).click
           fill_in(@text[1..-1], :with => 'invalid#hash')
           find(@confirm).click
+          wait_until { page.find(@container + ' p') }
           find(@container).find('p').should have_content('valid hashtag')
         end
 

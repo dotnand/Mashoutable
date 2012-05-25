@@ -54,7 +54,12 @@ Spork.prefork do
       DatabaseCleaner.clean
     end
 
+    Capybara.register_driver :poltergeist do |app|
+      Capybara::Poltergeist::Driver.new(app, :debug => true)
+    end
+
     Capybara.javascript_driver = :poltergeist
+    Capybara.server_port = '1337' # Port number not important, just needs to have some value
   end
 end
 
