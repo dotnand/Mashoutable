@@ -1,4 +1,6 @@
 class GenerateMonthlyReports < GenerateReports
+  @queue = :generate_reports_queue
+
   def self.last_month
     (Time.now.midnight - 1.month)..(Time.now.midnight)
   end

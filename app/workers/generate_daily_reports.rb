@@ -1,4 +1,6 @@
 class GenerateDailyReports < GenerateReports
+  @queue = :generate_reports_queue
+
   def self.yesterday
     (Time.now.midnight - 1.day)..(Time.now.midnight)
   end

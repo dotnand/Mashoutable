@@ -1,4 +1,6 @@
 class GenerateWeeklyReports < GenerateReports
+  @queue = :generate_reports_queue
+
   def self.last_week
     (Time.now.midnight - 1.week)..(Time.now.midnight)
   end
