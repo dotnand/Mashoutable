@@ -421,10 +421,7 @@ h4 span.counter {
 
 #header #navigation-social #h-navigation ul{
     margin-right: -8px;
-    position: absolute;
-    top: 60px;
-    right: -8px;
-    min-width: 445px; }
+    top: 60px; }
 
 #header #navigation-social #h-navigation li{
     display: block;
